@@ -1,0 +1,15 @@
+{
+  "name": "fable-team",
+  "description": "Fable Team — Fable 5 の引き継ぎフレームワークを配布するセルフホスト・マーケットプレイス",
+  "owner": {
+    "name": "rabitarochan",
+    "email": "rabitarochan@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "fable-team",
+      "source": "./",
+      "description": "Opus / Sonnet / Haiku の分業で、単発タスクから長期ミッションまで完遂する AI エージェントチーム(Fable 5 引き継ぎフレームワーク)"
+    }
+  ]
+}

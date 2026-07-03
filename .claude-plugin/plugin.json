@@ -1,0 +1,10 @@
+{
+  "name": "fable-team",
+  "description": "Opus / Sonnet / Haiku の分業で、単発タスクから長期ミッションまで完遂する AI エージェントチーム(Fable 5 引き継ぎフレームワーク)",
+  "version": "0.1.0",
+  "author": {
+    "name": "rabitarochan",
+    "email": "rabitarochan@gmail.com"
+  },
+  "license": "MIT"
+}

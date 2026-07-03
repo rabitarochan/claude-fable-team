@@ -1,11 +1,12 @@
 # Fable Team フレームワーク変更履歴(CHANGELOG)
 
-> Fable Team 本体(規約・エージェント・fable-* スキル・同梱プレイブック/テンプレート)への
+> Fable Team 本体(規約の正本・エージェント・スキル・同梱プレイブック/テンプレート)への
 > 変更を、**根拠シグナル**と**効果測定の方法**つきで記録する。
 > 「なぜこの規則があるのか」の答えはここにある。答えられない規則は削除候補である。
 > 各プロジェクトでの成長記録(pj-* スキルの収穫など)は、そのプロジェクトの
 > `.fable-team/growth/changelog.md` に記録する。
-> 変更が効いたかは /fable-retro が評価し、効いていなければ /fable-grow で書き直すか削る。
+> 変更が効いたかは /fable-team:retro が評価し、効いていなければ /fable-team:grow で書き直すか削る。
+> (2026-07-03 のプラグイン化以前のエントリは、当時のスキル名 /fable-* のまま残している)
 
 ---
 
@@ -80,3 +81,18 @@
   解釈が割れる場合のみ」に軽量化(Fable 5 の実運用と同じ)
 - **効果測定**: 単発タスクが検証ゲートを通っているか、ミッション級の取り違え
   (昇格の遅れ)が起きていないかを retro で見る
+
+## 2026-07-03 — Claude Plugin 化(v0.1.0)
+
+- **変更**: `.claude-plugin/`(plugin.json + marketplace.json)を新設し、`agents/` と
+  `skills/` をプラグインルート直下へ移動。スキル名から fable- 接頭辞を除去
+  (プラグインスキルの呼び出しは完全修飾が強制されるため `/fable-team:task` 形式に)。
+  導入スキル `init` を新設 —— 規約の正本 `rules.md` と状態ファイルテンプレートを同梱し、
+  マーカー方式(fable-team:rules:start/end)で対象プロジェクトの CLAUDE.md を冪等に更新する。
+  HQ の CLAUDE.md は `@skills/init/rules.md` のインポート + HQ 固有規約の薄い構成に。
+  同梱リソースの参照は `${CLAUDE_PLUGIN_ROOT}` 変数に統一
+- **根拠**: ユーザー依頼「Claude Plugin 化して」。命名は選択肢を提示し、
+  fable-team:task 形式をユーザーが選択。プラグイン仕様(完全修飾の強制・コンポーネントの
+  ルート直下配置・CLAUDE.md の @import・validate CLI)は公式ドキュメントで検証してから実装
+- **効果測定**: `claude plugin validate .` が通ること。ローカルインストール →
+  /fable-team:init → /fable-team:task の一連が実プロジェクトで動くことを次の retro で確認
