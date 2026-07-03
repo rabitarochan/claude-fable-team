@@ -11,8 +11,8 @@ The handoff document written by Fable 5 itself is in [HANDOFF.md](HANDOFF.md).
 ## Installation
 
 ```
-# 1. Add the marketplace (for a local trial, use the path to this repository)
-/plugin marketplace add <path to this repository or owner/repo>
+# 1. Add the marketplace (or use a local path to this repository for a local trial)
+/plugin marketplace add rabitarochan/claude-fable-team
 
 # 2. Install the plugin
 /plugin install fable-team@fable-team
