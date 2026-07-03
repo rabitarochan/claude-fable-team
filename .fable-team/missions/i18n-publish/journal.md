@@ -110,3 +110,24 @@
 - **次へ**: 発注者の公開最終承認待ち → 承認後: README 手順確定コミット → gh repo create --public --push →
   v0.1.0 タグ → 4.4 導入テスト(実プロジェクトで marketplace add → install → /fable-team:init を発注者協力で完走、
   日本語で対話されることを確認)
+
+## 2026-07-03 — 指揮者(resume セッション) — GitHub 公開実行(4.2 / 4.3)
+
+- **やったこと**: 発注者の公開最終承認を受け、以下を実行: (1) README.md / README.ja.md のインストール手順を
+  `rabitarochan/claude-fable-team` に確定してコミット(c989bac) (2) ミッション状態記録をコミット(89c39cb)
+  (3) `gh repo create rabitarochan/claude-fable-team --public --source=. --push` を実行 → リポジトリは
+  public で作成成功したが gh が remote を SSH(git@github.com)で設定したため push が SSH 鍵エージェント署名失敗で失敗
+  (4) 対処: remote を HTTPS(https://github.com/rabitarochan/claude-fable-team.git)に set-url し
+  `gh auth setup-git` を実行 → `git push -u origin main` 成功 (5) `git tag -a v0.1.0` 作成し
+  `git push origin v0.1.0` 成功 (6) 検証: `gh repo view` が visibility=PUBLIC / url=https://github.com/rabitarochan/claude-fable-team
+  を返した → **4.2 公開・4.3 タグ完了**
+- **分かったこと**: SSH 公開鍵認証が使えない環境では `gh repo create --push` が初回 push で失敗する。gh は remote を
+  デフォルトで SSH(git@github.com)で張るため、初回 push が SSH エージェント署名に依存する。この環境では
+  private key がエージェント署名に対応していない。対処は remote を HTTPS に手動 set-url した上で
+  `gh auth setup-git` を実行してパーソナルアクセストークンのクレデンシャル設定を行うこと。
+- **判断と理由**: gh のデフォルト動作は SSH remote だが、今後の公開作業(他プロジェクトの公開など)でも繰り返されるリスク。
+  初期 push は HTTPS remote で行う手順を標準化し、ブロッカー欄に注記する。
+- **次へ**: 残タスクは 4.4 導入テストのみ。発注者協力のもと、別の実プロジェクトで新規セッション開始し
+  `/plugin marketplace add rabitarochan/claude-fable-team` → `/plugin install fable-team@fable-team` →
+  `/fable-team:init` を実行。init が完走して .fable-team/ 生成 + CLAUDE.md にルール埋め込み + 日本語で対話されることを確認。
+  完走したら DoD 全達成 → ミッション completed → /fable-team:retro
