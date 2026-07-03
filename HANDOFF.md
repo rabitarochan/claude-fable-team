@@ -197,6 +197,7 @@ Uninvestigated angles, unverified claims, unread references. What it finds becom
 | Endless fix cycles | Review finding → fix → new finding… never converges | If two rounds don't converge, ask the human |
 | Guessing for 30 minutes what asking takes 10 seconds | Work proceeds on a wrong premise | Ask early what only the user can know (but batch it into one ask) |
 | Unattended loop on weak verification | Confident garbage compounds (tests watered down to balance the books) | Harness (the verification gate) first; loops on top |
+| Treating translation as word substitution | Design flaws that only "happened to hold" in the source language (split status values, a reference that worked by a heading coincidence) surface during the English pass and become rework beyond translation | An i18n/translation pass doubles as a design review; back-translate against the original and budget for design fixes from the start |
 
 ---
 

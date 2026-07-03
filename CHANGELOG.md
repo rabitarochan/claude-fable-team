@@ -99,3 +99,28 @@
   ルート直下配置・CLAUDE.md の @import・validate CLI)は公式ドキュメントで検証してから実装
 - **効果測定**: `claude plugin validate .` が通ること。ローカルインストール →
   /fable-team:init → /fable-team:task の一連が実プロジェクトで動くことを次の retro で確認
+
+## 2026-07-03 — English-ization and public release (i18n-publish mission)
+
+> 要約(gist): フレームワーク内部を英語化し 3 層言語設計を導入。逆翻訳レビューが状態値の割れと
+> resume の grep 指示先という設計欠陥 2 件を修正。二か国語ドキュメント + MIT LICENSE + v0.1.0 を公開。
+> retro で落とし穴「翻訳=設計レビュー」を追加(発注者承認)。
+
+- **Change**:
+  - Translated the framework internals (agents/, skills/, rules.md, playbooks, templates, manifests) to
+    English under a **3-layer language design**: internals = English; runtime interaction and mission state
+    files = the user's language (new `## Language` rule in rules.md); docs = bilingual (README/HANDOFF in
+    en + ja, with HANDOFF.ja.md authoritative).
+  - Two design fixes surfaced by the back-translation review, beyond mere translation: **unified the status
+    tokens** to `in progress` / `completed` / `aborted` (previously split completed=done/completed and
+    aborted=aborted/paused), and **fixed the resume grep target** to the `Status:` line in mission.md (it had
+    pointed at state.md, which held only by a Japanese-heading coincidence).
+  - Added bilingual README/HANDOFF with cross-links, a MIT `LICENSE`, and published to
+    `rabitarochan/claude-fable-team` (public, v0.1.0).
+  - **Pitfall added (retro, owner-approved A)**: "Treating translation as word substitution" — an i18n pass
+    doubles as a design review; budget for design fixes from the start (HANDOFF §7).
+- **Evidence signal**: owner request "publish on GitHub, in English, but I don't read English." The
+  back-translation review is the mechanism that let a non-English-reading owner accept English deliverables.
+- **Effectiveness measure**: the back-translation review found 14 fixes + 2 design flaws (it worked). Next
+  retro: confirm the bilingual docs don't drift (English is authoritative) and that the status-token / grep-
+  target fixes hold across resumes.
