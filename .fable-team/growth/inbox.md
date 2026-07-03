@@ -16,8 +16,8 @@
 
 ## シグナル
 
-- [ ] 2026-07-03 | i18n-publish | 驚き | resume 時、状態ファイルの前提(「プラグイン未インストール→ロール general-purpose 代行」)が新セッションで無効化していた(専用エージェント利用可)。ロール実行手段はセッションごと再確認が要る。state.md のブロッカー欄にセッション固有の前提を書くときは「セッション固有」と明記すべき。
-- [ ] 2026-07-03 | i18n-publish | 摩擦 | `gh repo create --public --source=. --push` は origin を SSH(git@github.com)で張るため、SSH エージェント署名が使えない環境では初回 push が失敗する。対処は remote を HTTPS に set-url + `gh auth setup-git`。今後の公開手順に「HTTPS remote を使う」を織り込むべき。
+- [ ] 2026-07-03 | i18n-publish | 驚き | resume 時、状態ファイルの前提(「プラグイン未インストール→ロール general-purpose 代行」)が新セッションで無効化していた(専用エージェント利用可)。ロール実行手段はセッションごと再確認が要る。state.md のブロッカー欄にセッション固有の前提を書くときは「セッション固有」と明記すべき。(→ 2026-07-03 retro で resume スキルへの原則追加を提案。**発注者の承認待ち**のため未処理のまま保留)
+- [x] 2026-07-03 | i18n-publish | 摩擦 | `gh repo create --public --source=. --push` は origin を SSH(git@github.com)で張るため、SSH エージェント署名が使えない環境では初回 push が失敗する。対処は remote を HTTPS に set-url + `gh auth setup-git`。今後の公開手順に「HTTPS remote を使う」を織り込むべき。(→ 2026-07-03 retro で project changelog に記録済み)
 
 <!-- 記入例(架空ミッション example-todo-api より。処理済み扱い):
 - [x] 2026-06-30 | example-todo-api | 手戻り | テスト雛形の時点で DB 分離を仕込むべきだった(1.3 で flaky 化して debugger 出動)
