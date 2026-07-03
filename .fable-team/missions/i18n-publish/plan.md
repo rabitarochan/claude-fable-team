@@ -59,7 +59,7 @@
 
 | # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
 |---|--------|------|----------------------|------|------|
-| 4.1 | 総合検証(日本語残存 grep 0 / validate / 相互リンク) | verifier 役 | 全チェック green の証拠つき報告 | 3 完了 | ⬜ |
+| 4.1 | 総合検証(日本語残存 grep 0 / validate / 相互リンク) | verifier 役 | 全チェック green の証拠つき報告 | 3 完了 | ✅ |
 | 4.2 | GitHub 公開リポジトリ作成 + push(実行直前に発注者へ最終確認) | 指揮者 | `gh repo view rabitarochan/claude-fable-team` が public を返す | 4.1 | ⬜ |
 | 4.3 | README のインストール手順を owner/repo に差し替え + v0.1.0 タグ | 指揮者 | タグが push されている | 4.2 | ⬜ |
 | 4.4 | 公開版の導入テスト(marketplace add → install → init) | 発注者 + verifier 役 | 実プロジェクトで init が完走し、日本語で対話される | 4.3 | ⬜ |

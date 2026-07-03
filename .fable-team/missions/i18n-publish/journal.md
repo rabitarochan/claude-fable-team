@@ -91,3 +91,22 @@
 - **判断と理由**: HANDOFF「テストが通ることと動くことは別」は散文のまま訳す
   (原文自体がアフォリズム定型ではないため。builder の判断を承認)
 - **次へ**: Phase 3 ゲート = 日本語版の発注者レビュー → Phase 4(検証と公開)
+
+## 2026-07-03 — 指揮者(resume セッション) — Phase 3 ゲート通過 + 4.1 総合検証
+
+- **やったこと**: 新セッションで /fable-team:resume を実行し、state.md の前提と現実をクロスチェック
+  (Phase 3 コミット済み・日本語残存 0・validate 通過・英日ドキュメント+LICENSE 存在)。発注者が日本語版ドキュメント
+  (README.ja.md / HANDOFF.ja.md)を承認 → **Phase 3 ゲート通過(選択 B)**。
+  verifier に 4.1 総合検証を委譲 → 日本語残存 0 / validate / 英日相互リンク / LICENSE=MIT rabitarochan /
+  言語規則 / 英語版本文クリーン の 6 項目すべて green「公開可」。公開前プリフライト確認:
+  gh 認証(rabitarochan、repo スコープ有)、対象リポジトリ未作成、git remote 未設定を確認済み
+- **分かったこと**: (1) 本セッションではプラグイン未インストール条件が消滅し、fable-team:* 専用エージェント(verifier 等)が
+  利用可能。前セッションの state.md「プラグイン未インストール→ロールは general-purpose 代行」という前提は
+  セッション固有だった。(2) verifier の参考指摘 — mission.md の DoD 記述「skills 全 28」は skills/ 直下 12 ディレクトリと
+  数が食い違うが、grep 走査対象の 37 ファイルで実質すべてカバーされており、公開をブロックしない
+- **判断と理由**: 公開操作は外部への発信のため、実行直前に発注者へ最終確認(3 回目)を行う。
+  README のインストール手順(現在プレースホルダ)を公開前に owner/repo=`rabitarochan/claude-fable-team` へ
+  確定させてから push する。計画 4.3 の README 差し替えを 4.2 の前に前倒し(公開初版にプレースホルダを残さないため)
+- **次へ**: 発注者の公開最終承認待ち → 承認後: README 手順確定コミット → gh repo create --public --push →
+  v0.1.0 タグ → 4.4 導入テスト(実プロジェクトで marketplace add → install → /fable-team:init を発注者協力で完走、
+  日本語で対話されることを確認)
