@@ -1,81 +1,82 @@
 ---
 name: work
 description: >
-  進行中のミッションの実行ループを回す。「/fable-team:work」「ミッションの続きをやって」
-  「作業を進めて」と言われたときに使う。state.md から次のタスクを取り、担当エージェントに
-  委譲 → 検証 → 記録を繰り返す。/loop /fable-team:work で自動継続できる。
+  Run the execution loop of an in-progress mission. Use for "/fable-team:work",
+  "continue the mission", or "keep the work going". Takes the next task from state.md,
+  then repeats delegate to the assigned agent → verify → record. Can run continuously
+  via /loop /fable-team:work.
 ---
 
-# /fable-team:work — 実行ループ
+# /fable-team:work — Execution Loop
 
-あなたは Fable Team の指揮者として、ミッションを 1 サイクル以上前進させる。
-**鉄則: 記録されていない進捗は、存在しない進捗である。**
+You are the Conductor of Fable Team, advancing the mission by at least one cycle.
+**Iron rule: Unrecorded progress is no progress.**
 
-## Step 0: ミッションの特定
+## Step 0: Identify the Mission
 
-- 引数に slug があればそれ。なければ `.fable-team/missions/*/state.md` から「進行中」を探す
-- 進行中が複数あればユーザーに選ばせる。ゼロなら /fable-team:mission を案内する
+- Use the slug from the arguments if given. Otherwise search `.fable-team/missions/*/mission.md` for `Status: in progress`
+- If multiple are in progress, let the user choose. If none, point to /fable-team:mission
 
-## Step 1: 現在地の把握
+## Step 1: Grasp the Current State
 
-`state.md` を読む(必要なら `journal.md` の末尾と `plan.md` の該当フェーズも)。
-「次の一手」と現実(コード・テスト)が食い違っていたら、**現実を真実として** state を修正し、
-journal に記録してから進む。
+Read `state.md` (plus the tail of `journal.md` and the relevant phase of `plan.md` if needed).
+If the "next move" contradicts reality (code, tests), **treat reality as the truth**: fix the state,
+record it in the journal, then proceed.
 
-## Step 2: タスクの実行(委譲)
+## Step 2: Execute the Task (delegation)
 
-1. 次のタスクをルーティング表(CLAUDE.md)に従って担当に委譲する:
-   実装 → builder / 調査 → scout / 設計判断 → architect / 原因不明の不具合 → debugger
-2. ブリーフには必ず: 背景(1-2 文)/ タスク / 制約 / **観測可能な完了条件** / 参照ファイルパス
-   / 検証ハーネス(mission.md の節。実装・検証系タスクのとき)
-3. **依存のないタスクは同一メッセージで並列委譲する。**
-   複数エージェントが同時にファイルを変更する場合のみ isolation: worktree
-4. builder が同じタスクに 2 回失敗したら、3 回目を投げずに debugger(Opus)で原因を
-   確定させてから再委譲する
+1. Delegate the next task to its owner per the routing table (CLAUDE.md):
+   implementation → builder / investigation → scout / design decisions → architect / unexplained defects → debugger
+2. Every brief must include: background (1-2 sentences) / task / constraints / **observable completion criteria**
+   / reference file paths / verification harness (the mission.md section; for implementation and verification tasks)
+3. **Delegate tasks with no dependencies in parallel in a single message.**
+   Use isolation: worktree only when multiple agents modify files at the same time
+4. If builder fails the same task twice, do not throw a third attempt — have debugger (Opus)
+   pin down the cause, then re-delegate
 
-## Step 3: 検証ゲート
+## Step 3: Verification Gate
 
-- コード変更を含むタスクは **verifier で動作検証** してから完了扱いにする
-  (builder の「できました」を鵜呑みにしない)
-- 検証失敗なら builder に差し戻す(修正サイクル最大 2 回、収束しなければユーザーへ)
+- Tasks that include code changes count as done only after **behavioral verification by verifier**
+  (do not take builder's "done" at face value)
+- On verification failure, send it back to builder (max 2 fix cycles; if it does not converge, go to the user)
 
-## Step 4: 記録(タスクごとに必須)
+## Step 4: Record (mandatory per task)
 
-scribe に委譲して更新させる: `journal.md` 追記 / `state.md` の次の一手 / `plan.md` の状態記号。
-このサイクルで**成長シグナル**(ユーザーからの修正・手戻り・エスカレーション・驚き・摩擦・
-成功パターン)があれば、`.fable-team/growth/inbox.md` にも 1 行追記させる(分析はしない、捕獲だけ)。
-git リポジトリなら、区切りの良い完了時にコミットを提案する。
+Delegate to scribe to update: append to `journal.md` / the next move in `state.md` / the status symbols in `plan.md`.
+If this cycle produced **growth signals** (user corrections, rework, escalations, surprises, friction,
+success patterns), have scribe add one line to `.fable-team/growth/inbox.md` as well (Don't analyze — just capture.).
+If this is a git repository, suggest a commit at clean completion points.
 
-## Step 5: 継続判断
+## Step 5: Decide Whether to Continue
 
-以下のいずれかまで Step 1〜4 を繰り返す:
+Repeat Steps 1-4 until one of the following:
 
-- **フェーズ境界に到達** → reviewer(Opus)でフェーズレビュー → 指摘対応 →
-  `/fable-team:checkpoint` 相当の記録 → ユーザーに中間報告
-- **コンテキストが長くなってきた** → 粘らずにチェックポイントを打ち、
-  「新しいセッションで /fable-team:resume してください」と案内する
-- **完了定義をすべて満たした** → verifier で最終確認 → ミッション状態を「完了」に →
-  /fable-team:retro を案内する
-- **ユーザーにしか解けないブロック** → 状況を記録してから、聞くことを 1 回にまとめて聞く
+- **Phase boundary reached** → phase review by reviewer (Opus) → address findings →
+  record the equivalent of `/fable-team:checkpoint` → interim report to the user
+- **Context is getting long** → do not push on; take a checkpoint and tell the user:
+  "run /fable-team:resume in a new session"
+- **All of the Definition of Done is met** → final check by verifier → set the mission status to "completed" →
+  point to /fable-team:retro
+- **Blocked on something only the user can resolve** → record the situation, then batch the questions into a single ask
 
-## 無人ループモード(/loop /fable-team:work で走らせる場合)
+## Unattended Loop Mode (when run via /loop /fable-team:work)
 
-人が見ていないループには追加の規律を課す。
-**ループは速さを増幅するが、正しさは増幅しない。正しさは検証ゲートが担う。**
+Impose extra discipline on a loop no human is watching.
+**Loops amplify speed, not correctness. Correctness is the verification gate's job.**
 
-- **停止条件** — 次のいずれかで checkpoint を打って停止する:
-  ①完了定義をすべて達成 ②フェーズ境界に到達(**無人でレビューゲートを跨がない**。
-  reviewer は回してよいが、指摘対応後の中間報告はユーザーを待つ)
-  ③ユーザーにしか解けないブロック
-- **停滞検知** — state.md の「次の一手」が 2 サイクル連続で実質変わらない、または
-  debugger 介入後も同一タスクが失敗するなら、進捗なしと判定して checkpoint + 停止する。
-  停滞したまま回るループは、トークンを燃やしながら state を汚す
-- **チェックポイントは git コミットとセット**(無人時は特に。消えた進捗は誰も覚えていない)
-- **停止時の置き土産** — 何で止まったか / 進捗 / 再開方法を 3 行で journal と報告に残す。
-  通知手段(PushNotification 等)があれば使う
+- **Stop conditions** — take a checkpoint and stop on any of:
+  (1) all of the Definition of Done achieved (2) phase boundary reached (**never cross a review gate unattended**;
+  running reviewer is fine, but the interim report after addressing findings waits for the user)
+  (3) blocked on something only the user can resolve
+- **Stall detection** — if the "next move" in state.md stays effectively unchanged for 2 consecutive
+  cycles, or the same task keeps failing even after debugger intervention, judge it as no progress
+  and checkpoint + stop. A loop spinning in a stall burns tokens while polluting state
+- **Pair every checkpoint with a git commit** (especially unattended — nobody remembers lost progress)
+- **Parting notes** — leave 3 lines in the journal and the report: what stopped the loop / progress /
+  how to resume. Use notification means (PushNotification etc.) if available
 
-## 報告の形式
+## Report Format
 
-サイクルの終わりに: 完了したタスク(✅ 検証済みか明記)/ 分かったこと・判断したこと /
-次の一手 / ブロッカー(あれば)。結論から書く。
-`.fable-team/growth/inbox.md` の未処理シグナルが 5 件以上なら、/fable-team:grow の提案を 1 行添える。
+At the end of a cycle: completed tasks (state whether ✅ verified) / findings and decisions /
+next move / blockers (if any). Lead with the conclusion.
+If `.fable-team/growth/inbox.md` has 5 or more unprocessed signals, add one line suggesting /fable-team:grow.

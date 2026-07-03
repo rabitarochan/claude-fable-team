@@ -1,47 +1,48 @@
 ---
 name: retro
 description: >
-  完了(または中断)したミッションを振り返り、知見を収穫する。「/fable-team:retro」
-  「振り返りをして」「このミッションから学びを残して」と言われたとき、
-  またはミッション完了直後に使う。SkDD Skill 化の提案と memory への保存を行う。
+  Look back on a completed (or aborted) mission and harvest its lessons. Use when told
+  "/fable-team:retro", "run a retrospective", or "capture what we learned from this mission",
+  or right after a mission completes. Proposes SkDD Skill harvesting and saves learnings to memory.
 ---
 
-# /fable-team:retro — 振り返りと知見の収穫
+# /fable-team:retro — Retrospective and Lesson Harvesting
 
-ミッションの価値は成果物と**次回への学び**の 2 つ。後者を確実に回収する。
-チームは経験を重ねるほど強くなる —— 記録すれば。
+A mission's value is twofold: the deliverable and **the lessons for next time**. Reliably collect the latter.
+The team gets stronger with every mission — if it keeps records.
 
-## 手順
+## Steps
 
-1. **対象ミッションの特定**(引数 or 直近に完了したもの)
+1. **Identify the target mission** (from the argument, or the most recently completed one)
 
-2. **journal.md 全体を読む**(retro は全読みしてよい唯一の場面)。
-   長大なら scout(Haiku)に前半の要約を任せてよい
+2. **Read journal.md in full** (retro is the one occasion where reading it all is allowed).
+   If it is long, you may delegate a summary of the first half to a scout (Haiku)
 
-3. **教訓の抽出** — 以下の問いに答える:
-   - 何が二度手間だったか(手戻り・やり直し・無駄な調査)
-   - どの判断が正しかったか / 間違っていたか(結果論ではなく、判断時点の情報で評価)
-   - 見積もりと現実のズレはどこで生まれたか
-   - HANDOFF.md の失敗パターン集に**追加すべき新しい轍**はあるか
+3. **Extract lessons** — answer these questions:
+   - What was duplicated effort (rework, redoing things, wasted investigation)?
+   - Which decisions were right / wrong? (Judge by the information available at decision time, not hindsight)
+   - Where did estimates diverge from reality?
+   - Are there **new pitfalls to add** to the pitfall catalog in HANDOFF.md?
 
-   `.fable-team/growth/inbox.md` にある当該ミッションの未処理シグナルも、ここで教訓に合流させる。
+   Merge any unprocessed signals for this mission from `.fable-team/growth/inbox.md` into the lessons here.
 
-4. **前回変更の効果検証(ループを閉じる)** — 前回の振り返り以降に
-   changelog(`.fable-team/growth/changelog.md`、フレームワーク変更は `CHANGELOG.md`)へ
-   記録されたチーム資産の変更を見て、今回のミッションで
-   「効いたか / 破られたか / 使われなかったか」を評価する。
-   効いていない変更は書き直し・削除の候補として次工程へ回す。**変えっぱなしは成長ではない**
+4. **Check the effectiveness of previous changes (close the loop)** — look at the team-asset changes
+   recorded in the changelog (`.fable-team/growth/changelog.md`; framework changes in `CHANGELOG.md`)
+   since the last retrospective, and evaluate against this mission:
+   did each one work, get broken, or go unused?
+   Route changes that did not work to the next step as candidates for rewriting or deletion.
+   **Changing things isn't growth unless you check they worked.**
 
-5. **蒸留と適用** — 教訓の振り分け(落とし先表)・Skill 収穫(SkDD)・承認ゲート・
-   適用・changelog 記録は `/fable-team:grow` の手順に従う(対象を当該ミッション分に絞って実行する)
+5. **Distill and apply** — for triaging lessons (the destination table), Skill harvesting (SkDD), the approval gate,
+   application, and changelog recording, follow the steps in `/fable-team:grow` (scoped to this mission only)
 
-6. **クローズ処理**:
-   - `mission.md` の状態を「完了」(または「中断」+理由)に更新
-   - journal に retro エントリを追記
-   - `.fable-team/missions/_archive/<slug>/` への移動を提案(履歴は消さない)
+6. **Close out**:
+   - Update the status in `mission.md` to "completed" (or "aborted" + reason)
+   - Append a retro entry to the journal
+   - Propose moving the mission to `.fable-team/missions/_archive/<slug>/` (never delete history)
 
-## 原則
+## Principles
 
-- 犯人探しをしない。轍(パターン)を探す
-- 「次からは気をつける」は知見ではない。**仕組み(規約・テンプレート・スキル)に落ちて**
-  初めて知見である
+- Don't hunt for culprits. Hunt for pitfalls (patterns)
+- "I'll be careful next time" is not a lesson. It becomes a lesson only when it
+  **lands in the system (conventions, templates, skills)**

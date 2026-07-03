@@ -1,45 +1,45 @@
 ---
 name: checkpoint
 description: >
-  進行中のミッションの状態を今すぐ凍結する。「/fable-team:checkpoint」「一旦ここまでを保存して」
-  「今日はここまで」「セッションを切り替えたい」と言われたとき、またはコンテキストが
-  長くなってきたと指揮者自身が判断したときに使う。
+  Freeze the state of an in-progress mission right now. Use for "/fable-team:checkpoint",
+  "save what we have so far", "let's stop here for today", "I want to switch sessions",
+  or when the Conductor itself judges that the context is getting long.
 ---
 
-# /fable-team:checkpoint — 状態の凍結
+# /fable-team:checkpoint — Freezing State
 
-今この瞬間にセッションが消えても、次のセッションが完全に再開できる状態を作る。
-**チェックポイントは「切りが良いとき」ではなく「次の一手が明確なうち」に打つ。**
+Create a state from which the next session can fully resume even if this session dies this instant.
+**Take a checkpoint not "at a good stopping point" but "while the next move is still clear".**
 
-## 手順
+## Steps
 
-1. **対象ミッションを特定する**(引数 or 進行中のもの)
+1. **Identify the target mission** (from the arguments, or the one in progress)
 
-2. **作業中の状態を洗い出す**:
-   - やりかけのタスクと、正確な中断点(どのファイルのどこまで)
-   - 未コミットの変更(`git status` / `git diff --stat` で確認)
-   - 検証済みのこと / 未検証のこと(混ぜない)
-   - コンテキスト内にしかない判断・発見(これが一番蒸発しやすい)
+2. **Inventory the in-flight state**:
+   - Tasks in progress and the exact interruption point (which file, how far)
+   - Uncommitted changes (check with `git status` / `git diff --stat`)
+   - What is verified / what is not (never mix them)
+   - Decisions and findings that exist only in this context (these evaporate first)
 
-3. **scribe に委譲して記録する**:
-   - `journal.md` にチェックポイントエントリ(実際のシステム日時で)
-   - `state.md` を全面更新。「次の一手」は初見のセッションが動ける具体性で:
-     対象ファイル・実行コマンド・期待結果・前回どこまで進んだか
-   - `plan.md` のタスク状態記号を現実に合わせる
+3. **Delegate to scribe to record**:
+   - A checkpoint entry in `journal.md` (with the actual system date/time)
+   - Fully update `state.md`. Make the "next move" concrete enough for a first-time session to act on:
+     target files, commands to run, expected results, how far the previous session got
+   - Align the task status symbols in `plan.md` with reality
 
-4. **物理チェックポイント**: git リポジトリなら WIP コミットを提案する
-   (ミッション状態ファイルも一緒にコミットする)
+4. **Physical checkpoint**: if this is a git repository, suggest a WIP commit
+   (commit the mission state files together with it)
 
-5. **セルフテスト(必須)**: state.md を読み直し、自問する —
-   **「このリポジトリを初めて見る Opus セッションは、これだけで再開できるか?」**
-   足りなければ書き足してから完了を宣言する。
+5. **Self-test (mandatory)**: re-read state.md and ask yourself —
+   **"Could an Opus session seeing this repository for the first time resume from this alone?"**
+   If not, add what is missing before declaring completion.
 
-## 報告の形式
+## Report Format
 
 ```
-## チェックポイント完了: <slug>
+## Checkpoint complete: <slug>
 
-- 進捗: Phase N — 完了 X / 全 Y タスク
-- 凍結した状態: <1-2 文>
-- 再開方法: 新しいセッションで /fable-team:resume <slug>
+- Progress: Phase N — X of Y tasks done
+- Frozen state: <1-2 sentences>
+- How to resume: run /fable-team:resume <slug> in a new session
 ```

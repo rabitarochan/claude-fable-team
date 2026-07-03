@@ -1,30 +1,32 @@
 ---
 name: verify
 description: >
-  Fable Team の検証手筋を適用する。コード変更の動作確認・タスク完了条件の判定・
-  フェーズゲートやリリース前の受け入れ確認を行うとき、または verifier に検証を
-  委譲する直前に使う。「テストは通ったが本当に動くか確認したい」ときも使う。
-  「/fable-team:verify」「手筋どおり検証して」でも起動する。
+  Apply the Fable Team verification playbook. Use when confirming that a code change actually
+  works, judging whether a task's completion criteria are met, or running acceptance checks at a
+  phase gate or before release, or right before delegating verification to verifier. Also use
+  when "the tests pass but I want to confirm it really works". Also triggered by
+  "/fable-team:verify" or "verify by the playbook".
 ---
 
-# /fable-team:verify — 検証手筋の起動
+# /fable-team:verify — Launch the Verification Playbook
 
-本体は本スキル同梱の `playbook.md` にある(単一の真実。SKILL.md には複製しない)。
-合言葉: **テスト green ≠ 動く**。観測されたものだけが検証済みである。
+The substance lives in the bundled `playbook.md` (single source of truth; never duplicated into SKILL.md).
+Watchword: **Green tests ≠ working software.** Only what has been observed counts as verified.
 
-## 手順
+## Steps
 
-1. **本スキル同梱の `playbook.md` を読む**(このリポジトリでは
-   `${CLAUDE_PLUGIN_ROOT}/skills/verify/playbook.md`。プラグイン配布でもスキルと一緒に付いてくる)
-2. **委譲する場合**(原則こちら): verifier へ。ブリーフに必ず含める —
-   観測すべき完了条件(期待結果を先に書く)/ 変更種別(API・CLI・設定・migration・UI 等。
-   プレイブックのレシピ選択に使わせる)/ 参照として `${CLAUDE_PLUGIN_ROOT}/skills/verify/playbook.md`
-3. **自分で検証する場合**: 該当する変更種別のレシピに従う。
-   最低セット = 正常系 1 + 代表異常系 1〜2 + 周辺の回帰 1
+1. **Read the bundled `playbook.md`** (in this repository:
+   `${CLAUDE_PLUGIN_ROOT}/skills/verify/playbook.md`; it ships with the skill in plugin distribution too)
+2. **When delegating** (the default): to verifier. The brief must include —
+   the observable completion criteria (write the expected results first) / the change type (API, CLI,
+   config, migration, UI, etc.; the verifier uses it to pick a playbook recipe) /
+   `${CLAUDE_PLUGIN_ROOT}/skills/verify/playbook.md` as a reference
+3. **When verifying yourself**: follow the recipe for the relevant change type.
+   Minimum set = 1 happy path + 1-2 representative error cases + 1 nearby regression check
 
-## 守ること
+## Rules
 
-- 期待結果を**実行前に**書く。出力を見てから「正しい」と後付けしない
-- 証拠(コマンド + 実際の出力)なしの「確認しました」を受け取らない・出さない
-- 「未検証」と「検証して OK」を混ぜない。観測できなかった項目は理由つきで未検証と明記
-- ミッション作業中なら、検証結果は state.md の「検証状態」に反映する(scribe へ)
+- Write the expected results **before executing**. Never look at the output first and then declare it "correct"
+- Never accept — or give — an "I checked it" without evidence (the command + its actual output)
+- Never blur "unverified" and "verified OK". Mark anything you could not observe as unverified, with the reason
+- During mission work, reflect verification results in the "verification status" section of state.md (via scribe)

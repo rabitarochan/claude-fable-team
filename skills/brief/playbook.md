@@ -1,59 +1,59 @@
-# ブリーフィング・プレイブック — 委譲の技術
+# Briefing Playbook — The Art of Delegation
 
-> 主な読者: 指揮者(メインセッション)。
-> 委譲の失敗のほとんどは、エージェントの能力不足ではなくブリーフの情報不足で起きる。
+> Primary readers: the Conductor (main session).
+> Most delegation failures come not from the agent's lack of ability but from missing information in the brief.
 
-サブエージェントは、あなたの会話もこれまでの思考も一切見えていない**文脈ゼロの他人**である。
-そのつもりで書く。逆に言えば、良いブリーフさえ書ければ Sonnet も Haiku も期待以上に働く。
+A subagent is a **zero-context stranger** who has seen none of your conversation and none of your prior thinking.
+Write accordingly. The flip side: with a good brief, even Sonnet and Haiku will exceed your expectations.
 
-## 5 要素(CLAUDE.md 委譲規約)の書き方のコツ
+## How to Write the Five Elements (the CLAUDE.md Delegation Rules)
 
-1. **背景** — 「なぜやるか」を 1〜2 文。ミッション名とフェーズ。長い経緯は渡さない(読むコストで質が下がる)
-2. **タスク** — 動詞で書く。**1 委譲 = 1 タスク**。「ついでに〜も」を混ぜない
-3. **制約** — 「触ってはいけないもの」を明示する。禁止事項は推測できない
-4. **成果物** — 形式まで指定する(「実装箇所の一覧を `path:line` 形式で」)
-5. **参照** — 読むべきファイルを**指揮者が指定する**。「関連ファイルを探して読んで」は探索コストが載って質と速度が両方落ちる
+1. **Background** — Why this task exists, in 1–2 sentences. Mission name and phase. Don't pass long history (reading cost degrades quality)
+2. **Task** — Write it as a verb. **One delegation = one task.** No "and while you're at it..."
+3. **Constraints** — State explicitly what must not be touched. Prohibitions cannot be guessed
+4. **Deliverables** — Specify down to the format ("a list of implementation sites in `path:line` format")
+5. **References** — **The Conductor names the files** to read. "Find and read the relevant files" adds exploration cost and drops both quality and speed
 
-実装・検証系のブリーフには、mission.md の「検証ハーネス」節(テスト・lint・起動コマンド)を
-毎回含める。エージェントに再発見させるのは、委譲のたびに数分を捨てる行為である。
+For implementation and verification briefs, include the "verification harness" section of mission.md
+(test, lint, and launch commands) every time. Making the agent rediscover it throws away minutes on every delegation.
 
-## Before / After 実例
+## Before / After Examples
 
-### scout への委譲
+### Delegating to a scout
 
-❌ **悪い例**: 「認証まわりを調べて」
-(何を知りたいか不明 → 手当たり次第に読んで全部報告 → 親コンテキストが溢れる)
+❌ **Bad**: "Look into the auth stuff"
+(Unclear what you want to know → reads everything indiscriminately and reports it all → the parent context overflows)
 
-✅ **良い例**:
-> 問い: ログイン処理はどこで実装され、セッションはどう保存されているか。
-> 起点: `src/auth/` 配下。
-> 返す形式: 実装箇所の `path:line` と各 1 行の説明、セッション保存方式は結論 1 文。
-> ファイル内容のコピーは不要。
+✅ **Good**:
+> Question: Where is the login flow implemented, and how are sessions stored?
+> Starting point: under `src/auth/`.
+> Return format: `path:line` for each implementation site with a one-line description each; session storage mechanism as a one-sentence conclusion.
+> No copies of file contents needed.
 
-### builder への委譲
+### Delegating to a builder
 
-❌ **悪い例**: 「ユーザー登録 API を作って」
-(流儀・完了条件・触ってよい範囲が全部エージェント任せ → 手戻り確定)
+❌ **Bad**: "Build the user registration API"
+(Style, completion criteria, and touchable scope all left to the agent → rework guaranteed)
 
-✅ **良い例**:
-> 背景: todo-api ミッション Phase 2。ユーザー別の TODO 分離のため登録 API が要る。
-> タスク: `POST /users` を実装する(plan.md タスク 2.1)。
-> 制約: `src/db/schema.ts` は変更しない。既存の `src/api/todos.ts` の構成・命名に合わせる。
-> 完了条件: `npm test -- users` が通る。空メールで 400、正常入力で 201 と Location ヘッダが返る。
-> 参照: `src/api/todos.ts`(流儀の見本)、`src/db/schema.ts`(users テーブル定義)。
+✅ **Good**:
+> Background: todo-api mission, Phase 2. We need a registration API to separate TODOs per user.
+> Task: Implement `POST /users` (plan.md task 2.1).
+> Constraints: Do not modify `src/db/schema.ts`. Match the structure and naming of the existing `src/api/todos.ts`.
+> Completion criteria: `npm test -- users` passes. Empty email returns 400; valid input returns 201 with a Location header.
+> References: `src/api/todos.ts` (style exemplar), `src/db/schema.ts` (users table definition).
 
-## 回収の検収チェック
+## Acceptance Check on Returned Work
 
-返ってきた報告を統合・報告する前に確認する:
+Check before integrating and reporting the returned results:
 
-- [ ] **完了条件に 1 つずつ**答えているか(「やりました」の総括だけなら差し戻す)
-- [ ] 検証の**証拠**(コマンド + 出力)が付いているか
-- [ ] 「自分で判断したこと」の申告があるか(無申告の独自判断が一番怖い)
-- [ ] 重要なタスクは**抜き打ちで 1 点だけ**自分で現物を確認する(全数検査は不要、ゼロ検査は危険)
+- [ ] Does it answer **each completion criterion, one by one** (send it back if it is just a "done" summary)
+- [ ] Is verification **evidence** attached (commands + output)
+- [ ] Does it declare "decisions I made on my own" (undeclared judgment calls are the scariest kind)
+- [ ] For important tasks, **spot-check exactly one item** against the real thing yourself (inspecting everything is unnecessary; inspecting nothing is dangerous)
 
-## ユーザーへの質問の技法
+## How to Ask the User Questions
 
-- 質問は**まとめて 1 回**。逐次に 1 問ずつ聞かない(相手の時間を分割払いさせない)
-- **選択肢 + 推奨案**を添える。オープンクエスチョンより 10 倍答えやすく、答えの質も上がる
-- 調べれば分かることは聞かない。**ユーザーにしか分からないこと**(意図・優先度・好み・社内事情)だけを聞く
-- 聞く前に「自分の推奨はどれか」を決めておく。推奨が決められない質問は、まだ調査が足りていない
+- Ask **once, in a batch**. Never drip questions one at a time (don't make the user pay for their time in installments)
+- Attach **options plus a recommendation**. Ten times easier to answer than an open question, and the answers get better too
+- Never ask what you can look up. Ask only what **only the user can know** (intent, priorities, preferences, internal context)
+- Decide your own recommendation before asking. A question you cannot attach a recommendation to means you haven't researched enough

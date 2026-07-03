@@ -1,42 +1,42 @@
 ---
 name: resume
 description: >
-  新しいセッションで、中断していたミッションに完全復帰する。「/fable-team:resume」
-  「昨日の続きから」「ミッションを再開して」と言われたとき、またはセッション開始時に
-  進行中ミッションの再開をユーザーが承認したときに使う。
+  Fully recover an interrupted mission in a new session. Use for "/fable-team:resume",
+  "pick up where we left off yesterday", "resume the mission", or when the user approves
+  resuming an in-progress mission at session start.
 ---
 
-# /fable-team:resume — 完全復帰
+# /fable-team:resume — Full Recovery
 
-あなたは前任セッションの記憶を持たない。それで正常である。
-**ファイルが真実であり、ファイルだけを信じて復帰する。** ただし最後に現実と突き合わせる。
+You have no memory of the previous session. That is normal.
+**The files are the truth; trust only the files to recover.** But cross-check against reality at the end.
 
-## 手順
+## Steps
 
-1. **ミッションの特定**: 引数の slug、なければ `.fable-team/missions/*/state.md` から「進行中」を探す。
-   複数あればユーザーに選ばせる
+1. **Identify the mission**: the slug from the arguments; otherwise search
+   `.fable-team/missions/*/mission.md` for `Status: in progress`. If multiple, let the user choose
 
-2. **必要最小限を読む(この順で)**:
-   1. `state.md` — 現在地と次の一手
-   2. `journal.md` の**末尾数エントリ** — 直近の文脈と判断
-   3. `plan.md` の**現在フェーズ**の部分
-   4. `mission.md` — ゴールと完了定義の再確認
-   全ファイルを頭から読み込まない。journal 全体が必要になることはまれである
+2. **Read the bare minimum (in this order)**:
+   1. `state.md` — current state and next move
+   2. The **last few entries** of `journal.md` — recent context and decisions
+   3. The **current phase** section of `plan.md`
+   4. `mission.md` — re-confirm the goal and Definition of Done
+   Do not read every file top to bottom. Needing the whole journal is rare
 
-3. **前提の再検証(必須)**: state.md の記述と現実を突き合わせる:
-   - 記載された変更ファイルは実在するか(`git status` / `git log --oneline -5`)
-   - 「検証済み」とされたものは今も通るか(直近のテストを 1 つ実行して抜き打ち確認)
-   - 人間や他のセッションが状態を変えていないか
-   **食い違いがあれば現実を真実とし**、journal に記録して state を修正してから進む
+3. **Re-verify assumptions (mandatory)**: cross-check what state.md says against reality:
+   - Do the listed changed files actually exist? (`git status` / `git log --oneline -5`)
+   - Does what was marked "verified" still pass? (spot-check by running one recent test)
+   - Has a human or another session changed the state?
+   **On any mismatch, treat reality as the truth**: record it in the journal and fix the state before proceeding
 
-4. **復帰宣言**: ユーザーに 3 行で報告する —
-   「<slug> を再開します。現在 Phase N(X/Y 完了)。次の一手: <具体的に>」
+4. **Declare recovery**: report to the user in 3 lines —
+   "Resuming <slug>. Currently Phase N (X/Y done). Next move: <be specific>"
 
-5. **実行へ**: そのまま `/fable-team:work` のループに入る
-   (ユーザーが再開の確認だけを求めていた場合は、宣言で止まって指示を待つ)
+5. **Into execution**: enter the `/fable-team:work` loop directly
+   (if the user only asked to confirm the resume, stop at the declaration and wait for instructions)
 
-## 原則
+## Principles
 
-- 前任の判断を軽々しく覆さない。journal に理由つきで記録された判断は、
-  新しい根拠がない限り引き継ぐ(蒸し返しはコンテキストの浪費である)
-- 復帰に 10 分かけない。読む → 突き合わせる → 動く
+- Do not casually overturn the predecessor's decisions. A decision recorded in the journal with
+  its rationale carries over unless there is new evidence (relitigating wastes context)
+- Do not spend 10 minutes on recovery. Read → cross-check → move

@@ -1,30 +1,31 @@
 ---
 name: brief
 description: >
-  Fable Team の委譲手筋を適用する。サブエージェント(builder / scout / debugger /
-  verifier 等)へタスクを委譲するブリーフを書くとき、複数エージェントの並列投入を
-  設計するとき、返ってきた報告を検収するときに使う。委譲がうまくいかず手戻りが
-  起きたときの立て直しにも使う。「/fable-team:brief」でも起動する。
+  Apply the Fable Team delegation playbook. Use when writing a brief to delegate a task to a
+  subagent (builder / scout / debugger / verifier, etc.), when designing a parallel launch of
+  multiple agents, or when inspecting a report that came back. Also use to recover when a
+  delegation went wrong and caused rework. Also triggered by "/fable-team:brief".
 ---
 
-# /fable-team:brief — 委譲手筋の起動
+# /fable-team:brief — Launch the Delegation Playbook
 
-本体は本スキル同梱の `playbook.md` にある(単一の真実。SKILL.md には複製しない)。
-前提: サブエージェントは**文脈ゼロの他人**である。委譲の失敗のほとんどはブリーフの情報不足で起きる。
+The substance lives in the bundled `playbook.md` (single source of truth; never duplicated into SKILL.md).
+Premise: a subagent is **a stranger with zero context**. Most delegation failures come from briefs that lack information.
 
-## 手順
+## Steps
 
-1. **本スキル同梱の `playbook.md` を読む**(このリポジトリでは
-   `${CLAUDE_PLUGIN_ROOT}/skills/brief/playbook.md`。プラグイン配布でもスキルと一緒に付いてくる)
-2. **ブリーフを書く**: 5 要素(背景 / タスク / 制約 / 成果物 / 参照)を満たす。
-   プレイブックの Before/After 実例と見比べて、悪い例に似ていたら書き直す
-3. **投入する**: 依存のないタスクは同一メッセージで並列起動。
-   同時にファイルを変更する場合のみ worktree 分離(CLAUDE.md 並列実行の規約)
-4. **検収する**: プレイブックの検収チェックリストを通してから統合・報告する
-   (完了条件への個別回答 / 検証の証拠 / 独自判断の申告 / 抜き打ち 1 点確認)
+1. **Read the bundled `playbook.md`** (in this repository:
+   `${CLAUDE_PLUGIN_ROOT}/skills/brief/playbook.md`; it ships with the skill in plugin distribution too)
+2. **Write the brief**: cover the five elements (background / task / constraints / deliverables / references).
+   Compare it against the playbook's before/after examples; if it resembles a bad one, rewrite it
+3. **Launch**: start tasks with no dependencies in parallel in a single message.
+   Use worktree isolation only when they modify files at the same time (per the CLAUDE.md parallel-execution conventions)
+4. **Inspect**: run the report through the playbook's acceptance checklist before integrating and reporting
+   (item-by-item answers to the completion criteria / verification evidence / disclosure of independent
+   judgment calls / one random spot check)
 
-## 守ること
+## Rules
 
-- 1 委譲 = 1 タスク。「ついでに〜も」を混ぜない
-- 読むべきファイルは指揮者が指定する。「探して読んで」で丸投げしない
-- 検収を通っていない報告を「完了」としてユーザーに報告しない
+- One delegation = one task. Never mix in "and while you're at it..."
+- The Conductor specifies which files to read. Never punt with "find and read them yourself"
+- Never report anything to the user as "done" if it has not passed acceptance inspection

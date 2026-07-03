@@ -1,36 +1,36 @@
-# 現在地(state): TODO 管理 REST API
+# Current state: TODO management REST API
 
-> **このファイルが唯一の真実。** セッションはいつ死んでもよい。
+> **This file is the single source of truth.** Any session may die at any moment.
 
 - slug: `example-todo-api`
-- フェーズ: Phase 2 — 認証とユーザー分離
-- 進捗: 完了 4 / 全 7 タスク
-- 最終更新: 2026-07-02 18:40
-- 更新者: scribe(指揮者セッション #3 より)
+- Phase: Phase 2 — Authentication and user separation
+- Progress: 4 of 7 tasks done
+- Last updated: 2026-07-02 18:40
+- Updated by: scribe (from Conductor session #3)
 
-## 次の一手(最重要)
+## Next move (most important)
 
-タスク 2.2(認証ミドルウェア)の続き。`src/middleware/auth.ts` は作成済みで、
-`npm test -- auth` は 3 件中 2 件通過。残る失敗は「不正キーで 401 を返す」——
-現在 500 が返る。原因の見当: `src/middleware/auth.ts:18` で DB 照会の例外を
-catch せず next(err) に流しているため(未確定、要確認)。
+Continue task 2.2 (auth middleware). `src/middleware/auth.ts` already exists, and
+`npm test -- auth` passes 2 of 3 cases. The remaining failure is "returns 401 for an
+invalid key" — it currently returns 500. Suspected cause: `src/middleware/auth.ts:18`
+does not catch the DB-lookup exception and passes it to next(err) (unconfirmed; verify first).
 
-手順: ①上記を修正 → ② `npm test -- auth` 全緑を確認 → ③ `src/app.ts` へ
-ミドルウェアを組み込み(/users 以外の全ルート)→ ④ verifier で curl 観測
-(キーなし 401 / 不正キー 401 / 正キー 200)→ ⑤ scribe で記録して 2.3 へ。
-builder へのブリーフ例は journal の 07-02 エントリにある。
+Steps: (1) fix the above → (2) confirm `npm test -- auth` is all green → (3) wire the
+middleware into `src/app.ts` (all routes except /users) → (4) observe via verifier with curl
+(no key 401 / invalid key 401 / valid key 200) → (5) record via scribe and move to 2.3.
+An example brief for builder is in the journal's 07-02 entry.
 
-## 進行中・中断点
+## In progress / stopping point
 
-上記 2.2 のみ。ほかに書きかけのファイルはない(`git status` クリーン確認済み)。
+Only 2.2 above. No other files are mid-edit (`git status` confirmed clean).
 
-## 検証状態
+## Verification status
 
-- 検証済み: Phase 1 の CRUD 全系(実起動 + curl で観測、06-30)。2.1 のキー発行(同)
-- 未検証: 認証まわり全部(2.2 テスト 1 件失敗中)。display_name 列を含む登録の異常系
+- Verified: all Phase 1 CRUD paths (real launch + observed via curl, 06-30); key issuance in 2.1 (same)
+- Unverified: everything around auth (one 2.2 test still failing); error cases for registration including the display_name column
 
-## ブロッカー・注意
+## Blockers / notes
 
-- なし
-- 注意: users テーブルはユーザー本人が 07-01 に手で display_name 列を追加している
-  (journal 07-01 参照)。schema.ts が「計画時と違う」のは正常。
+- None
+- Note: the user hand-added the display_name column to the users table on 07-01
+  (see journal 07-01). schema.ts differing from the original plan is expected.

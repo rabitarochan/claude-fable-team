@@ -1,45 +1,45 @@
-# 実行計画: TODO 管理 REST API
+# Execution plan: TODO management REST API
 
-> 作成: architect / 承認: 2026-06-29
-> 状態記号: ⬜ 未着手 / 🔄 進行中 / ✅ 完了(検証済み) / ⏸️ ブロック
+> Author: architect / Approved: 2026-06-29
+> Status legend: ⬜ not started / 🔄 in progress / ✅ done (verified) / ⏸️ blocked
 
-## 前提
+## Assumptions
 
-- Node.js 22 がローカルで利用可能
-- データ量は個人利用規模(SQLite で十分)。崩れたら DB 選定から再計画
+- Node.js 22 is available locally
+- Data volume is personal-use scale (SQLite is sufficient). If this breaks, replan starting from DB selection
 
-## 主要な設計判断
+## Key design decisions
 
-| 判断 | 採用案 | 理由 | 採らなかった案 |
+| Decision | Choice | Rationale | Rejected alternatives |
 |---|---|---|---|
-| DB アクセス | better-sqlite3 | 同期 API でテストが単純になる。規模に十分 | Prisma(小規模には過剰。依存が深い) |
-| 認証方式 | API キー(ヘッダ) | 発注者が「簡単でいい」と明言 | JWT(スコープ外の本格認証に寄りすぎ) |
+| DB access | better-sqlite3 | Synchronous API keeps tests simple; sufficient for this scale | Prisma (overkill for a small project; deep dependency tree) |
+| Auth method | API key (header) | The user explicitly said simple is fine | JWT (leans too far toward the out-of-scope full-fledged auth) |
 
-## Phase 1: CRUD 基盤
+## Phase 1: CRUD foundation
 
-**ゲート**: reviewer レビュー LGTM + 実際に起動して curl で全エンドポイントの正常系を観測
-→ **2026-06-30 通過済み**(journal 参照)
+**Gate**: reviewer LGTM + actually start the app and observe the happy path of every endpoint via curl
+→ **passed 2026-06-30** (see journal)
 
-| # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
+| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
 |---|--------|------|----------------------|------|------|
-| 1.1 | プロジェクト雛形(TS/Express/テスト基盤) | builder | `npm test` のサンプルテストが通り、`npm start` で起動する | - | ✅ |
-| 1.2 | todos CRUD 実装 | builder | curl で POST/GET/PUT/DELETE が仕様どおり動く | 1.1 | ✅ |
-| 1.3 | テスト整備(CRUD 全系 + 異常系) | builder | `npm test` 全緑。並列実行でも安定(20 回連続緑) | 1.2 | ✅ |
+| 1.1 | Project scaffold (TS/Express/test setup) | builder | The sample test passes with `npm test`, and the app starts with `npm start` | - | ✅ |
+| 1.2 | Implement todos CRUD | builder | POST/GET/PUT/DELETE behave per spec via curl | 1.1 | ✅ |
+| 1.3 | Test coverage (all CRUD paths + error cases) | builder | `npm test` all green; stable under parallel runs (20 consecutive green runs) | 1.2 | ✅ |
 
-## Phase 2: 認証とユーザー分離
+## Phase 2: Authentication and user separation
 
-**ゲート**: reviewer レビュー LGTM + 「ユーザー A のキーでユーザー B の TODO に触れない」ことを curl で観測
+**Gate**: reviewer LGTM + observe via curl that user A's key cannot touch user B's TODOs
 
-| # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
+| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
 |---|--------|------|----------------------|------|------|
-| 2.1 | users テーブルと API キー発行 | builder | `POST /users` で 201 + キー返却。display_name 列を含む(07-01 変更、journal 参照) | - | ✅ |
-| 2.2 | 認証ミドルウェア | builder | `npm test -- auth` 全緑。キーなし/不正キーで 401 | 2.1 | 🔄 |
-| 2.3 | TODO のユーザー分離 | builder | A のキーで B の TODO を GET → 404、一覧に混入しない | 2.2 | ⬜ |
-| 2.4 | README(起動手順・API 一覧) | builder | 記載の手順をそのまま実行して起動・全 API 疎通 | 2.3 | ⬜ |
+| 2.1 | users table and API key issuance | builder | `POST /users` returns 201 + a key; includes the display_name column (changed 07-01, see journal) | - | ✅ |
+| 2.2 | Auth middleware | builder | `npm test -- auth` all green; 401 for missing/invalid key | 2.1 | 🔄 |
+| 2.3 | Per-user TODO separation | builder | GET on B's TODO with A's key → 404; nothing leaks into listings | 2.2 | ⬜ |
+| 2.4 | README (startup steps, API list) | builder | Following the written steps as-is starts the app and every API responds | 2.3 | ⬜ |
 
-## リスク
+## Risks
 
-| リスク | 検知方法 | 顕在化したら |
+| Risk | Detection | If it materializes |
 |---|---|---|
-| better-sqlite3 のビルドが環境で失敗 | 1.1 の npm install 時点 | sql.js へ差し替え(architect 再判断) |
-| 「簡単な認証」の解釈ズレ | Phase 2 ゲートでユーザー確認 | mission.md の完了定義を更新して再計画 |
+| better-sqlite3 build fails in this environment | At npm install during 1.1 | Swap in sql.js (architect re-decides) |
+| Misreading what "simple auth" means | User confirmation at the Phase 2 gate | Update the Definition of Done in mission.md and replan |

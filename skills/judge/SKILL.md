@@ -1,30 +1,32 @@
 ---
 name: judge
 description: >
-  Fable Team の判断手筋を適用する。正解のない判断で迷ったとき —— パッチかリファクタか、
-  ユーザーに聞くか進めるか、依存を足すか自作するか、コードを消してよいか、テストと実装の
-  どちらを直すか、見積もりが大きく崩れたとき、ユーザーの指示が間違っていそうなとき ——
-  に使う。「/fable-team:judge」「判断に迷っている」でも起動する。
+  Apply the Fable Team judgment playbook. Use when stuck on a decision with no right answer —
+  patch or refactor, ask the user or keep going, add a dependency or build it yourself, whether
+  it's safe to delete code, whether to fix the test or the implementation, when an estimate has
+  collapsed badly, or when the user's instructions seem wrong. Also triggered by
+  "/fable-team:judge" or "I'm stuck on a decision".
 ---
 
-# /fable-team:judge — 判断手筋の起動
+# /fable-team:judge — Launch the Judgment Playbook
 
-本体は本スキル同梱の `playbook.md` にある(単一の真実。SKILL.md には複製しない)。
-前提: **経験則は規則ではない。** 外れるべき状況では、理由を記録して外れてよい。
+The substance lives in the bundled `playbook.md` (single source of truth; never duplicated into SKILL.md).
+Premise: **heuristics are not rules.** In situations that call for deviating, you may deviate — record the reason.
 
-## 手順
+## Steps
 
-1. **本スキル同梱の `playbook.md` を読む**(このリポジトリでは
-   `${CLAUDE_PLUGIN_ROOT}/skills/judge/playbook.md`。プラグイン配布でもスキルと一緒に付いてくる)
-2. 直面している判断に該当する経験則を探し、当てはめる
-3. 該当する経験則がない場合の一般形:
-   - 可逆なら小さく試す。不可逆ならユーザーに聞く(選択肢 + 推奨を添えて)
-   - 判断に必要な情報が足りないなら、それは判断の問題ではなく調査の問題(scout へ)
-4. **判断したら記録する**: ミッション作業中なら journal.md に「判断と理由」を残す(scribe へ)。
-   後任が蒸し返さないための根拠を書く。経験則から外れた場合はその理由も
+1. **Read the bundled `playbook.md`** (in this repository:
+   `${CLAUDE_PLUGIN_ROOT}/skills/judge/playbook.md`; it ships with the skill in plugin distribution too)
+2. Find the heuristic that matches the decision you face, and apply it
+3. General form when no heuristic matches:
+   - If reversible, try it small. If irreversible, ask the user (with options + a recommendation)
+   - If you lack the information needed to decide, it is an investigation problem, not a judgment
+     problem (route to scout)
+4. **Record the decision**: during mission work, leave "decision and reasoning" in journal.md (via scribe).
+   Write the rationale so a successor won't relitigate it. If you deviated from a heuristic, record why
 
-## 守ること
+## Rules
 
-- 迷いを理由に止まらない。この手筋を通してもなお決められないなら、
-  それはユーザーに聞くべき判断である(まとめて 1 回で聞く)
-- 大きな設計判断(後戻りコスト大)は自分で抱えず architect(Opus)に諮る
+- Don't stall because you're unsure. If you still can't decide after running this playbook,
+  it is a decision the user should make (batch your questions into a single ask)
+- Don't carry major design decisions (high cost to reverse) alone — consult architect (Opus)

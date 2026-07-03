@@ -1,38 +1,38 @@
-# ミッション: <名前>
+# Mission: <name>
 
 - slug: `<kebab-case-slug>`
-- 開始日: YYYY-MM-DD
-- 状態: 進行中 <!-- 進行中 / 完了 / 中断(理由) -->
-- 発注者の依頼(原文のまま):
-  > <ユーザーの元の依頼文をそのまま貼る。要約しない。後から解釈のズレを検出する基準になる>
+- Start date: YYYY-MM-DD
+- Status: in progress <!-- in progress / completed / aborted (reason) -->
+- The user's request (verbatim):
+  > <Paste the user's original request as-is. Do not summarize. It becomes the baseline for detecting interpretation drift later>
 
-## ゴール
+## Goal
 
-<達成すべきことを 1〜3 文で>
+<What must be achieved, in 1-3 sentences>
 
-## 完了の定義(Definition of Done)
+## Definition of Done
 
-<!-- すべて観測可能な条件で書く。「〜を実装する」ではなく「〜すると××が観測できる」 -->
+<!-- Write every item as an observable condition: not "implement X" but "doing X lets you observe Y" -->
 
-- [ ] <条件 1>
-- [ ] <条件 2>
+- [ ] <Criterion 1>
+- [ ] <Criterion 2>
 
-## 検証ハーネス(このプロジェクトのフィードバックループ)
+## Verification harness (this project's feedback loop)
 
-<!-- 偵察で発見し、変わったら更新する。builder / verifier へのブリーフに毎回渡す。
-     新規プロジェクトでは Phase 1 で自ら整備し、判明し次第ここに記録する -->
+<!-- Discovered during recon; update when it changes. Pass it in every brief to builder / verifier.
+     For new projects, set it up yourself in Phase 1 and record it here as soon as it is known -->
 
-| 装置 | コマンド | 所要時間の目安 |
+| Check | Command | Approx. duration |
 |---|---|---|
-| テスト(全体) | | |
-| テスト(部分) | | |
-| lint / 型検査 | | |
-| 起動・動作確認 | | |
+| Tests (full) | | |
+| Tests (partial) | | |
+| Lint / type check | | |
+| Launch & smoke check | | |
 
-## 制約
+## Constraints
 
-- <守るべき規約・触ってはいけない領域・期限など>
+- <Conventions to follow, areas not to touch, deadlines, etc.>
 
-## スコープ外
+## Out of scope
 
-- <今回やらないと決めたこと。「後でやるかも」もここに書く>
+- <Things deliberately excluded this time. "Maybe later" items also go here>

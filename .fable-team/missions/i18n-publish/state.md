@@ -3,25 +3,33 @@
 > **このファイルが唯一の真実。** セッションはいつ死んでもよい。
 
 - slug: `i18n-publish`
-- フェーズ: Phase 1 — 翻訳基盤(ゲート待ち)
-- 進捗: 完了 1 / 全 13 タスク
-- 最終更新: 2026-07-03 17:49
+- フェーズ: Phase 3 — ドキュメント二か国語化(開始)
+- 進捗: 完了 9 / 全 13 タスク(Phase 1・2 ✅。Phase 2 ゲート通過 21:06)
+- 最終更新: 2026-07-03 21:06
 - 更新者: 指揮者(Fable 5、立ち上げセッション)
 
 ## 次の一手(最重要)
 
-**Phase 1 ゲート: glossary と言語規則の発注者承認を待っている。**
-glossary は本ディレクトリの `glossary.md`(作成済み)。言語規則の英文は journal の
-17:49 エントリに記録済み。承認されたら Phase 2 へ: タスク 2.1〜2.6 を並列で委譲する
-(各 builder 役へのブリーフには必ず glossary.md のパスを「参照」として含める。
-2.5 の rules.md 英訳には言語規則の挿入も含める)。完了したものから 2.7 の
-逆翻訳レビュー(reviewer 役)へパイプラインで流す。
-
-修正指示が来た場合は glossary.md / 言語規則を直して再提示する。
+Phase 3 を実行する: ①builder 役 2 体を並列投入 — B-doc1: README.md を英語化し
+現日本語版を README.ja.md として保存(相互リンク付き)+ CLAUDE.md(HQ)英語化
+(`@skills/init/rules.md` 行は不変)。B-doc2: HANDOFF.md を `git mv` で HANDOFF.ja.md に
+改名(原本保護)し、英訳 HANDOFF.md を新規作成(glossary 進拠・相互リンク付き)。
+②指揮者: 3.4 CHANGELOG ヘッダに言語規則追記(今後 = 英語 + 日本語 1 行要約)、
+3.5 LICENSE(MIT、Copyright (c) 2026 rabitarochan)作成。
+③完了後ゲート: **日本語版(README.ja / HANDOFF.ja)を発注者がレビュー**(2 回目の確認)。
+通過後 Phase 4(検証と公開)へ。
 
 ## 進行中・中断点
 
-なし(実行前)。
+なし(Phase 2 完了・コミット直前)。
+
+## 検証状態
+
+- 検証済み: フレームワーク内部の英語化 — 日本語残存 grep 0(agents/skills/.claude-plugin)、
+  `claude plugin validate .` 通過、逆翻訳レビュー 3 体の must-fix/recommended 全対応、
+  状態トークン(in progress / completed / aborted)横断統一、grep 導線を mission.md の
+  Status: 行に修正済み
+- 未検証: ドキュメント(Phase 3 成果)、公開後の導入一連(Phase 4)
 
 ## 検証状態
 

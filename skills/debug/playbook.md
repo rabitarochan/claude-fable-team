@@ -1,48 +1,48 @@
-# デバッグ・プレイブック
+# Debugging Playbook
 
-> 主な読者: debugger(Opus)と、自力デバッグ中の builder。
-> 指揮者はデバッグ系タスクの委譲時、ブリーフの「参照」に本ファイルを含めること。
+> Primary readers: the debugger (Opus), and any builder debugging on their own.
+> Conductor: when delegating debugging tasks, include this file in the brief's "References".
 
-## 大原則
+## Core Principles
 
-1. **観測は推測に勝つ。** ログを 1 行足すほうが、コードを 10 分眺めるより速い。
-2. **エラーメッセージは文字通り読む。** 経験を積むほど読み飛ばすようになる。最初の 1 行に答えが書いてあることは驚くほど多い。
-3. **「ありえない」と感じたら、前提のどれかが間違っている。** 前提を列挙して 1 つずつ検証する。「そのファイルが本当に実行されているか」から疑ってよい(古いビルド・別の設定・別のプロセス)。
+1. **Observation beats speculation.** Adding one log line is faster than staring at code for ten minutes.
+2. **Read error messages literally.** The more experienced you get, the more you skim past them. Surprisingly often, the answer is in the first line.
+3. **When something feels "impossible", one of your assumptions is wrong.** List the assumptions and verify them one by one. It is fair to start with "is that file actually the one being executed?" (stale build, different config, different process).
 
-## 標準手順
+## Standard Procedure
 
-1. **再現する** — 再現できないバグは、直せたかどうかも分からない。まず再現、話はそれから
-2. **安定化する** — 「たまに」を「必ず」にする(ループ実行、乱数 seed 固定、並行数 1、時刻固定)
-3. **切り分ける** — 二分探索で範囲を半分ずつに削る:
-   - 時間軸: `git bisect`(いつから壊れたか)
-   - 入力軸: 入力データを半分に削る(どの入力が壊すか)
-   - 層軸: 入力 → 処理 → 出力のどの層で期待とずれるか(各層の境界で値を観測)
-4. **仮説 → 判別条件 → 観測** — 「この仮説が真なら○○が観測されるはず」を**先に**立ててから観測する。観測してから仮説に合う解釈を探すのは逆(それは確証バイアス製造機である)
-5. **最小再現を作る** — 十数行の再現コードは、診断の証明であり、回帰テストの種になる
-6. **直して、回帰を確認し、検知の穴を塞ぐ** — 「なぜ既存のテスト・レビューで捕まらなかったか」に答え、同型のバグが次は自動で捕まる状態にして完了
+1. **Reproduce** — A bug you cannot reproduce is a bug you cannot prove you fixed. Reproduce first; everything else comes after
+2. **Stabilize** — Turn "sometimes" into "always" (run in a loop, pin the random seed, concurrency 1, freeze the clock)
+3. **Isolate** — Binary-search the range, halving it each time:
+   - Time axis: `git bisect` (when did it break)
+   - Input axis: cut the input data in half (which input breaks it)
+   - Layer axis: which layer — input → processing → output — diverges from expectations (observe values at each layer boundary)
+4. **Hypothesis → discriminating condition → observation** — State "if this hypothesis is true, X should be observed" **before** observing. Observing first and then hunting for an interpretation that fits is backwards (that is a confirmation-bias factory)
+5. **Build a minimal reproduction** — A dozen lines of repro code is proof of the diagnosis and the seed of a regression test
+6. **Fix, check for regressions, and close the detection gap** — Answer "why didn't existing tests or review catch this?" and finish only when the same class of bug will be caught automatically next time
 
-## 症状からの初手(類型表)
+## First Moves by Symptom (pattern table)
 
-| 症状 | 最初に疑う | 最初にやること |
+| Symptom | First suspects | First actions |
 |---|---|---|
-| たまに失敗する | 競合状態 / テスト間の状態共有 / 時刻依存 | 単独実行で緑か確認 → 実行順序を入れ替える → 並行数 1 で回す |
-| 環境によって挙動が違う | 環境変数 / パス区切り / 改行コード(CRLF) / ロケール・TZ / バージョン差 | 両環境でバージョンと環境変数の diff を取る |
-| 昨日まで動いていた | 変わったもの(コードとは限らない) | `git log -p` 直近分 / ロックファイルの diff / 環境・外部サービスの変化 |
-| エラーなく結果だけ違う | 境界値 / 暗黙の型変換 / キャッシュ / 古いビルド | キャッシュ削除・クリーンビルドでも再現するか確認 |
-| 起動すらしない | 設定 / 依存 / パス解決 | エラー出力の**最初の** 1 行(最後ではなく)を読む |
-| 遅い | 推測しない | まず計測(プロファイル・計時ログ)。数字が出るまで最適化しない |
+| Fails intermittently | Race condition / shared state between tests / time dependence | Check it is green when run alone → shuffle the execution order → run with concurrency 1 |
+| Behaves differently per environment | Environment variables / path separators / line endings (CRLF) / locale & TZ / version differences | Diff versions and environment variables across both environments |
+| Worked until yesterday | Whatever changed (not necessarily code) | `git log -p` for recent commits / diff the lockfiles / changes in environment or external services |
+| Wrong result, no error | Boundary values / implicit type coercion / caches / stale build | Check whether it still reproduces after clearing caches and a clean build |
+| Won't even start | Config / dependencies / path resolution | Read the **first** line of the error output (not the last) |
+| Slow | Don't guess | Measure first (profiler, timing logs). No optimizing until you have numbers |
 
-## スタックトレースの読み方
+## How to Read a Stack Trace
 
-- 自分のコードが登場する**最上段のフレーム**から見る(フレームワーク内部のフレームは大抵ただの通り道)
-- 例外の型とメッセージ → 自コードの最上段フレーム → そこへの入力値、の順で確認する
+- Start from the **topmost frame that is your own code** (framework-internal frames are usually just pass-throughs)
+- Check in this order: exception type and message → topmost frame in your code → the input values that reached it
 
-## 詰まったときの脱出法
+## Getting Unstuck
 
-- **確実に真と分かっている事実だけ**を journal に書き出す(仮説と混ぜない)。書くと大抵、検証していない前提が 1 つ見つかる
-- 30 分進展がなければ視点を変える: ログを足す場所を変える / 出力側から逆向きに遡る / 正常系と異常系の実行を並べて diff を取る
-- 2 時間進展がなければ、それはエスカレーションのサイン(builder → debugger、debugger → ユーザーへ状況報告)。粘りは美徳ではない、記録して渡すのが美徳
+- Write down in the journal **only the facts you know to be true** (never mixed with hypotheses). Writing them out usually surfaces one assumption you haven't verified
+- No progress in 30 minutes: change your viewpoint — log in a different place / trace backwards from the output / run the passing and failing paths side by side and diff them
+- No progress in 2 hours: that is the escalation signal (builder → debugger, debugger → status report to the user). Persistence is not the virtue; recording and handing off is.
 
-## 直した後の義務
+## Obligations After the Fix
 
-- 対症療法(リトライ追加・タイムアウト延長・null チェック追加)で症状が消えた場合、**機序を説明できていないなら未解決**として報告する。握りつぶした例外は必ずどこかで再請求される
+- If a symptomatic fix (adding a retry, extending a timeout, adding a null check) makes the symptom disappear, report it as **unresolved unless you can explain the mechanism**. A swallowed exception always comes back to collect.

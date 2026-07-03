@@ -1,40 +1,40 @@
-# 実行計画: <ミッション名>
+# Execution plan: <mission name>
 
-> 作成: architect / 承認: YYYY-MM-DD
-> 状態記号: ⬜ 未着手 / 🔄 進行中 / ✅ 完了(検証済み) / ⏸️ ブロック
-> ✅ は verifier の動作検証を通過したものだけ。
+> Author: architect / Approved: YYYY-MM-DD
+> Status legend: ⬜ not started / 🔄 in progress / ✅ done (verified) / ⏸️ blocked
+> ✅ only for tasks that passed verifier's behavioral verification.
 
-## 前提
+## Assumptions
 
-<!-- この計画が成り立つ条件。崩れたら architect に再計画を依頼する -->
+<!-- Conditions this plan depends on. If one breaks, ask architect to replan -->
 
-- <前提 1>
+- <Assumption 1>
 
-## 主要な設計判断
+## Key design decisions
 
-| 判断 | 採用案 | 理由 | 採らなかった案 |
+| Decision | Choice | Rationale | Rejected alternatives |
 |---|---|---|---|
 | | | | |
 
-## Phase 1: <名前>
+## Phase 1: <name>
 
-**ゲート**: <このフェーズを完了とみなす検証方法(reviewer レビュー + 何を動かして確認するか)>
+**Gate**: <How this phase is verified as complete (reviewer review + what to run and observe)>
 
-| # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
+| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
 |---|--------|------|----------------------|------|------|
 | 1.1 | | builder | | - | ⬜ |
 | 1.2 | | builder | | 1.1 | ⬜ |
 
-## Phase 2: <名前>
+## Phase 2: <name>
 
-**ゲート**: <検証方法>
+**Gate**: <verification method>
 
-| # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
+| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
 |---|--------|------|----------------------|------|------|
 | 2.1 | | | | | ⬜ |
 
-## リスク
+## Risks
 
-| リスク | 検知方法 | 顕在化したら |
+| Risk | Detection | If it materializes |
 |---|---|---|
 | | | |

@@ -1,40 +1,40 @@
 ---
 name: init
 description: >
-  Fable Team をプロジェクトに導入する。プラグインのインストール後、対象プロジェクトで
-  「/fable-team:init」「Fable Team をセットアップして」「Fable Team を導入して」と
-  言われたときに使う。.fable-team/(状態ディレクトリ)を作成し、プロジェクトの
-  CLAUDE.md にチーム規約を組み込む。再実行すると規約セクションだけを最新版に更新する(冪等)。
+  Set up Fable Team in a project. Use after installing the plugin, when the user says
+  "/fable-team:init", "set up Fable Team", or "install Fable Team in this project".
+  Creates .fable-team/ (the state directory) and embeds the team rules into the project's
+  CLAUDE.md. Re-running updates only the rules section to the latest version (idempotent).
 ---
 
-# /fable-team:init — プロジェクトへの導入
+# /fable-team:init — Project Setup
 
-Fable Team の頭脳(エージェント・スキル)はプラグインが持ってくる。
-このスキルは残りの 2 つ —— **状態の置き場**と**常時ロードされる規約** —— を対象プロジェクトに用意する。
+The plugin brings Fable Team's brains (agents and skills).
+This skill sets up the remaining two pieces in the target project — **a place for state** and **always-loaded rules**.
 
-## 手順
+## Steps
 
-1. **規約の正本を読む**: `${CLAUDE_PLUGIN_ROOT}/skills/init/rules.md`
+1. **Read the canonical rules**: `${CLAUDE_PLUGIN_ROOT}/skills/init/rules.md`
 
-2. **状態ディレクトリを作成する**(既存のものには触らない):
-   - `.fable-team/growth/inbox.md` ← `${CLAUDE_PLUGIN_ROOT}/skills/init/templates/inbox.md` をコピー
-   - `.fable-team/growth/changelog.md` ← 同 `templates/changelog.md` をコピー
-   - `.fable-team/missions/` は最初のミッションが作るので、今は作らない
+2. **Create the state directory** (do not touch anything that already exists):
+   - `.fable-team/growth/inbox.md` ← copy from `${CLAUDE_PLUGIN_ROOT}/skills/init/templates/inbox.md`
+   - `.fable-team/growth/changelog.md` ← copy from the same `templates/changelog.md`
+   - Do not create `.fable-team/missions/` now — the first mission creates it
 
-3. **プロジェクトの CLAUDE.md に規約を組み込む**(既存ファイルの変更なので、実行前にユーザーへ一言確認する):
-   - `<!-- fable-team:rules:start -->` 〜 `<!-- fable-team:rules:end -->` のマーカーで囲んで、
-     rules.md の内容を挿入する
-   - **既にマーカーがある場合は、マーカー間だけを最新版で置き換える**(再実行 = 規約の更新。
-     マーカー外のプロジェクト固有規約には一切触れない)
-   - CLAUDE.md が存在しなければ新規作成する
+3. **Embed the rules into the project's CLAUDE.md** (this modifies an existing file, so briefly confirm with the user first):
+   - Insert the contents of rules.md wrapped between the `<!-- fable-team:rules:start -->` and
+     `<!-- fable-team:rules:end -->` markers
+   - **If the markers already exist, replace only the content between them with the latest version**
+     (re-run = rules update. Never touch project-specific rules outside the markers)
+   - If CLAUDE.md does not exist, create it
 
-4. **完了報告**(3 行で):
-   - 単発タスク(1 セッション完結)は `/fable-team:task`
-   - 長期タスク(セッションをまたぐ)は `/fable-team:mission`
-   - 迷ったら「明日も続きをやるか?」で判断
+4. **Report completion** (in 3 lines):
+   - One-shot tasks (single-session) → `/fable-team:task`
+   - Long-running tasks (spanning sessions) → `/fable-team:mission`
+   - When unsure, decide by asking: Will you continue this tomorrow?
 
-## 注意
+## Notes
 
-- マーカー内は init が管理する領域である。プロジェクト固有の規則(成長ループで収穫した
-  規則を含む)は**マーカーの外**に書く
-- git リポジトリなら、導入をコミットすることを提案する
+- The area between the markers is managed by init. Project-specific rules (including rules
+  harvested by the growth loop) go **outside the markers**
+- If this is a git repository, suggest committing the setup

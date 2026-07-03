@@ -1,96 +1,98 @@
 ---
 name: grow
 description: >
-  ミッション遂行で溜まった成長シグナル(.fable-team/growth/inbox.md)を蒸留し、チーム自身の資産
-  (Skill・プレイブック・エージェント定義・規約・テンプレート・memory)を改善する。
-  「/fable-team:grow」「チームを成長させて」「たまった気づきを反映して」と言われたとき、
-  inbox の未処理シグナルが 5 件を超えたとき、/fable-team:retro の蒸留工程から参照されたときに使う。
-  SkDD の Skill 収穫はここで行う。
+  Distill the growth signals accumulated during missions (.fable-team/growth/inbox.md) and improve
+  the team's own assets (Skills, playbooks, agent definitions, conventions, templates, memory).
+  Use when told "/fable-team:grow", "grow the team", or "apply the accumulated learnings",
+  when the inbox has more than 5 unprocessed signals, or when referenced from the distillation
+  step of /fable-team:retro. SkDD Skill harvesting happens here.
 ---
 
-# /fable-team:grow — チーム自身の成長
+# /fable-team:grow — Growing the Team Itself
 
-モデルの重みは変わらない。それでもエージェントは成長できる ——
-規約・スキル・プレイブックという**外部の重み**を更新することで。
-Fable 5 が日々実践してきたのはこれである: **同じ指摘を二度受けないための仕組みづくり。**
+The model's weights never change. Agents can still grow —
+by updating their **external weights**: conventions, skills, and playbooks.
+This is what Fable 5 has practiced every day: **building systems so the same feedback never has to be given twice.**
 
-## Step 1: シグナルの収集
+## Step 1: Collect Signals
 
-- `.fable-team/growth/inbox.md` の未処理(`[ ]`)シグナルを読む
-- 呼び出し元が対象を指定していれば絞る(/fable-team:retro からは当該ミッション分のみ)
-- 未処理が 2 件以下なら無理に回さない —— 「まだ蒸留するほど溜まっていない」と報告して終了する
-  (成長儀式のための成長儀式をしない)
+- Read the unprocessed (`[ ]`) signals in `.fable-team/growth/inbox.md`
+- If the caller specified a scope, narrow to it (from /fable-team:retro, only that mission's signals)
+- If 2 or fewer signals are unprocessed, don't force a cycle — report "not enough accumulated to distill yet" and stop
+  (no growth rituals for the sake of growth rituals)
 
-## Step 2: クラスタリング
+## Step 2: Clustering
 
-同種のシグナルをまとめる。**回数は重みである** —— 1 回は事例、2 回は偶然かもしれない、
-3 回はパターン。例外: ユーザーからの「修正」シグナルは 1 件でも最優先で蒸留する。
+Group signals of the same kind. **Frequency is weight** — once is an instance, twice may be coincidence,
+three times is a pattern. Exception: a "correction" signal from the user gets distilled with top priority
+even if there is only one.
 
-## Step 3: 落とし先の決定
+## Step 3: Decide the Destination
 
-| シグナルの性質 | 落とし先 |
+| Nature of the signal | Destination |
 |---|---|
-| 再現可能な手順・パターン(3 回ルール、または明白な横展開性) | **Skill 化(SkDD)** — プロジェクト固有なら `pj-*` として `.claude/skills/pj-<名前>/` に新規作成(フレームワークのスキルと一目で区別できる)。プロジェクトを超えて使えるなら `~/.claude/skills/` へ卒業を提案 |
-| 作業の勘所・経験則 | 該当する手筋スキル同梱の `playbook.md` に追記(debug / verify / brief / judge。フレームワーク変更として提案) |
-| 特定ロールの振る舞いの問題 | `agents/<role>.md` の修正(フレームワーク変更として提案) |
-| 全員が常に守るべき規則 | プロジェクト CLAUDE.md の **fable マーカー外**に追記(マーカー内は init が管理)。全プロジェクト共通なら rules.md へのフレームワーク変更として提案(**最終手段**。肥大化は死) |
-| ミッション記録の形式の問題 | mission スキル同梱の `templates/` の修正(フレームワーク変更として提案) |
-| ユーザーの好み・プロジェクト固有の事実 | memory に保存 |
-| 何度直しても破られる規則 | hooks による機械的強制へ格上げ(/update-config で設定) |
-| 一過性・根拠不足・再現しない | **破棄**(破棄も立派な処理。inbox にチェックだけ付ける) |
+| Reproducible procedure or pattern (rule of three, or obvious transferability) | **Make it a Skill (SkDD)** — if project-specific, create it as `pj-*` under `.claude/skills/pj-<name>/` (instantly distinguishable from framework skills). If useful beyond the project, propose graduation to `~/.claude/skills/` |
+| Practical know-how, heuristics | Append to the `playbook.md` bundled with the relevant playbook skill (debug / verify / brief / judge; propose as a framework change) |
+| Behavior problem of a specific role | Fix `agents/<role>.md` (propose as a framework change) |
+| A rule everyone must always follow | Append to the project CLAUDE.md **outside the fable markers** (inside the markers is managed by init). If it applies to all projects, propose a framework change to rules.md (**last resort**. Bloat is death.) |
+| Problem with the mission record format | Fix the `templates/` bundled with the mission skill (propose as a framework change) |
+| User preference or project-specific fact | Save to memory |
+| A rule that keeps getting broken no matter how often it is fixed | Promote to mechanical enforcement via hooks (configure with /update-config) |
+| One-off, insufficient evidence, doesn't reproduce | **Discard** (Discarding is a valid outcome. Just check it off in the inbox.) |
 
-Skill 収穫はこの形式で提案する(Harvest 提案):
-
-```
-## Skill 収穫提案
-**候補**: <スキル名>
-**理由**: <再現性・構造性・汎用性の観点で>
-**内容概要**: <何を Skill として残すか>
-Skill 化しますか?
-```
-
-## Step 4: ルールダイエット(既存資産の健全性チェック)
-
-新しい変更を足す**前に**、既存を見る:
-
-- 直近のミッションで無視された・毎回例外扱いされた規則はないか → 書き直すか削る
-  (守られない規則は、規則が悪いか、置き場所が悪いか、そもそも不要かのどれかである)
-- **規則を 1 つ足すなら、1 つ削れないか探す**(ゼロサム意識)
-- 読まれない長さに膨らんだ文書は、存在しない文書と同じ
-
-## Step 5: 承認ゲート
-
-変更セットとしてまとめてユーザーに提示する:
+Propose Skill harvesting in this format (Harvest proposal):
 
 ```
-## チーム改善提案(変更セット)
-
-**対象シグナル**: N 件(修正 x / 手戻り y / …)
-
-1. [pj-Skill 新規] pj-<名前> — <理由>(根拠: シグナル <日付/種別>)
-2. [playbook 追記] debug/playbook.md — <追記内容 1 行>(根拠: …)
-3. [規則削除] CLAUDE.md「<規則>」 — 直近 3 ミッションで形骸化(根拠: …)
-4. [破棄] <シグナル> — 一過性と判断
-
-適用してよいですか?(番号での個別取捨も可)
+## Skill Harvest Proposal
+**Candidate**: <skill name>
+**Rationale**: <in terms of reproducibility, structure, and generality>
+**Outline**: <what to preserve as a Skill>
+Turn this into a Skill?
 ```
 
-**承認なしにチーム資産(CLAUDE.md・agents・skills — 同梱の playbook.md / templates/ を含む)を変更しない。**
-memory への保存と inbox のチェック付けは承認不要(可逆で低リスク)。
+## Step 4: Rule Diet (health check of existing assets)
 
-## Step 6: 適用と記録
+**Before** adding new changes, look at what already exists:
 
-1. 承認された変更を適用する(量が多ければ builder へ委譲。scribe は記録側を担当)
-2. changelog に記録する: 日付 / 変更内容 / 根拠シグナル / **効果測定の方法**。
-   記録先 —— プロジェクトの学び(pj-* スキル・プロジェクト規約)は
-   `.fable-team/growth/changelog.md`、フレームワーク自体(スキル・エージェント・
-   規約の正本)の変更は Fable Team リポジトリの `CHANGELOG.md`
-3. 処理したシグナルの inbox にチェックを付ける(破棄も含む)
-4. git リポジトリならコミットを提案する
+- Any rules that were ignored or exempted every time in recent missions? → rewrite or remove them
+  (a rule that isn't followed is a bad rule, is in the wrong place, or isn't needed at all)
+- **When adding one rule, look for one to remove** (think zero-sum)
+- A document that has grown too long to be read is the same as a document that doesn't exist
 
-## Step 7: 効果検証の予約(ループを閉じる)
+## Step 5: Approval Gate
 
-変更が「効いたか」は、次回の /fable-team:retro が changelog を見て評価する。
-そのために changelog の「効果測定」欄には**観測可能な形**で書く
-(「手戻りが減る」ではなく「同種の手戻りシグナルが inbox に再出現しない」)。
-効いていなければ、次の /fable-team:grow で書き直すか削る。**変えっぱなしは成長ではない。**
+Present everything to the user as a change set:
+
+```
+## Team Improvement Proposal (change set)
+
+**Signals covered**: N (corrections x / rework y / ...)
+
+1. [new pj-Skill] pj-<name> — <reason> (evidence: signal <date/type>)
+2. [playbook addition] debug/playbook.md — <one-line addition> (evidence: ...)
+3. [rule removal] CLAUDE.md "<rule>" — dead letter across the last 3 missions (evidence: ...)
+4. [discard] <signal> — judged one-off
+
+Apply? (You can accept or reject individual items by number.)
+```
+
+**Never change team assets (CLAUDE.md, agents, skills — including bundled playbook.md / templates/) without approval.**
+Saving to memory and checking off the inbox need no approval (reversible, low risk).
+
+## Step 6: Apply and Record
+
+1. Apply the approved changes (delegate to builder if the volume is large; scribe handles the recording side)
+2. Record in the changelog: date / change / evidence signals / **effectiveness check method**.
+   Where to record — project learnings (pj-* skills, project conventions) go to
+   `.fable-team/growth/changelog.md`; changes to the framework itself (the canonical skills, agents,
+   and conventions) go to `CHANGELOG.md` in the Fable Team repository
+3. Check off the processed signals in the inbox (including discards)
+4. If in a git repository, propose a commit
+
+## Step 7: Schedule the Effectiveness Check (close the loop)
+
+Whether a change "worked" is evaluated by the next /fable-team:retro, which reads the changelog.
+To make that possible, write the changelog's "effectiveness check" field in an **observable form**
+(not "rework decreases" but "the same kind of rework signal does not reappear in the inbox").
+If a change didn't work, rewrite or remove it in the next /fable-team:grow.
+**Changing things isn't growth unless you check they worked.**

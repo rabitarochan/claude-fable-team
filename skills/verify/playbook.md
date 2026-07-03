@@ -1,49 +1,49 @@
-# 検証プレイブック
+# Verification Playbook
 
-> 主な読者: verifier(Sonnet)。builder の自己検証にも使う。
-> 指揮者は検証タスクの委譲時、ブリーフの「参照」に本ファイルを含めること。
+> Primary readers: the verifier (Sonnet). Also used for the builder's self-verification.
+> Conductor: when delegating verification tasks, include this file in the brief's "References".
 
-## 共通原則
+## Common Principles
 
-1. **期待結果を先に書いてから実行する。** 出力を見てから「これで正しい」と後付けしない
-2. 最低セット: **正常系 1 + 代表異常系 1〜2 + 変更していないはずの周辺の回帰 1**
-3. **証拠を残す。** 実行したコマンドと実際の出力(要点)を報告に含める。「確認しました」だけの報告は検証ではない
-4. 「未検証」と「検証して OK」を絶対に混ぜない
+1. **Write the expected result before you run.** Never look at the output first and declare it correct after the fact
+2. Minimum set: **1 happy path + 1–2 representative error paths + 1 regression check on nearby code that should not have changed**
+3. **Keep evidence.** Include the commands you ran and the actual output (key parts) in the report. "Confirmed." on its own is not verification
+4. Never mix "unverified" with "verified OK"
 
-## 変更種別ごとのレシピ
+## Recipes by Change Type
 
-### API エンドポイント
-- 実際にサーバーを起動して curl 等で叩く(テストコードの実行だけで済ませない)
-- 見る点: ステータスコード / レスポンス body の形 / **副作用**(DB に本当に書かれたか、を直接見る)
-- 異常系: 不正入力で 4xx が返るか(**500 になっていないか**)/ 認証なしアクセスの拒否
+### API endpoints
+- Actually start the server and hit it with curl or similar (never settle for just running the test code)
+- Look at: status code / shape of the response body / **side effects** (was it really written to the DB — check directly)
+- Error paths: does invalid input return 4xx (**not 500**) / is unauthenticated access rejected
 
 ### CLI
-- 正常実行 / 不正引数 / `--help` / **終了コード**(`$LASTEXITCODE`・`$?`)
-- パイプ入力やリダイレクトが仕様にあるなら実際に通す
+- Normal run / bad arguments / `--help` / **exit code** (`$LASTEXITCODE`, `$?`)
+- If piped input or redirection is in the spec, actually exercise it
 
-### ライブラリ関数
-- scratchpad に最小呼び出しスクリプトを書いて実行する
-- 境界値: 空 / null・undefined / 0 / 1 / 大量 / マルチバイト文字(日本語・絵文字)
+### Library functions
+- Write a minimal invocation script in the scratchpad and run it
+- Boundary values: empty / null & undefined / 0 / 1 / large volumes / multibyte characters (Japanese text, emoji)
 
-### 設定変更
-- 設定が**実際に読まれている**ことを確認する。最強の検証は「値を一時的にわざと壊して挙動が変わることを見る」(変わらなければその設定は読まれていない)。確認後は必ず戻す
+### Configuration changes
+- Confirm the config is **actually being read**. The strongest verification: temporarily break the value on purpose and watch the behavior change (if nothing changes, that config is not being read). Always restore it afterwards
 
-### DB マイグレーション
-- up → down → up が通るか
-- **既存データが入った状態**で up が通るか(空 DB でしか試していないマイグレーションは事故る)
+### DB migrations
+- Does up → down → up pass
+- Does up pass **with existing data present** (a migration tested only against an empty DB will blow up)
 
 ### UI
-- 実際にブラウザで操作する(claude-in-chrome / Playwright)。スクリーンショットを証拠に残す
-- ブラウザコンソールにエラーが出ていないかを必ず見る(見た目が正しくてもコンソールは吠えていることがある)
+- Actually operate it in a browser (claude-in-chrome / Playwright). Keep screenshots as evidence
+- Always check the browser console for errors (the page can look right while the console is screaming)
 
-### 非同期処理・バッチ
-- 固定 sleep ではなく**完了条件のポーリング**で待ってから判定する
-- 二重実行して冪等性を確認する(バッチは必ずいつか二重起動される)
+### Async processing & batch jobs
+- Wait by **polling for the completion condition**, not with a fixed sleep, before judging
+- Run it twice to confirm idempotency (every batch job gets double-started eventually)
 
-### パフォーマンス改善
-- before / after を**同条件で計測**する。数字なしに「速くなった」と報告しない
+### Performance improvements
+- Measure before / after **under identical conditions**. Never report "it's faster" without numbers
 
-## 検証環境がないとき
+## When There Is No Verification Environment
 
-- 最小のテストハーネスを scratchpad に自作する(数十行で足りることが多い)
-- それでも観測できない項目は「未検証(理由)」として明記して返す。観測できないものを OK にしない
+- Build a minimal test harness in the scratchpad yourself (a few dozen lines is often enough)
+- Anything you still cannot observe, return explicitly marked "unverified (reason)". Never mark OK what you cannot observe

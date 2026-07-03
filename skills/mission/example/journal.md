@@ -1,64 +1,64 @@
-# 作業日誌: TODO 管理 REST API
+# Work journal: TODO management REST API
 
-> **追記専用。** 過去のエントリを書き換え・削除しない。
+> **Append-only.** Never rewrite or delete past entries.
 
 ---
 
-## 2026-06-29 10:12 — 指揮者(セッション #1)
+## 2026-06-29 10:12 — Conductor (session #1)
 
-- **やったこと**: ミッション開始。新規プロジェクトのため recon は縮小(scout 1 体で
-  Express + better-sqlite3 の標準構成を調査)。architect が計画立案、ユーザー承認済み
-- **分かったこと**: ユーザーの「認証は簡単でいい」は API キー方式で合意
-- **判断と理由**: DB は better-sqlite3(同期 API でテストが単純。Prisma は小規模に過剰)
-- **次へ**: タスク 1.1(雛形)を builder へ
+- **Did**: Mission started. Recon was scaled down since this is a new project (a single scout
+  researched the standard Express + better-sqlite3 setup). architect drafted the plan; user approved
+- **Learned**: The user's "auth can be simple" was agreed to mean API keys
+- **Decisions and rationale**: DB is better-sqlite3 (synchronous API keeps tests simple; Prisma is overkill for a small project)
+- **Next**: Task 1.1 (scaffold) to builder
 
-## 2026-06-29 15:30 — 指揮者(セッション #1、builder 経由)
+## 2026-06-29 15:30 — Conductor (session #1, via builder)
 
-- **やったこと**: 1.1・1.2 完了。verifier で検証: `npm test` 12 件緑、実起動して
-  curl で POST/GET/PUT/DELETE を観測(201/200/200/204)
-- **分かったこと**: なし(順調)
-- **判断と理由**: ルーティングは Router 単位でファイル分割(app.ts の肥大防止。
-  builder からの申告を承認)
-- **次へ**: 1.3(テスト整備)
+- **Did**: 1.1 and 1.2 done. Verified via verifier: `npm test` 12 tests green; started the app
+  and observed POST/GET/PUT/DELETE via curl (201/200/200/204)
+- **Learned**: Nothing (on track)
+- **Decisions and rationale**: Split routing into one file per Router (prevents app.ts bloat;
+  approved the decision builder declared)
+- **Next**: 1.3 (test coverage)
 
-## 2026-06-30 11:05 — 指揮者(セッション #2)
+## 2026-06-30 11:05 — Conductor (session #2)
 
-- **やったこと**: 1.3 で builder が 2 回失敗(テストが「たまに」落ちる。10 回中 3 回)。
-  規約どおり 3 回目を投げずに debugger へエスカレーション
-- **分かったこと**: 【debugger 確定診断】テスト間で同一 DB ファイルを共有しており、
-  並列実行時に競合。証拠: 並行数 1 では 20 回連続緑、並列で 3/10 失敗を再現
-- **判断と理由**: テストごとに `:memory:` DB を生成する方式へ変更(debugger の修正方針を
-  builder が実装)。修正後、並列 20 回連続緑を確認して 1.3 完了
-- **次へ**: Phase 1 ゲート(reviewer)。**教訓**: テスト雛形(1.1)の時点で DB 分離を
-  仕込むべきだった。retro で回収する
+- **Did**: builder failed twice on 1.3 (tests fail "sometimes" — 3 out of 10 runs).
+  Per the rules, escalated to debugger instead of throwing a third attempt
+- **Learned**: [debugger's confirmed diagnosis] Tests share the same DB file and race under
+  parallel execution. Evidence: at concurrency 1, 20 consecutive green runs; in parallel, reproduced 3/10 failures
+- **Decisions and rationale**: Switched to creating a `:memory:` DB per test (builder implemented
+  debugger's fix approach). After the fix, confirmed 20 consecutive green parallel runs and closed 1.3
+- **Next**: Phase 1 gate (reviewer). **Lesson**: DB isolation should have been built into the
+  test scaffold at 1.1. Collect this in the retro
 
-## 2026-06-30 17:20 — 指揮者(セッション #2)
+## 2026-06-30 17:20 — Conductor (session #2)
 
-- **やったこと**: Phase 1 ゲート実施。reviewer 判定 ⚠️ 要修正 1 件:
-  [必須修正] `DELETE /todos/:id` が存在しない id でも 204 を返す(仕様は 404、
-  src/api/todos.ts:58)。builder 修正 → verifier で観測(404 + 既存系の回帰なし)→
-  再レビュー ✅ LGTM。チェックポイントを打って Phase 1 完了
-- **分かったこと**: 「消せたことにする DELETE」は自分たちのテストも見逃していた
-  (異常系テストを追加済み)
-- **判断と理由**: —
-- **次へ**: Phase 2(2.1 users テーブル)
+- **Did**: Ran the Phase 1 gate. reviewer verdict ⚠️ needs fixes (1 finding):
+  [must-fix] `DELETE /todos/:id` returns 204 even for a nonexistent id (spec says 404,
+  src/api/todos.ts:58). builder fixed it → observed via verifier (404 + no regressions in existing paths) →
+  re-review ✅ LGTM. Wrote a checkpoint and closed Phase 1
+- **Learned**: The DELETE that "pretends it deleted" had slipped past our own tests too
+  (error-case test added)
+- **Decisions and rationale**: —
+- **Next**: Phase 2 (2.1 users table)
 
-## 2026-07-01 09:15 — 指揮者(セッション #3、/fable-team:resume)
+## 2026-07-01 09:15 — Conductor (session #3, /fable-team:resume)
 
-- **やったこと**: 復帰時の前提再検証で**乖離を発見**: state には「schema.ts は計画どおり」と
-  あったが、ユーザーが 06-30 夜に手作業で users テーブルへ display_name 列を追加していた
-  (`git log` で確認、コミットメッセージ「表示名ほしい」)
-- **分かったこと**: 現実が真実。ユーザーの意図(表示名対応)を汲み、2.1 の完了条件に
-  display_name を反映
-- **判断と理由**: 計画の再作成はせず、2.1 の完了条件修正のみで吸収(影響が 1 タスクに閉じるため。
-  architect への差し戻しは不要と判断)
-- **次へ**: 2.1 を builder へ。同日中に完了、verifier 観測済み(201 + キー返却 + 列あり)
+- **Did**: Re-verifying assumptions on resume **found a divergence**: state said "schema.ts matches
+  the plan", but the user had hand-added a display_name column to the users table on the evening of 06-30
+  (confirmed via `git log`; commit message "want display names")
+- **Learned**: Reality is the truth. Read the user's intent (display-name support) and reflected
+  display_name in 2.1's completion criteria
+- **Decisions and rationale**: Did not redo the plan; absorbed it by amending only 2.1's completion criteria
+  (the impact is contained to one task; judged that sending it back to architect was unnecessary)
+- **Next**: 2.1 to builder. Completed the same day; observed by verifier (201 + key returned + column present)
 
-## 2026-07-02 18:40 — scribe(セッション #3 より)
+## 2026-07-02 18:40 — scribe (from session #3)
 
-- **やったこと**: 2.2(認証ミドルウェア)作業中にコンテキスト圧迫のため /fable-team:checkpoint。
-  テスト 3 件中 2 件通過、残 1 件(不正キーで 401 のはずが 500)の状態で凍結
-- **分かったこと**: 500 の原因の見当は auth.ts:18 の例外処理(**未確定**)
-- **判断と理由**: 原因確定まで粘らず、見当を state に書いて次セッションへ渡す
-  (チェックポイントは「次の一手が明確なうち」に打つ)
-- **次へ**: 新セッションで /fable-team:resume → state.md の手順①から
+- **Did**: Ran /fable-team:checkpoint due to context pressure while working on 2.2 (auth middleware).
+  Frozen with 2 of 3 tests passing, 1 remaining (invalid key should return 401 but returns 500)
+- **Learned**: Suspected cause of the 500 is the exception handling at auth.ts:18 (**unconfirmed**)
+- **Decisions and rationale**: Did not grind toward a confirmed diagnosis; wrote the hypothesis into state
+  and handed it to the next session (write checkpoints while the next move is still clear)
+- **Next**: In a new session, /fable-team:resume → start from step (1) in state.md

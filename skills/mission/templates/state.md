@@ -1,36 +1,36 @@
-# 現在地(state): <ミッション名>
+# Current state: <mission name>
 
-> **このファイルが唯一の真実。** セッションはいつ死んでもよい。
-> タスク完了ごと・チェックポイントごとに必ず更新する。
-> 記述と現実(コード・テスト結果)が食い違ったら、現実が真実。journal に記録して直す。
+> **This file is the single source of truth.** Any session may die at any moment.
+> Update it after every task completion and every checkpoint.
+> If this file and reality (code, test results) disagree, reality is the truth. Record it in the journal and fix this file.
 
 - slug: `<slug>`
-- フェーズ: Phase N — <名前>
-- 進捗: 完了 X / 全 Y タスク
-- 最終更新: YYYY-MM-DD HH:MM(実際のシステム日時で。推測しない)
-- 更新者: <指揮者セッション / scribe>
+- Phase: Phase N — <name>
+- Progress: X of Y tasks done
+- Last updated: YYYY-MM-DD HH:MM (use the actual system time; do not guess)
+- Updated by: <Conductor session / scribe>
 
-## 次の一手(最重要)
+## Next move (most important)
 
 <!--
-品質基準: このリポジトリを初めて見るセッションが、これだけ読んで作業を再開できること。
-含めるもの: 対象タスク番号 / 対象ファイル / 実行するコマンド / 期待される結果 /
-           やりかけなら「前回どこまで進んだか」
+Quality bar: a session seeing this repository for the first time can resume work from this alone.
+Include: target task number / target files / commands to run / expected results /
+         if work is in progress, how far the last session got
 -->
 
-<ここに書く>
+<Write it here>
 
-## 進行中・中断点
+## In progress / stopping point
 
-<やりかけの作業と、どのファイルのどこで止まっているか。なければ「なし」>
+<Work in progress and where in which file it stopped. If none, write "None">
 
-## 検証状態
+## Verification status
 
-<!-- 「検証済み」と「未検証」を混ぜない。verifier が観測したものだけが検証済み -->
+<!-- Do not mix "verified" and "unverified". Only what verifier has observed counts as verified -->
 
-- 検証済み: <実際に動かして確認できていること>
-- 未検証: <まだ観測していないこと>
+- Verified: <what has actually been run and confirmed>
+- Unverified: <what has not been observed yet>
 
-## ブロッカー・注意
+## Blockers / notes
 
-<ユーザー待ち・環境問題・前任からの警告など。なければ「なし」>
+<Waiting on the user, environment issues, warnings from predecessors, etc. If none, write "None">

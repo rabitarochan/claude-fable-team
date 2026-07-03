@@ -33,13 +33,13 @@
 
 | # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
 |---|--------|------|----------------------|------|------|
-| 2.1 | agents/ 7 ファイル英訳 | builder 役(並列) | 各ファイルに日本語なし・glossary 準拠 | 1.1 | ⬜ |
-| 2.2 | skills/ SKILL.md 12 本英訳(description 含む) | builder 役(並列) | 同上 | 1.1 | ⬜ |
-| 2.3 | playbook.md 4 本英訳 | builder 役(並列) | 同上 | 1.1 | ⬜ |
-| 2.4 | mission の templates 4 + example 5 + init templates 2 英訳 | builder 役(並列) | 同上 | 1.1 | ⬜ |
-| 2.5 | rules.md 英訳 + 言語規則の追加 | builder 役 | 同上 + 言語規則が入っている | 1.1, 1.2 | ⬜ |
-| 2.6 | plugin.json / marketplace.json の description 英語化 | 指揮者 | validate 通過 | 1.1 | ⬜ |
-| 2.7 | 逆翻訳レビュー(2.1〜2.6 の全成果、パイプラインで) | reviewer 役 | 意味ドリフト指摘が 0 件 or 全対応済み | 各タスク完了後 | ⬜ |
+| 2.1 | agents/ 7 ファイル英訳 | builder 役(並列) | 各ファイルに日本語なし・glossary 準拠 | 1.1 | ✅ |
+| 2.2 | skills/ SKILL.md 12 本英訳(description 含む) | builder 役(並列) | 同上 | 1.1 | ✅ |
+| 2.3 | playbook.md 4 本英訳 | builder 役(並列) | 同上 | 1.1 | ✅ |
+| 2.4 | mission の templates 4 + example 5 + init templates 2 英訳 | builder 役(並列) | 同上 | 1.1 | ✅ |
+| 2.5 | rules.md 英訳 + 言語規則の追加 | builder 役 | 同上 + 言語規則が入っている | 1.1, 1.2 | ✅ |
+| 2.6 | plugin.json / marketplace.json の description 英語化 | 指揮者 | validate 通過 | 1.1 | ✅ |
+| 2.7 | 逆翻訳レビュー(2.1〜2.6 の全成果、パイプラインで) | reviewer 役 | 意味ドリフト指摘が 0 件 or 全対応済み | 各タスク完了後 | ✅ |
 
 ## Phase 3: ドキュメントの二か国語化
 

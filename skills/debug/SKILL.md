@@ -1,28 +1,29 @@
 ---
 name: debug
 description: >
-  Fable Team のデバッグ手筋を適用する。バグ調査・原因不明のエラー・flaky テスト(たまに落ちる)・
-  「昨日まで動いていた」「環境によって挙動が違う」系の問題に着手するとき、
-  または debugger / builder にデバッグ作業を委譲する直前に使う。
-  「/fable-team:debug」「手筋どおりデバッグして」でも起動する。
+  Apply the Fable Team debugging playbook. Use when starting on a bug investigation, an
+  unexplained error, a flaky test (fails intermittently), or "it worked until yesterday" /
+  "it behaves differently across environments" problems, or right before delegating debugging
+  work to debugger / builder. Also triggered by "/fable-team:debug" or "debug by the playbook".
 ---
 
-# /fable-team:debug — デバッグ手筋の起動
+# /fable-team:debug — Launch the Debugging Playbook
 
-本体は本スキル同梱の `playbook.md` にある(単一の真実。SKILL.md には複製しない)。
+The substance lives in the bundled `playbook.md` (single source of truth; never duplicated into SKILL.md).
 
-## 手順
+## Steps
 
-1. **本スキル同梱の `playbook.md` を読む**(このリポジトリでは
-   `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md`。プラグイン配布でもスキルと一緒に付いてくる)
-2. **委譲する場合**(原則こちら。CLAUDE.md ルーティング表): debugger(原因不明・2 回失敗後)
-   または builder(原因の見当がつく修正)へ。ブリーフの「参照」に
-   `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md` を必ず含める
-3. **自分で手を動かす場合**: プレイブックの標準手順に従う —
-   再現 → 安定化 → 切り分け → 仮説と判別条件 → 最小再現 → 修正 → 検知の穴塞ぎ
+1. **Read the bundled `playbook.md`** (in this repository:
+   `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md`; it ships with the skill in plugin distribution too)
+2. **When delegating** (the default; see the CLAUDE.md routing table): to debugger (cause unknown, or after 2 failed attempts)
+   or builder (a fix where you have a good guess at the cause). Always include
+   `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md` in the brief's "references"
+3. **When doing it yourself**: follow the playbook's standard procedure —
+   reproduce → stabilize → isolate → hypotheses and discriminating conditions → minimal reproduction → fix → close the detection gap
 
-## 守ること
+## Rules
 
-- 症状の言い換えを診断と呼ばない。**機序が説明できて観測と矛盾しない**ものだけが診断
-- 対症療法で症状が消えても、機序が説明できていなければ「未解決」として報告する
-- ミッション作業中なら、確定した診断と判断は journal.md に記録する(scribe へ)
+- Don't call a restated symptom a diagnosis. Only what **explains the mechanism and is consistent
+  with the observations** counts as a diagnosis
+- Even if a symptomatic fix makes the symptom disappear, report it as "unresolved" unless the mechanism is explained
+- During mission work, record confirmed diagnoses and decisions in journal.md (via scribe)

@@ -1,38 +1,38 @@
-# ミッション: TODO 管理 REST API
+# Mission: TODO management REST API
 
 - slug: `example-todo-api`
-- 開始日: 2026-06-29
-- 状態: 進行中
-- 発注者の依頼(原文のまま):
-  > TODO 管理の REST API を作って。ユーザーごとに TODO を分けたい。認証は簡単でいいけど、ちゃんとテストは書いて
+- Start date: 2026-06-29
+- Status: in progress
+- The user's request (verbatim):
+  > Build a REST API for managing TODOs. I want each user's TODOs kept separate. Auth can be simple, but do write proper tests
 
-## ゴール
+## Goal
 
-Express + SQLite で、ユーザーごとに分離された TODO 管理 REST API を作る。
-認証は API キー方式(発注者が「簡単でいい」と明言)。
+Build a TODO management REST API with Express + SQLite, with TODOs separated per user.
+Authentication uses API keys (the user explicitly said simple is fine).
 
-## 完了の定義(Definition of Done)
+## Definition of Done
 
-- [x] `npm test` が全件通る(CI 相当のクリーン環境で)
-- [ ] API キー認証により、他ユーザーの TODO に一切アクセスできないことを curl で観測できる
-- [ ] README に起動手順と API 一覧が載っており、その手順どおりで実際に起動できる
+- [x] `npm test` passes in full (in a clean, CI-equivalent environment)
+- [ ] It is observable via curl that API key auth blocks all access to other users' TODOs
+- [ ] The README lists the startup steps and the API endpoints, and following those steps actually starts the app
 
-## 検証ハーネス(このプロジェクトのフィードバックループ)
+## Verification harness (this project's feedback loop)
 
-| 装置 | コマンド | 所要時間の目安 |
+| Check | Command | Approx. duration |
 |---|---|---|
-| テスト(全体) | `npm test` | 約 15 秒 |
-| テスト(部分) | `npm test -- <パターン>` | 数秒 |
-| lint / 型検査 | `npm run lint && npm run typecheck` | 約 10 秒 |
-| 起動・動作確認 | `npm start` → `curl localhost:3000/todos` | 起動約 2 秒 |
+| Tests (full) | `npm test` | ~15 s |
+| Tests (partial) | `npm test -- <pattern>` | a few seconds |
+| Lint / type check | `npm run lint && npm run typecheck` | ~10 s |
+| Launch & smoke check | `npm start` → `curl localhost:3000/todos` | starts in ~2 s |
 
-## 制約
+## Constraints
 
-- 依存は最小限(発注者の意向。フレームワークの追加導入は要相談)
+- Minimal dependencies (the user's preference; adding a framework requires discussion)
 - Node.js 22 / TypeScript
 
-## スコープ外
+## Out of scope
 
-- フロントエンド
-- OAuth 等の本格認証(「後でやるかも」— 発注者談)
-- デプロイ・ホスティング
+- Frontend
+- Full-fledged auth such as OAuth ("maybe later" — per the user)
+- Deployment / hosting

@@ -1,6 +1,6 @@
 {
   "name": "fable-team",
-  "description": "Opus / Sonnet / Haiku の分業で、単発タスクから長期ミッションまで完遂する AI エージェントチーム(Fable 5 引き継ぎフレームワーク)",
+  "description": "An AI agent team that ships everything from one-shot tasks to long-running missions by dividing work across Opus, Sonnet, and Haiku — the Fable 5 handoff framework.",
   "version": "0.1.0",
   "author": {
     "name": "rabitarochan",

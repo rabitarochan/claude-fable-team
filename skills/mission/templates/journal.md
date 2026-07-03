@@ -1,14 +1,14 @@
-# 作業日誌: <ミッション名>
+# Work journal: <mission name>
 
-> **追記専用。** 過去のエントリを書き換え・削除しない。新しいエントリは末尾に追加する。
-> 日時は必ず実際のシステム日時を確認して記載する。
-> 事実(観測されたこと)と判断(決めたこと)を区別して書く。失敗は美化せずそのまま残す。
+> **Append-only.** Never rewrite or delete past entries. Add new entries at the end.
+> Always check the actual system time before writing the timestamp.
+> Distinguish facts (what was observed) from judgments (what was decided). Leave failures as they happened — do not embellish them.
 
 ---
 
-## YYYY-MM-DD HH:MM — <担当(指揮者 / builder 経由など)>
+## YYYY-MM-DD HH:MM — <who (Conductor / via builder, etc.)>
 
-- **やったこと**: <実行した作業・委譲したタスク>
-- **分かったこと**: <観測された事実・発見>
-- **判断と理由**: <決めたこと + なぜそう決めたか(後任が蒸し返さないための根拠)>
-- **次へ**: <この時点で見えていた次の一手>
+- **Did**: <work performed / tasks delegated>
+- **Learned**: <observed facts and discoveries>
+- **Decisions and rationale**: <what was decided + why (so successors do not relitigate it)>
+- **Next**: <the next move as seen at this point>

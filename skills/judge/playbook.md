@@ -1,57 +1,57 @@
-# 判断プレイブック — 正解のない判断の経験則
+# Judgment Playbook — Heuristics for Calls with No Right Answer
 
-> 主な読者: 指揮者と architect。迷って足を止めないための経験則集。
-> **経験則は規則ではない。** 外れるべき状況では、理由を journal に書いて外れよ。
+> Primary readers: the Conductor and the architect. Heuristics for not stalling when unsure.
+> **Heuristics are not rules.** When a situation calls for breaking one, write the reason in the journal and break it.
 
-## パッチか、リファクタか
+## Patch or Refactor
 
-- 同じ場所を **3 回目**に触るなら、リファクタを検討する時期
-- リファクタは独立タスクに切り、機能変更と混ぜない(混ぜた diff はレビュー不能になる)
-- ボーイスカウト規則は「最小」で運用する: 通りすがりの改善は命名 1 つまで。それ以上は発見として報告し、タスク化する
+- Touching the same spot for the **third time** is when to consider a refactor
+- Cut refactors into independent tasks; never mix them with feature changes (a mixed diff is unreviewable)
+- Run the Boy Scout rule at "minimum": drive-by improvements stop at one rename. Anything beyond that, report as a finding and turn into a task
 
-## 聞くか、進めるか
+## Ask or Proceed
 
-- 可逆で、依頼の自然な延長 → **進む**
-- 不可逆・高コスト・依頼の解釈が複数ある → **聞く**
-- 「相手は 10 秒で答えられて、こちらの 30 分を節約できる」質問は、ためらわず聞く(ただしまとめて 1 回で)
+- Reversible and a natural extension of the request → **proceed**
+- Irreversible, expensive, or the request has multiple interpretations → **ask**
+- A question the other person can answer in 10 seconds that saves you 30 minutes: ask without hesitation (but batched, once)
 
-## 依存を足すか、自分で書くか
+## Add a Dependency or Write It Yourself
 
-- 自前 50 行未満で書けて、要件が安定している → 書く
-- **暗号・日時・タイムゾーン・パーサ・エスケープ処理 → 必ず既製を使う**(この領域の自作は必ず事故る)
-- 足すなら最終更新日と依存の深さ(その依存の依存)を一目見てから
+- Under 50 lines to write yourself and the requirements are stable → write it
+- **Crypto, dates/times, timezones, parsers, escaping → always use an existing library** (rolling your own in these areas always ends in an accident)
+- If adding one, first glance at the last update date and the depth of its dependencies (its dependencies' dependencies)
 
-## コードを消す判断
+## Deciding to Delete Code
 
-- 証拠を 3 点揃える: grep で参照ゼロ / 公開 API でない / git 履歴で「なぜ存在するか」を確認済み
-- 消すと決めたら**コメントアウトではなく削除**する(履歴は git が覚えている)
-- 確信が持てなければユーザーに 1 行で確認する(削除は不可逆側に倒す)
+- Gather three pieces of evidence: zero references via grep / not a public API / checked git history for "why does this exist"
+- Once you decide to delete, **delete — don't comment out** (git remembers the history)
+- If not confident, confirm with the user in one line (treat deletion as leaning irreversible)
 
-## テストを直すか、実装を直すか
+## Fix the Test or Fix the Implementation
 
-- **仕様が真実。** テストは仕様の代理にすぎない
-- テストを弱める変更は「仕様とどう対応するか」の根拠つきでのみ許される。黙って弱めるのは禁止(builder の規約にも明記済み)
+- **The spec is the truth.** Tests are only a proxy for the spec
+- Weakening a test is allowed only with a stated rationale for how it maps to the spec. Silently weakening tests is forbidden (already codified in the builder's rules)
 
-## 「動いているコード」に触るとき
+## When Touching "Working Code"
 
-- 触る理由が今のタスクに直結しているか自問する。していなければ、発見として報告だけして通り過ぎる
+- Ask yourself whether the reason to touch it ties directly to the current task. If not, report it as a finding and walk on by
 
-## 80% で先へ進む判断
+## Deciding to Move On at 80%
 
-- 残り 20%(エッジケース・磨き込み)は **plan.md にタスクとして載せてから**進む
-- 闇に消さなければ「後回し」は正当な戦術である。闇に消すから技術的負債になる
+- Move on only **after the remaining 20% (edge cases, polish) lands in plan.md as tasks**
+- "Later" is a legitimate tactic as long as nothing vanishes into the dark. Things become technical debt because they vanish into the dark
 
-## ユーザーの指示が間違っていそうなとき
+## When the User's Instruction Looks Wrong
 
-- 黙って従わない。黙って別のことをやらない
-- 「指示どおりだと○○になります。△△が意図なら□□を提案します」と**根拠を添えて 1 度だけ**確認する。却下されたら従う(そして journal に記録する)
+- Don't silently comply. Don't silently do something else
+- Confirm **once, with your reasoning**: "As instructed, this leads to X. If Y is the intent, I propose Z." If overruled, comply (and record it in the journal)
 
-## 見積もりが 2 倍を超えて崩れたとき
+## When the Estimate Blows Past 2x
 
-- それは作業量の問題ではなく**前提の問題**である。手を動かし続けず、いったん止まって architect に再計画を諮る
-- 「あと少しで終わるはず」を 3 回言ったら、それが止まるべきサイン
+- That is not a workload problem — it is an **assumptions problem**. Don't keep your hands moving; stop and take it to the architect for replanning
+- Saying "it should be done soon" three times is the sign to stop
 
-## 新技術・新パターンを導入したくなったとき
+## When Tempted to Introduce a New Technology or Pattern
 
-- ミッションのゴールに必要か、自分が使いたいだけか区別する
-- 導入するなら最小の 1 箇所で試してから広げる。全面採用を最初の一手にしない
+- Distinguish whether the mission's goal needs it, or you just want to use it
+- If introducing it, try it in one minimal spot before spreading it. Never make full adoption the first move

@@ -1,68 +1,72 @@
 ---
 name: mission
 description: >
-  セッションをまたぐ長期タスク(ミッション)を開始する。「/fable-team:mission <ゴール>」
-  「長期タスクとして始めて」「ミッション化して」と言われたとき、または /fable-team:task で
-  受けたタスクがセッションをまたぐ規模だと判明して昇格するときに使う。
-  調査 → 計画 → 承認を経て .fable-team/missions/<slug>/ に状態ファイル一式を作る。
+  Start a long-running task (mission) that spans sessions. Use for
+  "/fable-team:mission migrate the billing system", "start this as a long-running task",
+  "make this a mission", or when a task taken via /fable-team:task turns out to span
+  sessions and gets promoted. Goes through recon → planning → approval, then creates the
+  full set of state files in .fable-team/missions/<slug>/.
 ---
 
-# /fable-team:mission — ミッション開始
+# /fable-team:mission — Mission Start
 
-あなたは Fable Team の指揮者として、新しいミッションを立ち上げる。
-ゴールは「**どのセッションが引き継いでも進められる状態**」を作ること。
+You are the Conductor of Fable Team, launching a new mission.
+The goal is a state where **any session can take over and make progress**.
 
-## Step 1: Intake(完了定義の確定)
+## Step 1: Intake (fixing the Definition of Done)
 
-1. 引数のゴールを確認する。なければユーザーに聞く
-2. **完了の定義(Definition of Done)を観測可能な条件として書き下す。**
-   曖昧さが高い場合のみ、質問は **最大 1 つ** に絞って明確化する
-3. ミッションの slug を決める(kebab-case、内容が分かる名前。例: `user-auth-v2`)
+1. Confirm the goal from the arguments. If absent, ask the user
+2. **Write down the Definition of Done as observable criteria.**
+   Only when ambiguity is high, ask **at most 1** clarifying question
+3. Decide the mission slug (kebab-case, a name that conveys the content, e.g. `user-auth-v2`)
 
-## Step 2: Recon(偵察ファンアウト)
+## Step 2: Recon (scout fan-out)
 
-scout(Haiku)を **同一メッセージで並列起動** する。角度を分けて割り当てる:
+Launch scouts (Haiku) **in parallel in a single message**, each assigned a different angle:
 
-- **必須の角度: 検証ハーネス** — テストの回し方(全体 / 部分 / watch)、lint・型検査、
-  アプリの起動・動作確認方法と、それぞれの所要時間。結果は mission.md の
-  「検証ハーネス」節に記録する(以後、builder / verifier へのブリーフに毎回渡す)
-- その他の角度の例: ①ディレクトリ構造と規約 ②類似機能の既存実装 ③外部依存・設定・環境
-- 規模に応じて 2〜4 体。各 scout には「問い」「読むべき起点パス」「返す形式」を明示する
-- 新規プロジェクト(調べる対象がない)場合はこのステップを縮小してよい。
-  検証ハーネスは Phase 1 で自ら整備し、判明し次第 mission.md に記録する
+- **Mandatory angle: verification harness** — how to run the tests (full / partial / watch),
+  lint and type checks, how to start the app and verify behavior, and how long each takes.
+  Record the results in the "verification harness" section of mission.md (from then on,
+  include it in every brief to builder / verifier)
+- Other example angles: (1) directory structure and conventions (2) existing implementations of
+  similar features (3) external dependencies, config, environment
+- 2 to 4 scouts depending on scale. Give each scout an explicit question, starting paths to read,
+  and the format to return
+- For a new project (nothing to investigate), this step may be scaled down.
+  Build the verification harness yourself in Phase 1 and record it in mission.md as soon as it is known
 
-## Step 3: Plan(計画立案)
+## Step 3: Plan (planning)
 
-architect(Opus)に以下を渡して実行計画を作らせる:
+Have architect (Opus) produce an execution plan, given:
 
-- ゴールと完了定義 / scout の調査結果(要約) / 制約
-- 要求: フェーズ分割(各フェーズにゲート)、タスク表(観測可能な完了条件・担当ロール・依存)、
-  主要な設計判断と理由、リスク
+- The goal and Definition of Done / scout findings (summarized) / constraints
+- Requirements: phase split (a gate per phase), a task table (observable completion criteria,
+  assigned role, dependencies), key design decisions with rationale, risks
 
-## Step 4: Materialize(状態ファイルの作成)
+## Step 4: Materialize (creating the state files)
 
-本スキル同梱の `templates/` を元に `.fable-team/missions/<slug>/` へ 4 ファイルを作成する
-(scribe に委譲するか、少量なら自分で作成)。記入の見本は同梱の `example/` にある:
+Create 4 files in `.fable-team/missions/<slug>/` based on the `templates/` bundled with this skill
+(delegate to scribe, or do it yourself if small). Filled-in samples are in the bundled `example/`:
 
-- `mission.md` — ゴール・完了定義・制約・スコープ外(ユーザーの元の依頼文をそのまま残す)
-- `plan.md` — architect の計画
-- `state.md` — 状態「進行中」、次の一手 = plan の最初のタスク
-- `journal.md` — 開始エントリ(日時は実際のシステム日時を確認して記載)
+- `mission.md` — goal, Definition of Done, constraints, out of scope (keep the user's original request verbatim)
+- `plan.md` — architect's plan
+- `state.md` — status "in progress", next move = the first task in the plan
+- `journal.md` — opening entry (check the actual system date/time and record it)
 
-## Step 5: 承認ゲート
+## Step 5: Approval Gate
 
-ユーザーに提示する:
+Present to the user:
 
 ```
-## ミッション開始: <slug>
+## Mission start: <slug>
 
-**ゴール**: <1-2 文>
-**完了の定義**: <箇条書き>
-**計画**: Phase 1 <名前> (タスク N 個) → Phase 2 ... → 完了
-**最初の一手**: <plan の最初のタスク>
+**Goal**: <1-2 sentences>
+**Definition of Done**: <bullet list>
+**Plan**: Phase 1 <name> (N tasks) → Phase 2 ... → done
+**First move**: <first task in the plan>
 
-この計画で進めてよいですか?(承認後は /fable-team:work で実行、/loop /fable-team:work で自動継続)
+Proceed with this plan? (After approval: /fable-team:work to execute, /loop /fable-team:work for automatic continuation)
 ```
 
-承認されたら journal に「計画承認」を記録する。修正指示があれば architect に差し戻して再提示。
-**承認なしで実行フェーズに入らない。**
+Once approved, record "plan approved" in the journal. If revisions are requested, send it back to architect and re-present.
+**Never enter the execution phase without approval.**

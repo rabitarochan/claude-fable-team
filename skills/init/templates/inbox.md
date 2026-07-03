@@ -1,17 +1,17 @@
-# 成長シグナル受信箱(inbox)
+# Growth signal inbox
 
-> **気づいた瞬間に 1 行追記する。分析は後(/fable-team:grow がやる)。捕獲だけが義務。**
+> **Append one line the moment you notice something. Don't analyze — just capture. (Analysis comes later — /fable-team:grow does it.)**
 >
-> 形式: `- [ ] 日付 | ミッション | 種別 | 何が起きたか(1 行)`
+> Format: `- [ ] date | mission | type | what happened (one line)`
 >
-> 種別:
-> - **修正** — ユーザーからの指摘・訂正(最優先シグナル。1 件でも蒸留対象)
-> - **手戻り** — やり直しが発生した(原因を添える)
-> - **失敗** — エスカレーションが発生した(builder 2 回失敗など)
-> - **驚き** — 前提が誤っていた・予想と違った
-> - **摩擦** — 毎回同じ準備をしている・情報が見つからない・手順が重い
-> - **成功** — うまくいったパターン(再現したい)
+> Types:
+> - **Correction** — feedback or a correction from the user (highest-priority signal; even a single one is a candidate for distillation)
+> - **Rework** — something had to be redone (include the cause)
+> - **Failure** — an escalation occurred (e.g., builder failed twice)
+> - **Surprise** — an assumption was wrong, or reality differed from expectations
+> - **Friction** — repeating the same setup every time, information hard to find, heavyweight procedures
+> - **Success** — a pattern that worked well (worth reproducing)
 >
-> 処理したら `[x]` にして `changelog.md` にエントリを残す(**破棄も処理である**)。
+> When processed, mark it `[x]` and leave an entry in `changelog.md` (**Discarding is a valid outcome.**).
 
-## シグナル
+## Signals
