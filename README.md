@@ -22,7 +22,8 @@ claude-fable-team/       ← 将来 Claude Plugin として公開する本体
 │   │   ├── verifier.md    (Sonnet) 動作検証(E2E)
 │   │   ├── scout.md       (Haiku)  探索・調査(並列ファンアウト)
 │   │   └── scribe.md      (Haiku)  記録・状態更新
-│   └── skills/            ミッション 5 + 手筋 4 + 成長 1 スキル
+│   └── skills/            単発 1 + ミッション 5 + 手筋 4 + 成長 1 スキル
+│       ├── fable-task/        単発タスクの遂行(1 セッション完結。昇格経路つき)
 │       ├── fable-mission/     ミッション開始(templates/ と example/ を同梱)
 │       ├── fable-work/        実行ループ(委譲→検証→記録)
 │       ├── fable-checkpoint/  状態の凍結
@@ -47,16 +48,17 @@ claude-fable-team/       ← 将来 Claude Plugin として公開する本体
 
 ```
 1. メインセッションを Opus にする      /model opus
-2. 長期ミッションを開始する            /fable-mission ○○を実装する
-3. 実行ループを回す                    /fable-work
+2. 単発タスク(1 セッション完結)      /fable-task ○○を修正して
+3. 長期ミッションを開始する            /fable-mission ○○を実装する
+4. 実行ループを回す                    /fable-work
    (自動で回し続けるなら)             /loop /fable-work
-4. セッションが切れた・翌日になった    新セッションで /fable-resume
-5. ミッション完了後                    /fable-retro で知見を収穫
-6. シグナルが溜まったら                /fable-grow でチーム自身を改善
+5. セッションが切れた・翌日になった    新セッションで /fable-resume
+6. ミッション完了後                    /fable-retro で知見を収穫
+7. シグナルが溜まったら                /fable-grow でチーム自身を改善
 ```
 
-単発〜数時間で終わるタスクは、既存の `/cc`(cc-orchestrator)をそのまま使う。
-**セッションをまたぐ規模になったら Fable Team のミッションプロトコルに乗せる。**
+単発タスクは `/fable-task`、セッションをまたぐ規模は `/fable-mission`。
+迷ったら「明日も続きをやるか?」で判断する。**昇格はいつでもできる(降格はできない)。**
 
 ## 設計思想(1 段落で)
 
