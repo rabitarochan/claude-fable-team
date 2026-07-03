@@ -7,6 +7,9 @@
 > `.fable-team/growth/changelog.md` に記録する。
 > 変更が効いたかは /fable-team:retro が評価し、効いていなければ /fable-team:grow で書き直すか削る。
 > (2026-07-03 のプラグイン化以前のエントリは、当時のスキル名 /fable-* のまま残している)
+>
+> **Language policy**: Entries from 2026-07-03 (i18n) onward are written in English with a
+> one-line Japanese gist (要約). Earlier entries remain in Japanese — history is not rewritten.
 
 ---
 

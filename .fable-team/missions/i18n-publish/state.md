@@ -3,25 +3,25 @@
 > **このファイルが唯一の真実。** セッションはいつ死んでもよい。
 
 - slug: `i18n-publish`
-- フェーズ: Phase 3 — ドキュメント二か国語化(開始)
-- 進捗: 完了 9 / 全 13 タスク(Phase 1・2 ✅。Phase 2 ゲート通過 21:06)
-- 最終更新: 2026-07-03 21:06
+- フェーズ: Phase 3 — 完了(ゲート待ち)
+- 進捗: 完了 14 / 全 13+1 タスク(Phase 1〜3 の全タスク ✅。用語統一 evidence signals 追加対応済み)
+- 最終更新: 2026-07-03 21:14
 - 更新者: 指揮者(Fable 5、立ち上げセッション)
 
 ## 次の一手(最重要)
 
-Phase 3 を実行する: ①builder 役 2 体を並列投入 — B-doc1: README.md を英語化し
-現日本語版を README.ja.md として保存(相互リンク付き)+ CLAUDE.md(HQ)英語化
-(`@skills/init/rules.md` 行は不変)。B-doc2: HANDOFF.md を `git mv` で HANDOFF.ja.md に
-改名(原本保護)し、英訳 HANDOFF.md を新規作成(glossary 進拠・相互リンク付き)。
-②指揮者: 3.4 CHANGELOG ヘッダに言語規則追記(今後 = 英語 + 日本語 1 行要約)、
-3.5 LICENSE(MIT、Copyright (c) 2026 rabitarochan)作成。
-③完了後ゲート: **日本語版(README.ja / HANDOFF.ja)を発注者がレビュー**(2 回目の確認)。
-通過後 Phase 4(検証と公開)へ。
+**Phase 3 ゲート: 日本語版ドキュメントの発注者レビューを待っている(2 回目の確認)。**
+確認対象は README.ja.md(旧 README の内容 + 言語リンク行のみ追加)と HANDOFF.ja.md
+(原本無傷 + 先頭に原本表記 1 行)。実質は「この形でよいか」の確認。
+承認されたら Phase 4 へ: 4.1 総合検証(verifier 役 — 日本語残存 grep 全体 /
+validate / 英日リンクの相互整合 / LICENSE)→ 4.2 GitHub 公開(`gh repo create
+rabitarochan/claude-fable-team --public --source=. --push`。**実行直前に発注者へ最終確認 =
+3 回目**)→ 4.3 README のインストール手順を rabitarochan/claude-fable-team に差し替え +
+v0.1.0 タグ → 4.4 公開版の導入テスト(発注者協力)。
 
 ## 進行中・中断点
 
-なし(Phase 2 完了・コミット直前)。
+なし(Phase 3 成果はコミット済み、ゲート待ち)。
 
 ## 検証状態
 

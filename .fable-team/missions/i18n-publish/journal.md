@@ -78,3 +78,16 @@
 - **次へ**: Phase 2 コミット → Phase 3(3.1 README 英日 / 3.2 HANDOFF 英日 / 3.3 CLAUDE.md /
   3.4 CHANGELOG 言語規則 / 3.5 LICENSE)。3.1+3.3 と 3.2 を builder 役 2 体で並列、
   3.4+3.5 は指揮者。完了後、日本語版ドキュメントの発注者レビュー(ゲート)
+
+## 2026-07-03 21:14 — 指揮者(Fable 5)
+
+- **やったこと**: Phase 3 全 5 タスク完了。builder 2 体並列(README 英日化 + CLAUDE.md /
+  HANDOFF 英日化)+ 指揮者(CHANGELOG 言語規則・LICENSE)。機械検証グリーン
+  (HANDOFF.md・CLAUDE.md 日本語 0 / README.md は言語リンク 1 行のみ / 英日ファイル +
+  LICENSE 存在 / validate 通過)
+- **分かったこと**: HANDOFF.ja.md は git rename + 先頭 1 行追加のみで原本無傷。
+  「根拠シグナル」の訳が supporting/evidence に割れたため evidence signals に統一
+  (grow スキル既訳に合わせた)
+- **判断と理由**: HANDOFF「テストが通ることと動くことは別」は散文のまま訳す
+  (原文自体がアフォリズム定型ではないため。builder の判断を承認)
+- **次へ**: Phase 3 ゲート = 日本語版の発注者レビュー → Phase 4(検証と公開)

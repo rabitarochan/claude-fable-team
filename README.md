@@ -1,83 +1,86 @@
 # Fable Team
 
-Fable 5 が引退した世界で、**Opus / Sonnet / Haiku の分業**により Fable 5 の
-「長期タスクを最後まで完遂する能力」を再現する **Claude Code プラグイン**。
+[日本語 (Japanese)](README.ja.md)
 
-Fable 5 本人による引き継ぎ資料は [HANDOFF.md](HANDOFF.md) にある。
+A **Claude Code plugin** that recreates Fable 5's ability to carry long-running tasks
+through to completion — in a world where Fable 5 has retired — via a **division of labor
+among Opus / Sonnet / Haiku**.
 
-## インストール
+The handoff document written by Fable 5 itself is in [HANDOFF.md](HANDOFF.md).
+
+## Installation
 
 ```
-# 1. マーケットプレイスを追加(ローカル試用ならこのリポジトリのパス)
-/plugin marketplace add <このリポジトリのパス or owner/repo>
+# 1. Add the marketplace (for a local trial, use the path to this repository)
+/plugin marketplace add <path to this repository or owner/repo>
 
-# 2. プラグインをインストール
+# 2. Install the plugin
 /plugin install fable-team@fable-team
 
-# 3. 対象プロジェクトで導入(状態ディレクトリ作成 + CLAUDE.md への規約組み込み)
+# 3. Set up in the target project (creates the state directory + embeds the rules into CLAUDE.md)
 /fable-team:init
 ```
 
-## クイックスタート
+## Quick Start
 
 ```
-1. メインセッションを Opus にする      /model opus
-2. 単発タスク(1 セッション完結)      /fable-team:task ○○を修正して
-3. 長期ミッションを開始する            /fable-team:mission ○○を実装する
-4. 実行ループを回す                    /fable-team:work
-   (自動で回し続けるなら)             /loop /fable-team:work
-5. セッションが切れた・翌日になった    新セッションで /fable-team:resume
-6. ミッション完了後                    /fable-team:retro で知見を収穫
-7. シグナルが溜まったら                /fable-team:grow でチーム自身を改善
+1. Set the main session to Opus            /model opus
+2. One-shot task (single-session)          /fable-team:task fix <something>
+3. Start a long-running mission            /fable-team:mission implement <something>
+4. Run the execution loop                  /fable-team:work
+   (to keep it running automatically)      /loop /fable-team:work
+5. Session died, or it's the next day      /fable-team:resume in a new session
+6. After the mission completes             /fable-team:retro to harvest insights
+7. When signals have accumulated           /fable-team:grow to improve the team itself
 ```
 
-単発タスクは `task`、セッションをまたぐ規模は `mission`。
-迷ったら「明日も続きをやるか?」で判断する。**昇格はいつでもできる(降格はできない)。**
+One-shot tasks go to `task`; anything that spans sessions goes to `mission`.
+When in doubt, ask "Will you continue this tomorrow?" **You can always promote; you can never demote.**
 
-## 構成
+## Structure
 
 ```
-claude-fable-team/       ← Claude Plugin 本体(このリポジトリ)
+claude-fable-team/       ← The Claude Plugin itself (this repository)
 ├── .claude-plugin/
-│   ├── plugin.json        マニフェスト
-│   └── marketplace.json   セルフホストのマーケットプレイス定義
-├── agents/              ← 専門サブエージェント 7 名
-│   ├── architect.md       (Opus)   設計・計画
-│   ├── debugger.md        (Opus)   難バグの根本原因分析
-│   ├── reviewer.md        (Opus)   敵対的コードレビュー
-│   ├── builder.md         (Sonnet) 実装・テスト作成
-│   ├── verifier.md        (Sonnet) 動作検証(E2E)
-│   ├── scout.md           (Haiku)  探索・調査(並列ファンアウト)
-│   └── scribe.md          (Haiku)  記録・状態更新
-├── skills/              ← 導入 1 + 単発 1 + ミッション 5 + 手筋 4 + 成長 1
-│   ├── init/              プロジェクト導入(規約の正本 rules.md を同梱)
-│   ├── task/              単発タスクの遂行(1 セッション完結。昇格経路つき)
-│   ├── mission/           ミッション開始(templates/ と記入例 example/ を同梱)
-│   ├── work/              実行ループ(委譲→検証→記録。無人ループモードつき)
-│   ├── checkpoint/        状態の凍結
-│   ├── resume/            新セッションでの完全復帰
-│   ├── retro/             完了後の知見収穫
-│   ├── grow/              チーム自身の成長(シグナル蒸留→資産更新)
-│   └── debug/ verify/ brief/ judge/   手筋スキル(各 playbook.md 同梱)
-├── README.md / HANDOFF.md / CHANGELOG.md / CLAUDE.md(HQ 用)
-└── .fable-team/         ← この HQ リポジトリ自身の状態(配布物ではない)
+│   ├── plugin.json        Manifest
+│   └── marketplace.json   Self-hosted marketplace definition
+├── agents/              ← 7 specialist subagents
+│   ├── architect.md       (Opus)   Design and planning
+│   ├── debugger.md        (Opus)   Root-cause analysis of hard bugs
+│   ├── reviewer.md        (Opus)   Adversarial code review
+│   ├── builder.md         (Sonnet) Implementation and test writing
+│   ├── verifier.md        (Sonnet) Behavior verification (E2E)
+│   ├── scout.md           (Haiku)  Exploration and research (parallel fan-out)
+│   └── scribe.md          (Haiku)  Recording and state updates
+├── skills/              ← 1 setup + 1 one-shot + 5 mission + 4 playbook + 1 growth
+│   ├── init/              Project setup (bundles rules.md, the canonical rules)
+│   ├── task/              One-shot task execution (single-session, with a promotion path)
+│   ├── mission/           Mission kickoff (bundles templates/ and a filled-in example/)
+│   ├── work/              Execution loop (delegate → verify → record, with unattended loop mode)
+│   ├── checkpoint/        Freezing state
+│   ├── resume/            Full recovery in a new session
+│   ├── retro/             Harvesting insights after completion
+│   ├── grow/              Growing the team itself (signal distillation → asset updates)
+│   └── debug/ verify/ brief/ judge/   Playbook skills (each bundles a playbook.md)
+├── README.md / HANDOFF.md / CHANGELOG.md / CLAUDE.md (for HQ)
+└── .fable-team/         ← State of this HQ repository itself (not part of the distribution)
 ```
 
-導入先プロジェクトに増えるのは 2 つだけ:
-**`.fable-team/`**(ミッション状態と成長ループ)と **`.claude/skills/pj-*/`**(収穫された
-プロジェクト固有スキル。プロジェクトを超えて使えるものは `~/.claude/skills/` へ卒業)。
+Only two things are added to a target project:
+**`.fable-team/`** (mission state and the growth loop) and **`.claude/skills/pj-*/`** (harvested
+project-specific skills; those usable across projects graduate to `~/.claude/skills/`).
 
-## 設計思想(1 段落で)
+## Design Philosophy (in one paragraph)
 
-Fable 5 の長期一貫性は「巨大な単一コンテキスト」で実現されていた。
-Fable Team はそれを「`.fable-team/` ディレクトリへの規律ある状態外部化」で置き換える。
-真実はコンテキストではなくファイルにあり、どのセッションもいつ死んでよい。
-判断が必要な仕事は Opus に、量産は Sonnet に、幅と速度は Haiku に振り、
-すべての成果は「観測可能な完了条件」と「動作検証」を通ってから完了になる。
+Fable 5's long-horizon consistency was achieved through "a single enormous context."
+Fable Team replaces it with "disciplined state externalization into the `.fable-team/` directory."
+The truth lives in files, not in context, and any session may die at any moment.
+Work that needs judgment goes to Opus, volume production goes to Sonnet, breadth and speed go to Haiku,
+and every deliverable counts as done only after passing "observable completion criteria" and behavior verification.
 
-## 開発(このリポジトリを育てる)
+## Development (growing this repository)
 
-- フレームワークへの変更は承認制で、根拠シグナルつきで `CHANGELOG.md` に記録する
-- 検証の手順: `claude plugin validate .` → ローカルインストール →
-  実プロジェクトで `/fable-team:init` から一連の動作を確認する
-- チェックポイントごとにコミットする(変更履歴がそのままチームの成長史になる)
+- Changes to the framework require approval and are recorded in `CHANGELOG.md` with their evidence signals
+- Verification procedure: `claude plugin validate .` → install locally →
+  run through the full flow starting from `/fable-team:init` in a real project
+- Commit at every checkpoint (the change history itself becomes the team's growth history)

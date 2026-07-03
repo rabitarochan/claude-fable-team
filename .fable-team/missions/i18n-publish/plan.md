@@ -47,11 +47,11 @@
 
 | # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
 |---|--------|------|----------------------|------|------|
-| 3.1 | README.md 英語化 + README.ja.md 作成(相互リンク) | builder 役 | 両ファイル存在・リンク有効 | 2 完了 | ⬜ |
-| 3.2 | HANDOFF.md → HANDOFF.ja.md(原本)に改名 + 英訳 HANDOFF.md 作成 | builder 役 | 同上。日本語原本が無傷 | 2 完了 | ⬜ |
-| 3.3 | CLAUDE.md(HQ)英語化 | builder 役 | 日本語なし・@import が機能 | 2.5 | ⬜ |
-| 3.4 | CHANGELOG 運用規則追記(今後: 英語 + 日本語 1 行要約。過去: 日本語のまま) | 指揮者 | ヘッダに規則が明記されている | - | ⬜ |
-| 3.5 | LICENSE(MIT、rabitarochan 名義)追加 | 指揮者 | LICENSE が存在 | - | ⬜ |
+| 3.1 | README.md 英語化 + README.ja.md 作成(相互リンク) | builder 役 | 両ファイル存在・リンク有効 | 2 完了 | ✅ |
+| 3.2 | HANDOFF.md → HANDOFF.ja.md(原本)に改名 + 英訳 HANDOFF.md 作成 | builder 役 | 同上。日本語原本が無傷 | 2 完了 | ✅ |
+| 3.3 | CLAUDE.md(HQ)英語化 | builder 役 | 日本語なし・@import が機能 | 2.5 | ✅ |
+| 3.4 | CHANGELOG 運用規則追記(今後: 英語 + 日本語 1 行要約。過去: 日本語のまま) | 指揮者 | ヘッダに規則が明記されている | - | ✅ |
+| 3.5 | LICENSE(MIT、rabitarochan 名義)追加 | 指揮者 | LICENSE が存在 | - | ✅ |
 
 ## Phase 4: 検証と公開
 
