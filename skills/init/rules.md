@@ -144,3 +144,7 @@ The team's assets are living documents; grow them as a byproduct of mission exec
 ## Destructive Operations
 
 Never delete files, rewrite git history, publish to external services, or change databases without the user's approval.
+**Approval does not carry over**: an approval covers only the specific operation the user actually
+saw — those targets, that scope, that time. A new instance of the same kind of operation (new
+targets, a later session, an unattended loop) needs a fresh ask; a past approval recorded in the
+journal is a record of that decision, not a standing authorization for the class.

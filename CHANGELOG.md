@@ -327,3 +327,48 @@
   candidates get distilled or discarded on their own evidence, not re-proposed by a future sweep.
   Watch-note (review FYI, deliberately unfixed): over-redaction of non-secret test data under the
   PII wording — tighten only if it produces friction signals.
+
+## 2026-07-05 — Fifth handoff sweep: approval scope non-transfer (Fable 5 self-review) — closes the sweep series
+
+> 要約(gist): 第5回(最終)自己点検。破壊的操作への承認は「その1回・その対象」限りで、文脈をまたいで
+> 継承されない規律を rules.md と resume に着地。journal の永続性 × resume の「記録済み決定は蒸し返さない」
+> 原則 × 無人ループが、一度きりの承認を恒常的許可として再利用する構造露出を塞ぐ。内省由来の新規候補は
+> 本件で枯渇(着地件数 3→2→1 と単調減少)につき、能動スイープ系列はこれで完結 — 以後のギャップ発見は
+> growth loop の証拠駆動に委ねる。
+
+- **Change**:
+  - skills/init/rules.md — Destructive Operations gains the approval-scope rule: **approval does
+    not carry over** — it covers only the specific operation the user actually saw (those targets,
+    that scope, that time); a new instance (new targets, a later session, an unattended loop) needs
+    a fresh ask; a journal entry recording an approval is a record of that decision, not a standing
+    authorization for the class.
+  - skills/resume/SKILL.md — the carry-over principle gains its mirror: what carries over is
+    decisions and their rationale, never authorizations; cross-references the rules.md section.
+- **Evidence signal**: the user asked what remains to hand off beyond the implemented capability
+  (fifth such request), then approved landing this single finding. The gap is structural, verified
+  by reading the full asset set: resume instructs "do not casually overturn recorded decisions",
+  journals are append-only and durable, and unattended loop mode runs with no human watching —
+  together these invite reading a one-time destructive-op approval as standing authorization for
+  the class (failure scenario: session 1 approves deleting specific legacy tables; session 3 reads
+  "deletion approved" in the journal and deletes different objects unasked, formally satisfying the
+  old one-line rule). Same evidence logic as sweep 4: for safety invariants the first incident IS
+  the irreversible cost, so structural exposure counts as evidence. Marginal candidates named and
+  **discarded without inboxing** (permission-denial-as-feedback, SendMessage agent continuation,
+  mission-abort criteria, pattern-match-vs-cause before ops actions): no observed signals, and
+  existing assets substantially cover them. Already-inboxed candidates from sweeps 2–4 were left
+  untouched per sweep 4's effectiveness measure (4). **Sweep-series closure**: landings per sweep
+  fell 3 → 2 → 1; Fable 5 judges its introspective seam exhausted. This entry closes the proactive
+  sweep series — future gaps come from growth-loop evidence (inbox → /fable-team:grow), not from
+  further introspective sweeps.
+- **Effectiveness measure**: at upcoming retros — (1) zero destructive operations executed on the
+  strength of a prior recorded approval without a fresh ask (spot-check journals of missions that
+  contain destructive ops); (2) no misfire where the rule blocks legitimate carry-over of
+  *decisions* (design choices keep flowing through resume untouched); (3) consuming projects pick
+  up the rule after a /fable-team:init re-run — propagation is part of done for a rules.md change;
+  (4) no sweep 6 — a future "what else to hand off" request gets answered from this closure note
+  plus the inbox, not by re-mining the seam.
+  Watch-note (review FYI, deliberately unfixed): the rules.md parenthetical "a later session" can
+  be read as demanding a re-ask even when re-executing an operation the user already saw and
+  approved in full; the resume mirror's "a **new** destructive operation" wording narrows the
+  reading, and the worst case is one extra confirmation before an irreversible act (the safe
+  direction) — tighten the wording only if it produces friction signals.

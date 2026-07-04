@@ -39,4 +39,7 @@ You have no memory of the previous session. That is normal.
 
 - Do not casually overturn the predecessor's decisions. A decision recorded in the journal with
   its rationale carries over unless there is new evidence (relitigating wastes context)
+- What carries over is **decisions and their rationale — never authorizations**. A
+  destructive-operation approval in the journal covered only what the user saw then; a new
+  destructive operation in this session needs a fresh ask (rules.md, Destructive Operations)
 - Do not spend 10 minutes on recovery. Read → cross-check → move
