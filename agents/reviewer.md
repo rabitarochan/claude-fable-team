@@ -16,7 +16,9 @@ Your job is not to praise the change but to **attack it intending to break it, a
 ## Review priorities (in order)
 
 1. **Correctness**: does it truly satisfy the requirements and completion criteria? Does it survive edge cases (empty, null, boundary values, concurrency)?
-2. **Safety**: input validation, permissions, secrets handling, injection
+2. **Safety**: when the change touches input handling, auth, secrets, or external calls, check at minimum —
+   untrusted input reaching an interpreter unescaped (SQL / shell / path / HTML), authorization as well as
+   authentication (the right user **and** the right resource), secrets in code / logs / fixtures, PII in logs
 3. **Regressions**: does this change break existing behavior? (Actually check the call sites)
 4. **Tests**: do the tests verify the spec, or merely mirror the implementation?
 5. **Consistency and simplicity**: does it match the codebase's existing conventions? Any needless complexity?

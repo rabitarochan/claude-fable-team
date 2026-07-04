@@ -189,3 +189,48 @@
   convergence device into the skill — it stays in .fable-team/growth/changelog.md pending the
   reproducibility check already scheduled there (if it reproduces, promote it into SKILL.md so
   consuming projects can see it).
+
+## 2026-07-04 — Second handoff sweep: encode the "build it well" craft (Fable 5 self-review)
+
+> 要約(gist): 引き継ぎ済み知識が「直す・確かめる・頼む・迷う」の4領域に偏り、「良く作る」ための上流手筋が
+> 未着地だった。テスト設計 6 箇条(verify playbook)、本番インシデントの逆転原則(debug playbook)、
+> 可逆性による吟味の重み付け・expand-contract・スパイク・characterization(judge playbook)、
+> reviewer のセキュリティ最低限チェック、rules.md への brainstorm 導線(相乗り)を実装。
+> 見送り分は inbox に捕獲し証拠待ち。
+
+- **Change**:
+  - skills/verify/playbook.md — new **"Test Design"** section (6 rules: behavior over implementation;
+    one-reason-to-fail naming; real collaborators over mocks; injectable time/randomness/concurrency;
+    deliberate boundary values; characterization tests before touching untested code). Header now names
+    the builder as the reader of that section on test-writing tasks.
+  - skills/debug/playbook.md — new **"Exception First: Live Production Incidents"** section: the
+    playbook's own "reproduce first" rule inverts during a live incident (mitigate → preserve cheap
+    evidence → reproduce off-production afterwards).
+  - skills/judge/playbook.md — new sections **"How Much Scrutiny a Decision Deserves"** (weigh by cost
+    of reversal, not felt importance) and **"Making a Breaking Change (expand-contract)"**; plus a
+    characterization-tests bullet under Patch-or-Refactor and a spike (timeboxed throwaway code, never
+    graduates to production) bullet under the new-technology section.
+  - agents/reviewer.md — the Safety review priority expanded from one phrase into a minimum checklist
+    (injection, authorization as well as authentication, secrets in code/logs/fixtures, PII in logs).
+  - skills/init/rules.md — Task Intake gains the brainstorm route line (piggybacked on this rules.md
+    touch, per the 2026-07-04 inbox signal); the playbook table's verify row now routes the Test Design
+    section to builder on test-writing tasks.
+  - skills/verify/SKILL.md and agents/debugger.md — consistency fixes caught by the verifier sweep of
+    this change set (the same cross-sweep technique that caught agents/scribe.md on 2026-07-04): the
+    verify launcher now tells the Conductor to include the "Test Design" section in builder briefs on
+    test-writing tasks, and debugger's Process step 1 gains the live-incident carve-out (mitigation
+    recommendation before investigation).
+- **Evidence signal**: The user asked Fable 5 to review what system-development knowledge remained
+  un-handed-off, then approved implementation ("reconsider and implement"). Review verdict: the four
+  playbooks covered fix / verify / delegate / judge, but the upstream "build it well" craft was missing —
+  e.g. the reviewer had a post-hoc criterion ("tests that mirror the implementation") with no upstream
+  guidance for the builder who writes those tests, and the debug playbook's "reproduce first" was
+  actively harmful for live production incidents. Deliberately deferred, captured as an inbox signal
+  (evidence-first, Bloat is death): production deployment discipline (feature flags, rollback plans,
+  prod migration sequencing), a deeper security playbook, performance engineering, API/data-model
+  design craft.
+- **Effectiveness measure**: At upcoming retros — (1) reviewer findings of the class "tests mirror the
+  implementation" stop appearing (upstream guidance worked); (2) breaking changes in mission plans show
+  expand → migrate → contract task splits; (3) any live-incident work shows mitigation before diagnosis
+  in the journal; (4) a fuzzy-goal request actually takes the brainstorm route (closes the
+  discoverability signal from the brainstorm-asset self-review).

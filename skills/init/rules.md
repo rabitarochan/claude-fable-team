@@ -48,6 +48,8 @@ The framework's internals are English; the user's experience is not.
 - **One-shot task (single-session)**: `/fable-team:task` — the lightweight version that drops
   the mission's heavy gear but never drops quality discipline (delegation, verification, honest reporting)
 - **Long-running task (spans sessions)**: the mission protocol under `/fable-team:mission`
+- **Goal itself still fuzzy**: diverge and converge first with `/fable-team:brainstorm`,
+  then route its draft through task or mission intake
 - When unsure, decide with "Will you continue this tomorrow?" From task to mission,
   **you can always promote; you can never demote** — so when in doubt, start with the lighter one
 - On completion: run a retrospective with `/fable-team:retro`. Even for one-shot tasks,
@@ -85,7 +87,7 @@ Fable 5's practical knowledge ships with each playbook skill as `playbook.md`.
 | Situation | Conductor invokes via skill | How to pass to subagents |
 |---|---|---|
 | Debugging work | /fable-team:debug | playbook.md bundled with the debug skill (to debugger / builder) |
-| Behavior verification | /fable-team:verify | playbook.md bundled with the verify skill (to verifier) |
+| Behavior verification / test writing | /fable-team:verify | playbook.md bundled with the verify skill (to verifier; its "Test Design" section to builder on test-writing tasks) |
 | Writing a delegation brief | /fable-team:brief | playbook.md bundled with the brief skill (used by the Conductor itself) |
 | Judgment calls with no right answer | /fable-team:judge | playbook.md bundled with the judge skill (Conductor / architect) |
 

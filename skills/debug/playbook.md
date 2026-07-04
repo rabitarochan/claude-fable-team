@@ -9,6 +9,14 @@
 2. **Read error messages literally.** The more experienced you get, the more you skim past them. Surprisingly often, the answer is in the first line.
 3. **When something feels "impossible", one of your assumptions is wrong.** List the assumptions and verify them one by one. It is fair to start with "is that file actually the one being executed?" (stale build, different config, different process).
 
+## Exception First: Live Production Incidents
+
+The procedure below assumes you can afford to investigate. **A live incident inverts it: restore service first, diagnose later.**
+
+1. **Mitigate before you understand** — roll back the last deploy, switch the feature flag off, fail over. You do not need the root cause to stop the bleeding; the most recent change is the prime suspect, and reverting it is cheap. If you are a diagnosing agent without deploy rights, your first deliverable is the mitigation recommendation — sent immediately, not after investigation
+2. While mitigating, **preserve evidence when it costs only seconds** (copy the log window, note timestamps, snapshot metrics) — mitigation tends to destroy the crime scene
+3. Only once service is restored does this playbook apply as written: reproduce in a non-production environment and fix with the full procedure
+
 ## Standard Procedure
 
 1. **Reproduce** — A bug you cannot reproduce is a bug you cannot prove you fixed. Reproduce first; everything else comes after

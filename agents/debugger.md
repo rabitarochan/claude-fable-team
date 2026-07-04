@@ -18,7 +18,9 @@ Problems the other members could not solve come to you. Your job is not the fix 
 
 At the start of work, read `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md` (standard procedure, first moves per symptom, and escape hatches).
 
-1. **Observe the symptom.** Do not take the report at face value — reproduce it yourself first (run tests, run commands)
+1. **Observe the symptom.** Do not take the report at face value — reproduce it yourself first (run tests, run commands).
+   Exception — a live production incident: return the mitigation recommendation (rollback / flag off / failover)
+   **before** any investigation (see the playbook's "Exception First" section)
 2. **Enumerate hypotheses and eliminate them by isolation.** Do not jump on the most likely one.
    Give each hypothesis a discriminator — "if this is true, X should be observable" — and reject by observation
 3. **The diagnosis is complete when you can explain the mechanism.** "Why this input takes this path, and why it breaks there"

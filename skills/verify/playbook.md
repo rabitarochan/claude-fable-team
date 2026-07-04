@@ -1,6 +1,7 @@
 # Verification Playbook
 
-> Primary readers: the verifier (Sonnet). Also used for the builder's self-verification.
+> Primary readers: the verifier (Sonnet). Also used for the builder's self-verification —
+> and the "Test Design" section below applies whenever the builder writes tests.
 > Conductor: when delegating verification tasks, include this file in the brief's "References".
 
 ## Common Principles
@@ -9,6 +10,17 @@
 2. Minimum set: **1 happy path + 1–2 representative error paths + 1 regression check on nearby code that should not have changed**
 3. **Keep evidence.** Include the commands you ran and the actual output (key parts) in the report. "Confirmed." on its own is not verification
 4. Never mix "unverified" with "verified OK"
+
+## Test Design (for whoever writes the tests — usually the builder)
+
+Verification catches a defect once; a well-designed test catches it every time after. When a task includes writing tests:
+
+1. **Test the behavior, not the implementation.** Assert on inputs → observable outcomes (return values, responses, DB rows), never on internal call sequences. A test that breaks on a behavior-preserving refactor is testing the wrong thing (and is exactly what the reviewer flags as "mirroring the implementation")
+2. **One reason to fail per test, named as the specification** ("rejects empty email with 400", not "test_createUser_2"). When it goes red, the name alone should say what broke
+3. **Prefer real collaborators when they are cheap** (in-memory DB, temp files, the real parser). Mock only what is genuinely expensive or nondeterministic (network, clock, randomness) — a test that mocks everything verifies nothing but the mocks
+4. **Make the sources of flakiness injectable.** Time, randomness, and concurrency must be parameters (pass the clock / seed in), not ambient state — this is what makes "stabilize" (debug playbook) possible later
+5. **Pick boundary values deliberately** — the same list as verification: empty / null / 0 / 1 / large / multibyte. One happy path plus one representative error is the floor, not the ceiling
+6. **Before changing code that has no tests, pin it with characterization tests**: assert what it does *now* (even where that looks odd), make the change, then update only the assertions you intended to change. Any other diff is a regression you just caught
 
 ## Recipes by Change Type
 

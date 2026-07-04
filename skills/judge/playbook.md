@@ -3,11 +3,24 @@
 > Primary readers: the Conductor and the architect. Heuristics for not stalling when unsure.
 > **Heuristics are not rules.** When a situation calls for breaking one, write the reason in the journal and break it.
 
+## How Much Scrutiny a Decision Deserves
+
+- Weigh by **cost of reversal**, not by how important the question feels. Reversible (a rename, an internal helper, most code structure) → decide fast and move on; git remembers
+- Hard to reverse (data model, public API shape, persisted formats, wire protocols, adopting a dependency) → slow down: alternatives, rationale, and "reconsider if ..." conditions on the record (architect-grade scrutiny)
+- Most decisions feel important and are in fact reversible. When unsure which kind this is, ask: "what would it cost to change this after a month in production?"
+
+## Making a Breaking Change (expand-contract)
+
+- Never change a data model, API, or file format in one step. Three steps: **expand** (add the new alongside the old) → **migrate** (move readers/writers over, verifying) → **contract** (remove the old once nothing references it)
+- Each step ships and verifies independently, so the system works at every point and is always one small step from rollback
+- The one-step version is faster only until something goes wrong mid-flight — then it is the slowest option available
+
 ## Patch or Refactor
 
 - Touching the same spot for the **third time** is when to consider a refactor
 - Cut refactors into independent tasks; never mix them with feature changes (a mixed diff is unreviewable)
 - Run the Boy Scout rule at "minimum": drive-by improvements stop at one rename. Anything beyond that, report as a finding and turn into a task
+- Refactoring code that has no tests? **Pin current behavior with characterization tests first** (verify playbook, "Test Design") — refactoring without a net is how "working code" stops working
 
 ## Ask or Proceed
 
@@ -55,3 +68,4 @@
 
 - Distinguish whether the mission's goal needs it, or you just want to use it
 - If introducing it, try it in one minimal spot before spreading it. Never make full adoption the first move
+- If the decision is blocked on uncertainty ("would it even work here?"), buy the answer with a **spike**: timeboxed, throwaway code that answers that one question. Keep the answer, discard the code — spike code never graduates to production
