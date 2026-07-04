@@ -17,6 +17,8 @@ Write accordingly. The flip side: with a good brief, even Sonnet and Haiku will 
 For implementation and verification briefs, include the "verification harness" section of mission.md
 (test, lint, and launch commands) every time. Making the agent rediscover it throws away minutes on every delegation.
 
+For briefs delegating to scribe, state the Conductor-verified current timestamp explicitly — scribe has no shell tool and cannot check the clock, so an unstated timestamp gets guessed.
+
 ## Before / After Examples
 
 ### Delegating to a scout
@@ -29,6 +31,8 @@ For implementation and verification briefs, include the "verification harness" s
 > Starting point: under `src/auth/`.
 > Return format: `path:line` for each implementation site with a one-line description each; session storage mechanism as a one-sentence conclusion.
 > No copies of file contents needed.
+
+When a scout surveys enumeration points (docs/lists that must be updated together), demand glob coverage of all variants (e.g. `README*` to catch `README.ja.md`), not just the canonical file — a miss there surfaces later as unplanned rework.
 
 ### Delegating to a builder
 

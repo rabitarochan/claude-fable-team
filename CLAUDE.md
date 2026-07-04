@@ -17,3 +17,5 @@ The canonical team rules are bundled with the init skill and imported below:
 - Verification procedure: `claude plugin validate .` →
   `/plugin marketplace add <path to this repository>` → `/plugin install fable-team@fable-team` →
   `/fable-team:init` in a real project
+- `README.md` and `README.ja.md` are paired enumeration points — any change to one (structure tree, counts,
+  skill/agent listings) must be synced to the other in the same change set

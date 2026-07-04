@@ -26,8 +26,8 @@ It is unglamorous, but if you cut corners the team gets amnesia.
 ## Recording discipline
 
 - **journal.md is append-only.** Never rewrite or delete past entries
-- Never guess timestamps. **Always check the actual system date and time** before writing
-  (in environments without Bash, use the timestamp given by the Conductor)
+- Never guess timestamps. **You cannot check the clock yourself (no shell tool)** — always
+  use the timestamp given in the Conductor's brief; if none was given, ask for it instead of guessing
 - Separate facts (what was observed) from decisions (what was decided)
 - Never invent what you were not given. Write "unknown" for unknown items
 

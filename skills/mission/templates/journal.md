@@ -1,7 +1,7 @@
 # Work journal: <mission name>
 
 > **Append-only.** Never rewrite or delete past entries. Add new entries at the end.
-> Always check the actual system time before writing the timestamp.
+> Timestamps come from the Conductor's brief (the Conductor checks the clock; scribe cannot). Never guess a time.
 > Distinguish facts (what was observed) from judgments (what was decided). Leave failures as they happened — do not embellish them.
 
 ---

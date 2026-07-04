@@ -140,3 +140,16 @@
 - **Change**: One sub-bullet added to Step 3 (Convergence) of skills/brainstorm/SKILL.md requiring recorded objections (growth-inbox notes, journal decisions) to be surfaced and the override rationale recorded before converging.
 - **Evidence signal**: During the brainstorm-asset dogfooding, the converged choice A2 (give scribe Bash) silently contradicted the growth-inbox note "Bash 付与は過剰"; the verifier flagged the unexplained contradiction (2.2 PASS-WITH-NOTES) and the user withdrew A2 at change-set approval — one avoidable approval cycle. Distilled at the 2026-07-04 retro from a 修正 (user-correction) signal and a 摩擦 signal.
 - **Effectiveness measure**: At the next retro, check whether brainstorm summaries produced since then either contain no contradictions with recorded positions or explicitly state the overridden objection and rationale; zero repeat of a post-approval reversal caused by an unsurfaced objection.
+
+## 2026-07-04 — Procedural defenses against guessed timestamps and README-pair drift (post-brainstorm task)
+
+> 要約(gist): 初の実ブレストで収束した再発防止策を実装。scribe への委任は Conductor 確認済み時刻を明記(A1)、scout の列挙点調査は glob で全変種(B4)、README 英日ペア規則(B1)、テンプレートと scribe 定義の時刻指示を実行可能な文言に修正(A3+整合)。
+
+- **Change**:
+  - (A1) skills/brief/playbook.md — briefs to scribe must state the Conductor-verified timestamp.
+  - (B4) skills/brief/playbook.md — scout enumeration surveys must demand glob coverage of variants (e.g., README* to catch README.ja.md).
+  - (B1) CLAUDE.md — README.md and README.ja.md declared as paired enumeration points (both must be kept in sync at review boundaries).
+  - (A3) skills/mission/templates/journal.md and state.md — timestamp instructions rewritten to "timestamps come from the Conductor's brief; if none was given, ask" (replacing the impossible "check the actual system date and time yourself").
+  - agents/scribe.md — the scribe's own "always check the actual system date and time" instruction rewritten to "you cannot check the clock yourself — use the timestamp from the Conductor's brief; if none was given, ask" for internal consistency.
+- **Evidence signal**: Two growth-inbox signals from the brainstorm-asset mission: (1) a scribe journal timestamp guessed as "14:30" when the real time was ~09:27 (scribe has no shell/clock access), and (2) scout's enumeration survey of README variants missed README.ja.md in a bilingual documentation pair. Both converged in the first real /fable-team:brainstorm run. A2 (grant scribe Bash) was adopted during convergence, then withdrawn by the user at change-set approval: the tool-minimum principle outweighed a structural fix, and the procedural path (Conductor supplies timestamps) covers the need without widening scribe's tool surface. A verifier sweep then discovered agents/scribe.md itself carried the impossible "check the clock" instruction — fixed in the same change set.
+- **Effectiveness measure**: At the next retro — (1) zero guessed or incorrect timestamps in mission journals; (2) README.md / README.ja.md enumeration stays in sync with no unplanned sync tasks; (3) no recurrence of instructions that their executor cannot perform.

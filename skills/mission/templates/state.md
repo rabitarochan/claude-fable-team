@@ -7,7 +7,7 @@
 - slug: `<slug>`
 - Phase: Phase N — <name>
 - Progress: X of Y tasks done
-- Last updated: YYYY-MM-DD HH:MM (use the actual system time; do not guess)
+- Last updated: YYYY-MM-DD HH:MM (timestamp from the Conductor's brief; do not guess)
 - Updated by: <Conductor session / scribe>
 
 ## Next move (most important)
