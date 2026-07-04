@@ -152,3 +152,12 @@
   - 設計判断(専用エージェント不在 / 単一ファイル / ephemeral 既定 / fan-out の Opus 層級)を Fable 5 として裏書き — 変更なし
   - multi-select 収束デバイスの SKILL.md 昇格は**見送り** — retro が予約した再現性確認を尊重(記録済み判断を根拠なく覆さない。皮肉にも本レビューで強化した収束ルールそのもの)
 - **Next**: 変更セット(SKILL.md / CHANGELOG.md / inbox.md / 本エントリ)のコミット。次回 retro で CHANGELOG の Effectiveness measure 3点+multi-select 再現性を効果測定
+
+---
+
+## 2026-07-04 16:34 — Conductor(アーカイブ)
+
+- **Did**: ユーザー指示(/fable-team:resume "brainstorm-asset を archive して")により、ミッションディレクトリを `.fable-team/missions/_archive/brainstorm-asset/` へ git mv で移動
+- **Learned**: -
+- **Decisions and rationale**: retro 時点の「③ _archive への移動は見送り」判断を上書き。根拠 = ユーザー本人の明示的な新指示(記録済み判断を覆すに足る新しい証拠)
+- **Next**: なし(ミッション完結)。後続はブレスト成果の実装 task(A1+B1+B4+A3)を必要時に /fable-team:task で起票
