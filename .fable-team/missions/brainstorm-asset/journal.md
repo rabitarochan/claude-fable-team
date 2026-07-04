@@ -61,3 +61,49 @@
   - Loop は計画に従い Phase 境界で停止(unattended-loop 規律: ゲート未人手確認の状態で先へ進まない)
   - Phase 2(2.1-2.4)は **ユーザーとの対話(実ブレスト・ドッグフーディング)が必須**のため、無人での継続は不可。再開は `/fable-team:resume` の命令待ち
 - **Next**: ユーザーが中間報告を読んだ後、Phase 2 → 2.1(新スキルによる実ブレスト・ドッグフーディング開始)。題材候補: growth inbox の未処理シグナル / HANDOFF.md の未カバー領域 / ユーザー持ち込みのあいまいなアイデア。出力 Brainstorm Summary を journal に記録後、2.2 で verifier に intake 適合検証を委任
+
+---
+
+## 2026-07-04 10:07 — Conductor (2.1 ドッグフーディング)
+
+- **Did**: 新スキル `skills/brainstorm/SKILL.md` を用いて実ブレストを実施。言語: 日本語、ユーザーとの対話。題材: `.fable-team/growth/inbox.md` の未処理シグナル2件(scribe-timestamp 摩擦 / bilingual-README pair miss)の防止戦略立案。
+  - (1) 問題枠づけ: ユーザーが確認・承認。枠づけ: 「同じ事故が黙って再発しない状態を作る」
+  - (2) 発散: スキル既定ルール(狭い探索空間 → 並列 fan-out 不要、Conductor 主導対話)に従い、4つのレンズから選択肢生成。結果: A レンズ群 4案(A1-A4)+ B レンズ群 4案(B1-B4)
+  - (3) 収束: AskUserQuestion(multi-select)により、ユーザーが **A1+A2** と **B1+B4** を選択(構造的修正 + 手続き規則の二層防御)。ユーザー判断: A2(scribe に Bash 提供)が根本的修正を可能にし、A3/A4 は削除(A2 で template 手順が実行可能に)。B3(予防>検知)は後ろ盾規則なため削除、B2(日本語ドキュメント追加)は簡潔さ維持のため削除
+  - (4) Goal 草案 + 6点の観測可能 DoD 草案を生成
+  - (5) Route 判定: `/fable-team:task` 推奨(ミッション化不要、単一セッション task で充分)
+  - Brainstorm Summary(問題枠づけ / 選択肢 / 収束方向 / goal+DoD 草案 / 推奨 route)を Conductor に提出
+- **Learned**:
+  - スキル手順は実装通り実行可能(fresh reader でも読める)
+  - AskUserQuestion(multi-select)は複数選択の収束デバイスとして有効に機能(ユーザーが迷わず選べた)
+  - 対話が全編日本語で進行(language rule 達成)
+  - 検証視点: スキル本文の欠陥は未検出。手順は言語プロンプトの通り動作
+- **Notable**:
+  - ユーザーの選択 A2(scribe に Bash 提供)は、既存 inbox note が「Bash は過剰」と記述していたのを上書き。根本修正を優先する判断(手順テンプレートを実行可能にするため)
+  - Divergence レンズ4個は既定(対話ベース)で十分。fan-out 版(scout 並列)は用いず
+- **Decisions and rationale**:
+  - 2.1 完了。出力 goal+DoD 草案は手戻りなく `/fable-team:task` intake に受理される見通し
+  - ユーザーとの実対話を通じてスキル実装の有効性を確認(ドッグフーディング = 目的達成)
+- **Next**: 2.2(verifier による intake 適合検証)の結果待ち。スキル改訂の必要性は現時点で見込まれない(dogfooding でスキル手順そのものの欠陥は未検出)が、verifier からの指摘があれば builder に委任。2.4 で scribe が growth signals(成功パターン: multi-select 収束デバイス等)を inbox に捕捉後、Phase 2 ゲート判定へ
+
+---
+
+## 2026-07-04 10:11 — Conductor (via verifier / Phase 2 ゲート判定)
+
+- **Did**: 
+  - 2.2 verifier の intake 適合検証 → **PASS-WITH-NOTES**。検証内容: task/mission 両 intake との突合、DoD 6項目の観測可能性(全項目 OK)、実リポジトリとのアンカー突合(agents/scribe.md の tools 行に Bash なし = A2 対象実在 / brief playbook の Five Elements 節と scout 委任例 = A1/B4 アンカー実在 / CLAUDE.md 固有ルール節 = B1 アンカー実在 / inbox の未処理シグナルちょうど2件で一致 / validate exit 0 ベースライン確認)。存在しない参照先を名指しした DoD 項目はゼロ。ルート推奨(task)も妥当と判定。
+  - 申し送り3点(実装 Conductor 向け): 
+    - (1) A1 と B4 は同一ファイル skills/brief/playbook.md 対象 → 1ユニットに統合して委任する
+    - (2) A2 採用は元 inbox シグナルの「Bash 付与は過剰」を覆す決定 — ユーザーが収束時に明示選択した(根本解決を優先)。CHANGELOG に「なぜツール最小原則の懸念を上回るか」を明記すること
+    - (3) agents/・skills/ 配下の変更は着手前にユーザー承認必須(HQ 固有ルール)
+  - 2.3 判定: ドッグフーディングでスキル手順自体の欠陥は未検出 → **スキル改訂「不要」と記録**(validate は 2.2 中に verifier が exit 0 を確認済み)。verifier ノート2 は growth シグナルとして捕捉し、テンプレート変更の要否は将来の /fable-team:grow に委ねる(即ルール化しない)
+  - Phase 2 ゲート判定: **PASS**(実ブレスト1回実施・日本語対話・ユーザー収束・出力が intake に手戻りなく受理可能と verifier が判定・証拠は本 journal と 10:07 エントリ)
+- **Learned**: -
+- **Decisions and rationale**: 
+  - Phase 2 フェーズ境界での停止規律に従い、ここで loop を停止(フェーズ移行はユーザーの中間報告確認後)
+  - verifier 申し送り3点は次のフェーズ(3.1-3.3)の Conductor 実装に含める、または実装用に別途 task ticket
+- **Next**: Phase 3 を実行する
+  - 3.1: scribe に CHANGELOG.md エントリを委任(形式: 日付—タイトル、日本語要約、Change / Evidence signal / Effectiveness measure)。証拠シグナル = ユーザーの明示要望『引き継ぎ資産にブレスト支援がない』+ 本ミッションのドッグフーディング成功
+  - 3.2: Conductor が変更セット(skills/brainstorm/SKILL.md 新規 + README.md / README.ja.md 差分 + CHANGELOG)をユーザーに提示し承認を得る
+  - 3.3: rules.md 未変更につき再 init 伝播不要と記録
+  - **注意**: ブレスト成果の実装(scribe への Bash 付与等4点)は本ミッションのスコープ外 — 別途 /fable-team:task で起票する(verifier 申し送り3点を添えること)
