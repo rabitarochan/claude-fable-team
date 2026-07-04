@@ -52,8 +52,9 @@ claude-fable-team/       ← The Claude Plugin itself (this repository)
 │   ├── verifier.md        (Sonnet) Behavior verification (E2E)
 │   ├── scout.md           (Haiku)  Exploration and research (parallel fan-out)
 │   └── scribe.md          (Haiku)  Recording and state updates
-├── skills/              ← 1 setup + 1 one-shot + 5 mission + 4 playbook + 1 growth
+├── skills/              ← 1 setup + 1 brainstorm + 1 one-shot + 5 mission + 4 playbook + 1 growth
 │   ├── init/              Project setup (bundles rules.md, the canonical rules)
+│   ├── brainstorm/        Pre-mission brainstorming: diverge, converge, draft goal/DoD for task/mission intake
 │   ├── task/              One-shot task execution (single-session, with a promotion path)
 │   ├── mission/           Mission kickoff (bundles templates/ and a filled-in example/)
 │   ├── work/              Execution loop (delegate → verify → record, with unattended loop mode)

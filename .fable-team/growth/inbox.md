@@ -16,6 +16,8 @@
 
 ## シグナル
 
+- [ ] 2026-07-04 | brainstorm-asset | 摩擦 | scribe は Bash を持たないため「実時刻を確認して記録」が構造的に不可能(journal に 14:30 と記録されたが実時刻は 09:27 頃 = 推測で書かれた)。テンプレート/ルールの「実時刻を確認せよ」は scribe には実行不能 → Conductor がブリーフにタイムスタンプを明記して渡すべき。scribe へ Bash 付与は過剰(ツール最小原則)。
+- [ ] 2026-07-04 | brainstorm-asset | 驚き | scout の列挙点調査(4観点)が README.ja.md を見落とした。builder の「スコープ外」指摘で露見。双言語ドキュメント(README.md + README.ja.md)は**ペアの列挙点**として暗黙的に同期すべき。列挙点定義「README + CHANGELOG のみ」の見直し候補。
 - [x] 2026-07-03 | i18n-publish | 驚き | resume 時、状態ファイルの前提(「プラグイン未インストール→ロール general-purpose 代行」)が新セッションで無効化していた(専用エージェント利用可)。ロール実行手段はセッションごと再確認が要る。state.md のブロッカー欄にセッション固有の前提を書くときは「セッション固有」と明記すべき。(→ 2026-07-03 retro で resume 原則追加を提案 → **発注者が却下(B 不採用)**。破棄として処理)
 - [x] 2026-07-03 | i18n-publish | 摩擦 | `gh repo create --public --source=. --push` は origin を SSH(git@github.com)で張るため、SSH エージェント署名が使えない環境では初回 push が失敗する。対処は remote を HTTPS に set-url + `gh auth setup-git`。今後の公開手順に「HTTPS remote を使う」を織り込むべき。(→ 2026-07-03 retro で project changelog に記録済み)
 

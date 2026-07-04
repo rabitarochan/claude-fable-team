@@ -51,8 +51,9 @@ claude-fable-team/       ← Claude Plugin 本体(このリポジトリ)
 │   ├── verifier.md        (Sonnet) 動作検証(E2E)
 │   ├── scout.md           (Haiku)  探索・調査(並列ファンアウト)
 │   └── scribe.md          (Haiku)  記録・状態更新
-├── skills/              ← 導入 1 + 単発 1 + ミッション 5 + 手筋 4 + 成長 1
+├── skills/              ← 導入 1 + ブレスト 1 + 単発 1 + ミッション 5 + 手筋 4 + 成長 1
 │   ├── init/              プロジェクト導入(規約の正本 rules.md を同梱)
+│   ├── brainstorm/        ミッション前のブレインストーミング:発散→収束、task/mission 着手用の goal/DoD を起草
 │   ├── task/              単発タスクの遂行(1 セッション完結。昇格経路つき)
 │   ├── mission/           ミッション開始(templates/ と記入例 example/ を同梱)
 │   ├── work/              実行ループ(委譲→検証→記録。無人ループモードつき)
