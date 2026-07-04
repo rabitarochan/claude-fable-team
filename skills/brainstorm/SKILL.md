@@ -29,6 +29,8 @@ it. Do not duplicate intake's job.
    - No idea-killing during this step (see Rules)
 3. **Convergence**: cluster the options, score them against the user's constraints, and pick a
    direction **with the user** — the user picks, the Conductor recommends
+   - If the emerging choice contradicts a previously recorded position (growth-inbox note, journal
+     decision), surface that objection before converging and record why it is overridden
 4. **Drafting**: write a goal draft (1-2 sentences) and an **observable** Definition of Done draft
 5. **Intake routing**: recommend `/fable-team:task` (single session) or `/fable-team:mission`
    (spans sessions), using the existing heuristic: "Will you continue this tomorrow?"
