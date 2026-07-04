@@ -19,18 +19,26 @@ it. Do not duplicate intake's job.
 ## Steps
 
 1. **Problem framing** (with the user, in dialogue): what itch or opportunity is this, for whom,
-   and what would success feel like? Do this in conversation — do not skip to solutions.
+   what would success feel like — and what happens if nothing is done? The do-nothing baseline is
+   what every option gets measured against. Do this in conversation — do not skip to solutions.
 2. **Divergence**: generate options through distinct lenses (catalog below).
+   - Generate the full option set **before** discussing any single one — presenting options one at
+     a time anchors both you and the user on the first idea
    - **Default**: Conductor-led dialogue with the user, walking a few lenses together
    - **Only when the solution space is wide**: fan out to **Opus-tier agents (architect)**, each
      briefed with a different lens — ideation is generative judgment work, not breadth search, so
      this is not a scout task. This reuses the HANDOFF.md §5 "Judge Panel" pattern: independent
-     proposals from different priorities, with scoring and merging staying with the Conductor
+     proposals from different priorities, with scoring and merging staying with the Conductor.
+     Wide means: after framing you still cannot name a leading candidate, or the plausible options
+     differ in kind (architecture, paradigm), not just in degree
    - No idea-killing during this step (see Rules)
 3. **Convergence**: cluster the options, score them against the user's constraints, and pick a
    direction **with the user** — the user picks, the Conductor recommends
+   - If clustering collapses every option into one group, divergence failed (you produced
+     variations of one idea) — return to step 2 with a contrarian or adjacent-domain lens
    - If the emerging choice contradicts a previously recorded position (growth-inbox note, journal
-     decision), surface that objection before converging and record why it is overridden
+     decision), surface that objection before converging and record the override rationale in the
+     summary's open-questions line
 4. **Drafting**: write a goal draft (1-2 sentences) and an **observable** Definition of Done draft
 5. **Intake routing**: recommend `/fable-team:task` (single session) or `/fable-team:mission`
    (spans sessions), using the existing heuristic: "Will you continue this tomorrow?"
@@ -44,6 +52,7 @@ Pick 2-4 that fit the problem; do not run all of them mechanically.
 - **Risk/failure-first** — what breaks first, and how do we hedge against it?
 - **Extensibility** — which choice keeps future options open?
 - **Contrarian/invert** — what if we did the opposite of the obvious approach?
+- **Constraint removal** — which "fixed" constraint, if dropped, would change the problem entirely?
 - **Adjacent domain** — how does a different field solve a similar problem?
 
 ## Output: Brainstorm Summary
@@ -60,6 +69,8 @@ End every brainstorm with this block, handed to the user:
 **Definition of Done draft** (observable):
 - <bullet>
 - <bullet>
+**Open questions / overridden objections**: <assumptions intake must verify; recorded positions
+overridden, and why>
 **Recommended intake route**: /fable-team:task | /fable-team:mission
 ```
 

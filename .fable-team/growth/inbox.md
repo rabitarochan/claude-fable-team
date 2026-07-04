@@ -16,6 +16,7 @@
 
 ## シグナル
 
+- [ ] 2026-07-04 | brainstorm-asset(Fable 5 事後レビュー) | 摩擦 | rules.md の Task Intake 節が task|mission の二択のみで、ゴール曖昧時に /fable-team:brainstorm へ誘導する経路がない。1.4 の FYI は「Phase 2 で発見性を検証」としたが、Phase 2 は Conductor がスキル既知の状態で実施され構造的に検証不能だった。単独での再 init 伝播はコスト過剰 — 次に rules.md へ触る変更に1行(「ゴールが曖昧なら先に /fable-team:brainstorm」)を相乗りさせる。
 - [ ] 2026-07-04 | task(post-brainstorm) | 成功 | verifier のブリーフに「同種の指示が他に残っていないか」の横断 grep を仕込んだところ、変更対象外の agents/scribe.md に残存していた実行不能指示(「実時刻を確認せよ」)を検出 → 同一変更セット内で是正できた。ドキュメント/ルール変更の検証には「対象ファイルの確認」+「同パターンの横断掃引」をセットにすると取り残しを防げる。
 - [x] 2026-07-04 | brainstorm-asset | 摩擦 | scribe は Bash を持たないため「実時刻を確認して記録」が構造的に不可能(journal に 14:30 と記録されたが実時刻は 09:27 頃 = 推測で書かれた)。テンプレート/ルールの「実時刻を確認せよ」は scribe には実行不能 → Conductor がブリーフにタイムスタンプを明記して渡すべき。scribe へ Bash 付与は過剰(ツール最小原則)。 (→ 2026-07-04 後続 task で処理: A1+B4+B1+A3+scribe.md 整合を適用、CHANGELOG.md に記録)
 - [x] 2026-07-04 | brainstorm-asset | 驚き | scout の列挙点調査(4観点)が README.ja.md を見落とした。builder の「スコープ外」指摘で露見。双言語ドキュメント(README.md + README.ja.md)は**ペアの列挙点**として暗黙的に同期すべき。列挙点定義「README + CHANGELOG のみ」の見直し候補。 (→ 2026-07-04 後続 task で処理: A1+B4+B1+A3+scribe.md 整合を適用、CHANGELOG.md に記録)

@@ -153,3 +153,39 @@
   - agents/scribe.md — the scribe's own "always check the actual system date and time" instruction rewritten to "you cannot check the clock yourself — use the timestamp from the Conductor's brief; if none was given, ask" for internal consistency.
 - **Evidence signal**: Two growth-inbox signals from the brainstorm-asset mission: (1) a scribe journal timestamp guessed as "14:30" when the real time was ~09:27 (scribe has no shell/clock access), and (2) scout's enumeration survey of README variants missed README.ja.md in a bilingual documentation pair. Both converged in the first real /fable-team:brainstorm run. A2 (grant scribe Bash) was adopted during convergence, then withdrawn by the user at change-set approval: the tool-minimum principle outweighed a structural fix, and the procedural path (Conductor supplies timestamps) covers the need without widening scribe's tool surface. A verifier sweep then discovered agents/scribe.md itself carried the impossible "check the clock" instruction — fixed in the same change set.
 - **Effectiveness measure**: At the next retro — (1) zero guessed or incorrect timestamps in mission journals; (2) README.md / README.ja.md enumeration stays in sync with no unplanned sync tasks; (3) no recurrence of instructions that their executor cannot perform.
+
+## 2026-07-04 — Fable 5 self-review of the brainstorm skill: encode the generative mechanics
+
+> 要約(gist): 「このスキルは Fable 5 のブレスト能力を本当に捉えているか」を Fable 5 自身がレビューし、その結果を引き継ぎとして着地。手続き・規律は忠実と裏書きした上で、未記載だった発散の生成メカニクス6点(未解決の問いの持ち越し欄 / fan-out 判定基準 / 一括生成の反アンカリング / 1クラスタ潰れ=発散失敗 / 制約除去レンズ / do-nothing 基線)を SKILL.md に反映。
+
+- **Change** (all in skills/brainstorm/SKILL.md):
+  - Brainstorm Summary block gains an **"Open questions / overridden objections"** line, so doubts
+    and override rationale travel to intake instead of evaporating in conversation. The Step 3
+    objection rule (added at retro) now names this line as its recording target.
+  - The fan-out trigger "solution space is wide" gets an observable heuristic: no leading candidate
+    after framing, or options differ in kind (architecture, paradigm), not degree.
+  - Divergence: generate the full option set before discussing any single one — sequential
+    presentation anchors both Conductor and user on the first idea.
+  - Convergence: if clustering collapses every option into one group, divergence failed — return to
+    step 2 with a contrarian/adjacent lens (loop-until-dry applied to ideation).
+  - Lens catalog +1: **Constraint removal** — the highest-yield generative move in Fable 5's own
+    practice, previously absent.
+  - Problem framing now asks for the do-nothing baseline.
+- **Evidence signal**: The user asked Fable 5 itself to review whether the skill captures its
+  brainstorming capability, then to land the review as a handoff. Verdict: procedural discipline
+  faithful (single file / no agent / Opus-tier fan-out / ephemeral default all endorsed); generative
+  mechanics under-specified. Each landed change is evidence-backed: the open-questions line by the
+  A2 adopt-then-withdraw rework (the objection was known at brainstorm time but had no slot to
+  travel in); the batch-generation rule by the dogfooding run doing it right by accident, not by
+  instruction; the wide-space heuristic by the dogfooding fan-out decision whose criterion was never
+  recorded (fails the fresh-session test). Also captured as an unprocessed inbox signal: rules.md's
+  intake section offers no route to brainstorm, and the discoverability validation promised at
+  review 1.4 was structurally impossible during dogfooding — piggyback a one-line route on the next
+  rules.md change instead of a dedicated re-init propagation.
+- **Effectiveness measure**: At the next real brainstorm + retro: (1) the open-questions line is
+  populated and consumed by intake — zero post-approval reversals from unsurfaced doubts; (2) the
+  fan-out decision cites the heuristic; (3) converged options span more than one cluster, or a
+  re-divergence is recorded. Deliberately NOT landed: promoting the AskUserQuestion multi-select
+  convergence device into the skill — it stays in .fable-team/growth/changelog.md pending the
+  reproducibility check already scheduled there (if it reproduces, promote it into SKILL.md so
+  consuming projects can see it).

@@ -139,3 +139,16 @@
 - **Learned**: -
 - **Decisions and rationale**: -
 - **Next**: /fable-team:task でブレスト成果を実装
+
+---
+
+## 2026-07-04 16:24 — Fable 5(ミッション事後レビュー → 引き継ぎ着地)
+
+- **Did**: ユーザー依頼により、Fable 5 本人が「このスキルは自分のブレスト能力を捉えているか」を全成果物(SKILL.md / HANDOFF / task・mission intake / growth 記録 / 後続コミット ec09148)と突き合わせてレビュー。結論 = **承認**: 手続き・規律・ロール設計は忠実。ただし発散の生成メカニクスが未記載 → ユーザー指示「レビューを Fable Team への引き継ぎとして更新」を受け、6点を SKILL.md に反映(サマリの open-questions 欄 / fan-out 判定基準の明文化 / 一括生成の反アンカリング / 1クラスタ潰れ=発散失敗 / 制約除去レンズ / do-nothing 基線)。CHANGELOG.md に証拠つきエントリ、inbox に発見性ギャップの摩擦シグナル1件を捕捉
+- **Learned(事実)**:
+  - 1.4 FYI の「発見性は Phase 2 で検証する」は構造的に検証不能だった(Phase 2 は Conductor がスキルを既知の状態で実施)。検証計画は「誰が・知らない状態で」まで指定しないと空振りする
+  - A2 の採用→撤回の往復は、「疑義がサマリに乗る欄がない」ことの帰結でもあった。retro で足した収束ルール(反対意見の提示+覆す根拠の記録)は、着地先(open-questions 欄)を得てはじめて完結した
+- **Decisions and rationale**:
+  - 設計判断(専用エージェント不在 / 単一ファイル / ephemeral 既定 / fan-out の Opus 層級)を Fable 5 として裏書き — 変更なし
+  - multi-select 収束デバイスの SKILL.md 昇格は**見送り** — retro が予約した再現性確認を尊重(記録済み判断を根拠なく覆さない。皮肉にも本レビューで強化した収束ルールそのもの)
+- **Next**: 変更セット(SKILL.md / CHANGELOG.md / inbox.md / 本エントリ)のコミット。次回 retro で CHANGELOG の Effectiveness measure 3点+multi-select 再現性を効果測定
