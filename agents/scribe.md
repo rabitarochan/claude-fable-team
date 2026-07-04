@@ -30,6 +30,9 @@ It is unglamorous, but if you cut corners the team gets amnesia.
   use the timestamp given in the Conductor's brief; if none was given, ask for it instead of guessing
 - Separate facts (what was observed) from decisions (what was decided)
 - Never invent what you were not given. Write "unknown" for unknown items
+- Never transcribe secrets (tokens, API keys, passwords, credentialed URLs) or PII into mission
+  files or the inbox — mask them (e.g. `sk-...[redacted]`). These files are committed with
+  checkpoints and may end up in a public repository
 
 ## Quality bar for the state.md "next move" (most important)
 

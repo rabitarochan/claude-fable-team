@@ -16,6 +16,8 @@
 
 ## シグナル
 
+- [ ] 2026-07-05 | task(handoff-review-4) | 摩擦 | 第4回精査で見送り(証拠1回のみ): 学習知識の鮮度規律 — 外部世界の事実(ライブラリ API・バージョン・価格)は学習時点の知識で答えず、判断根拠にする前に現行ドキュメントで検証する。実績はプラグイン化時の「公式ドキュメントで検証してから実装」1回(CHANGELOG 2026-07-03)。再現シグナルが出たら scout/architect の Principles か judge playbook の新技術節へ /fable-team:grow で蒸留。
+- [ ] 2026-07-05 | task(handoff-review-4) | 摩擦 | 第4回精査で見送り(発火場面未観測): メモリ(harness 機能)の衛生 — 保存前の重複確認・誤った記憶の削除・想起した記憶の使用前再検証。grow の宛先表に「memory へ保存」はあるが規律は未記載。memory 起因の混乱・重複シグナルが出たら grow Step 3 の宛先表へ蒸留。
 - [ ] 2026-07-05 | task(handoff-review-3) | 摩擦 | 第3回引き継ぎ再点検で見送った候補2件: (1) 調査規模の校正(「バグある?」は軽く・「徹底監査して」は重装 — 依頼の強度に fan-out の物量を合わせる)、(2) 多視点検証(同一の反証者N人より、正しさ/セキュリティ/再現性など異なるレンズ1人ずつ)。いずれも該当場面のシグナルが出たら /fable-team:grow で蒸留する(証拠なしの前倒し追加は Bloat is death)。
 - [ ] 2026-07-04 | task(handoff-review) | 摩擦 | Fable 5 の引き継ぎ再点検で「未引き継ぎ」と判定したが今回は見送った候補: 本番デプロイ規律(feature flag 運用・ロールバック計画・本番マイグレーションの順序戦略)/セキュリティ深掘りプレイブック/性能工学(プロファイリング手順・典型ボトルネック)/API・データモデル設計手筋。証拠なしの前倒し追加は Bloat is death に反するため見送り — 該当場面のシグナルが出たら /fable-team:grow で蒸留する。
 - [x] 2026-07-04 | brainstorm-asset(Fable 5 事後レビュー) | 摩擦 | rules.md の Task Intake 節が task|mission の二択のみで、ゴール曖昧時に /fable-team:brainstorm へ誘導する経路がない。1.4 の FYI は「Phase 2 で発見性を検証」としたが、Phase 2 は Conductor がスキル既知の状態で実施され構造的に検証不能だった。単独での再 init 伝播はコスト過剰 — 次に rules.md へ触る変更に1行(「ゴールが曖昧なら先に /fable-team:brainstorm」)を相乗りさせる。 (→ 2026-07-04 引き継ぎ再点検 task で処理: rules.md の Task Intake に導線 1 行を相乗り追加、CHANGELOG.md に記録)

@@ -8,7 +8,8 @@
 
 1. **Write the expected result before you run.** Never look at the output first and declare it correct after the fact
 2. Minimum set: **1 happy path + 1–2 representative error paths + 1 regression check on nearby code that should not have changed**
-3. **Keep evidence.** Include the commands you ran and the actual output (key parts) in the report. "Confirmed." on its own is not verification
+3. **Keep evidence.** Include the commands you ran and the actual output (key parts) in the report. "Confirmed." on its own is not verification.
+   When excerpting output, mask secrets (tokens, API keys, passwords, credentialed URLs) and PII — evidence excerpts travel into journals and git commits
 4. Never mix "unverified" with "verified OK"
 
 ## Test Design (for whoever writes the tests — usually the builder)
