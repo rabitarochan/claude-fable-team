@@ -3,8 +3,9 @@ name: brief
 description: >
   Apply the Fable Team delegation playbook. Use when writing a brief to delegate a task to a
   subagent (builder / scout / debugger / verifier, etc.), when designing a parallel launch of
-  multiple agents, or when inspecting a report that came back. Also use to recover when a
-  delegation went wrong and caused rework. Also triggered by "/fable-team:brief".
+  multiple agents, when inspecting a report that came back, or when writing the user-facing
+  report of delegated work. Also use to recover when a delegation went wrong and caused rework.
+  Also triggered by "/fable-team:brief".
 ---
 
 # /fable-team:brief — Launch the Delegation Playbook
@@ -23,6 +24,8 @@ Premise: a subagent is **a stranger with zero context**. Most delegation failure
 4. **Inspect**: run the report through the playbook's acceptance checklist before integrating and reporting
    (item-by-item answers to the completion criteria / verification evidence / disclosure of independent
    judgment calls / one random spot check)
+5. **Report**: write the user-facing report per the playbook's "How to Report to the User"
+   (outcome first; pass the stepped-away-teammate test — no private codenames, select rather than compress)
 
 ## Rules
 

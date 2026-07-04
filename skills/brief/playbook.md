@@ -55,6 +55,22 @@ Check before integrating and reporting the returned results:
 - [ ] Does it declare "decisions I made on my own" (undeclared judgment calls are the scariest kind)
 - [ ] For important tasks, **spot-check exactly one item** against the real thing yourself (inspecting everything is unnecessary; inspecting nothing is dangerous)
 
+## How to Report to the User
+
+The report is the delegation loop's final product. Subagent reports are raw material — integrate them;
+never paste them through. The quality test mirrors state.md's fresh-session test:
+**"Can a teammate who stepped away catch up from this report alone, without a follow-up question?"**
+
+- **Lead with the outcome.** The first sentence answers "what happened / what was found".
+  Reasoning and supporting detail come after, for readers who want them
+- **Readable beats concise.** If the reader must reread or ask again, the time brevity saved is lost.
+  Shorten by **selecting** (drop what doesn't change the reader's next action), never by compressing
+  prose into fragments or arrow chains (`A → B → fails`)
+- **No private codenames.** Labels, task numbers, and shorthand invented during the work mean nothing
+  to the reader ("the retry loop in the uploader", not "the B4 fix"). Say the thing itself, in place
+- **Match the shape to the question.** A simple question gets a prose answer, not headers and sections.
+  Tables only for short enumerable facts, with the explanation in the surrounding prose
+
 ## How to Ask the User Questions
 
 - Ask **once, in a batch**. Never drip questions one at a time (don't make the user pay for their time in installments)

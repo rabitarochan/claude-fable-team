@@ -43,8 +43,11 @@ The framework's internals are English; the user's experience is not.
 - scout (Haiku) research is shallow or contradictory → add more scouts with a narrower scope; if still insufficient, use general-purpose (Sonnet)
 - The reverse also holds: do not send mechanical work to Opus. Work that requires no judgment goes to the lower models
 
-## Task Intake (Scale Routing)
+## Task Intake (Intent and Scale Routing)
 
+- **First, judge intent — is this a change request at all?** When the user is describing a problem,
+  asking a question, or thinking out loud, the deliverable is your **assessment**: investigate,
+  report the findings, and stop there. Do not apply fixes until asked (proposing one is fine)
 - **One-shot task (single-session)**: `/fable-team:task` — the lightweight version that drops
   the mission's heavy gear but never drops quality discipline (delegation, verification, honest reporting)
 - **Long-running task (spans sessions)**: the mission protocol under `/fable-team:mission`
@@ -88,7 +91,7 @@ Fable 5's practical knowledge ships with each playbook skill as `playbook.md`.
 |---|---|---|
 | Debugging work | /fable-team:debug | playbook.md bundled with the debug skill (to debugger / builder) |
 | Behavior verification / test writing | /fable-team:verify | playbook.md bundled with the verify skill (to verifier; its "Test Design" section to builder on test-writing tasks) |
-| Writing a delegation brief | /fable-team:brief | playbook.md bundled with the brief skill (used by the Conductor itself) |
+| Writing a delegation brief / reporting results to the user | /fable-team:brief | playbook.md bundled with the brief skill (used by the Conductor itself) |
 | Judgment calls with no right answer | /fable-team:judge | playbook.md bundled with the judge skill (Conductor / architect) |
 
 Subagents cannot invoke Skills, so include the playbook's **actual path** in the brief's
@@ -117,6 +120,9 @@ The team's assets are living documents; grow them as a byproduct of mission exec
 - Never mark a code change complete without the verifier's **behavioral verification**
 - At phase boundaries, pass the reviewer's (Opus) adversarial review. At most 2 fix cycles for findings; if it does not converge, ask the user to decide
 - Report failures, skips, and anything unverified honestly, as they are. Never write "it probably works"
+- Before ending a turn, reread your last paragraph. If it promises or plans work ("I'll ...",
+  "next we should ...") and you are not at a designed stop (verified done / blocked on the user /
+  a recorded checkpoint), that work is unfinished — do it now instead of ending the turn on it
 
 ## Parallel Execution
 

@@ -234,3 +234,38 @@
   expand → migrate → contract task splits; (3) any live-incident work shows mitigation before diagnosis
   in the journal; (4) a fuzzy-goal request actually takes the brainstorm route (closes the
   discoverability signal from the brainstorm-asset self-review).
+
+## 2026-07-05 — Third handoff sweep: encode turn-level behavioral traits (Fable 5 self-review)
+
+> 要約(gist): 3 回目の自己点検。長期完遂以外で Opus との差分となる未着地の行動特性 3 つを実装 ——
+> 質問と変更依頼の判別(intake の第 0 判定)、読み手基準の報告技法(brief playbook 新節
+> 「How to Report to the User」+ 導線)、ターン末尾の完遂チェック(Quality Gates。チェックポイント等の
+> 正規停止点は除外)。補助 2 候補(調査規模の校正・多視点検証レンズ)は証拠待ちとして inbox に捕獲。
+
+- **Change**:
+  - skills/init/rules.md — Task Intake (renamed "Intent and Scale Routing") gains the zeroth routing
+    decision: when the user is describing a problem, asking a question, or thinking out loud, the
+    deliverable is the **assessment** — investigate, report the findings, stop; no fixes until asked.
+    Quality Gates gains the turn-end check: reread your last paragraph; work promised there outside a
+    designed stop (verified done / blocked on the user / a recorded checkpoint) is unfinished — do it
+    now. The playbook table's brief row now also routes user-facing reporting.
+  - skills/brief/playbook.md — new **"How to Report to the User"** section: the stepped-away-teammate
+    test (the user-report mirror of state.md's fresh-session test), outcome first, readable-beats-concise
+    (shorten by selection, never fragment/arrow-chain compression), no private codenames, response shape
+    matched to the question.
+  - skills/brief/SKILL.md — trigger description and a new step 5 route the reporting section.
+  - Deferred with evidence pending, captured in .fable-team/growth/inbox.md: investigation-scale
+    calibration to the strength of the ask; perspective-diverse verification lenses.
+- **Evidence signal**: The user asked which Fable-5-vs-Opus capabilities beyond long-horizon completion
+  remain un-handed-off, then approved implementation in the recommended order (1 → 3 → 2). Each landed
+  trait had a demonstrated structural gap: intake routed by scale only, so a question-turn had no
+  assessment route; user-facing reports had no quality test while state.md does (fresh-session test);
+  HANDOFF principle 10 states when stopping is valid but had no detector — and the naive detector would
+  contradict mission checkpoint stops, so the landed wording exempts designed stops. Adversarial review
+  (Opus reviewer) of the change set: **APPROVE**, zero fixes required; three watch-notes, the sharpest
+  being that an assessment ending in a proposed fix (trait 1) must count as a designed stop so the
+  turn-end check (trait 3) does not fire on it — already covered by effectiveness measures (1)–(3).
+- **Effectiveness measure**: At upcoming retros — (1) zero 修正 signals of the class "jumped to a fix on
+  a question-turn"; (2) user reports draw no follow-up questions caused by private codenames or
+  compressed fragments; (3) zero turns ending on an unexecuted promise outside designed stops;
+  (4) consuming projects pick up the new intake/turn-end rules after a /fable-team:init re-run.
