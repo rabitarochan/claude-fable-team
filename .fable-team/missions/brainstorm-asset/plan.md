@@ -57,9 +57,9 @@
 
 | # | タスク | 担当 | 完了条件(観測可能) | 依存 | 状態 |
 |---|--------|------|----------------------|------|------|
-| 3.1 | CHANGELOG エントリ | scribe | `日付 — タイトル` 形式で、日本語要約 / Change / Evidence signal / Effectiveness measure を含むエントリが CHANGELOG.md に存在 | Phase 2 | ⬜ |
-| 3.2 | 変更セット提示と承認 | Conductor | 追加ファイル(SKILL.md)+ README 差分 + CHANGELOG を変更セットとして発注者に提示し、承認を得る | 3.1 | ⬜ |
-| 3.3 | 伝播不要の確認 | Conductor | rules.md 未変更につき consuming プロジェクトの再 init は不要、と判断を1行記録(任意で導入プロジェクトでの `/fable-team:init` が差分なしで完走することを確認) | 3.2 | ⬜ |
+| 3.1 | CHANGELOG エントリ | scribe | `日付 — タイトル` 形式で、日本語要約 / Change / Evidence signal / Effectiveness measure を含むエントリが CHANGELOG.md に存在 | Phase 2 | ✅ |
+| 3.2 | 変更セット提示と承認 | Conductor | 追加ファイル(SKILL.md)+ README 差分 + CHANGELOG を変更セットとして発注者に提示し、承認を得る | 3.1 | ✅ |
+| 3.3 | 伝播不要の確認 | Conductor | rules.md 未変更につき consuming プロジェクトの再 init は不要、と判断を1行記録(任意で導入プロジェクトでの `/fable-team:init` が差分なしで完走することを確認) | 3.2 | ✅ |
 
 ## リスク
 

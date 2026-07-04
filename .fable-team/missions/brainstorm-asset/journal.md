@@ -107,3 +107,26 @@
   - 3.2: Conductor が変更セット(skills/brainstorm/SKILL.md 新規 + README.md / README.ja.md 差分 + CHANGELOG)をユーザーに提示し承認を得る
   - 3.3: rules.md 未変更につき再 init 伝播不要と記録
   - **注意**: ブレスト成果の実装(scribe への Bash 付与等4点)は本ミッションのスコープ外 — 別途 /fable-team:task で起票する(verifier 申し送り3点を添えること)
+
+---
+
+## 2026-07-04 10:27 — Conductor (3.2 承認 + ユーザー訂正)
+
+- **Did**: 変更セット(skills/brainstorm/SKILL.md 新規 / README.md / README.ja.md / CHANGELOG.md エントリ)をユーザーに提示 → **承認**(3.2 完了)。ただし1点の方針訂正つき: **A2(scribe への Bash 付与)を撤回**。ブレスト成果の収束方向は「手順で防ぐ(A1+B1+B4)のみ」に改訂。改訂版 Brainstorm Summary を会話でユーザーに提示済み。
+- **Learned(事実)**: この訂正は元 inbox シグナル(「Bash 付与は過剰」)と再整合する方向であり、verifier が 2.2 で指摘した「記録済み反対意見を根拠明示なく覆した」懸念が実際にユーザーの再考で顕在化した。ツール最小原則が再確認された。
+- **補足**: A2 撤回により A3(journal テンプレートの「実時刻を確認せよ」を「時刻は Conductor のブリーフから受け取る」に修正)の不採用理由が消滅 → 将来の task 起票時に A3 同梱を推奨(採否はユーザー判断)と改訂版サマリに明記。
+- **補足**: なお本訂正は Phase 2 ゲート判定を無効化しない: スキル自体は設計どおり機能し(「収束の選択権はユーザーが持つ」ルールの実践)、intake 適合の検証結果はサマリの構造に対するもの。CHANGELOG エントリは A2 に言及していないため修正不要。
+- **確認**: 3.3: rules.md 未変更につき、導入済みプロジェクトへの再 init 伝播は**不要**と確認(3.3 完了)。
+- **Next**: verifier による DoD 全項目の最終チェック → mission 完了処理(Status: completed)→ 完了コミット → /fable-team:retro を提案。
+
+---
+
+## 2026-07-04 10:32 — Conductor (via verifier / ミッション完了)
+
+- **Did**: verifier が DoD 全6項目の最終チェックを実測で実施 → **ALL MET**(SKILL.md 準拠・日本語 grep 0 を verifier 自身が再実行 / validate exit 0 を再実行 / reviewer 逆評価と修正収束の journal 証跡 / ドッグフーディング3要素の証跡と A2 撤回の扱いの妥当性 / README 両言語 + CHANGELOG エントリ実在 / 承認記録 / git 履歴で agents・rules.md・.claude-plugin の全期間不変更を確認)。mission.md の Status を completed に変更、DoD チェックボックスを [x] 化。
+- **最終成果**: 新スキル `/fable-team:brainstorm`(76行・単一ファイル)+ README 両言語更新 + CHANGELOG エントリ。作らなかったもの: 新エージェント / playbook.md / templates / 状態ディレクトリ / rules.md 変更。
+- **Parting notes**:
+  1. ループ停止理由 = DoD 全達成によるミッション完了
+  2. 進捗 = 13/13 タスク + 最終検証 ALL MET、コミット: Phase 1: 05f7a6b / Phase 2: 683b415 / 完了: このエントリと同時のコミット
+  3. 再開不要 — 次のアクション: /fable-team:retro(振り返り)と、ブレスト成果(A1+B1+B4、A3 推奨)の /fable-team:task 起票
+- **Next**: /fable-team:retro を提案。growth inbox の未処理シグナルは5件(修正1・摩擦2・驚き1・成功1)— 閾値到達につき retro 内での蒸留または /fable-team:grow を推奨。

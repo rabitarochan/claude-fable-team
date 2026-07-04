@@ -2,7 +2,7 @@
 
 - slug: `brainstorm-asset`
 - Start date: 2026-07-04
-- Status: in progress
+- Status: completed
 - The user's request (verbatim):
   > Fable の力を借りたくて、Fable で mission を始めます。
   > あなたが引き継いだ中に、ブレインストーミング (プロジェクトを始める前のアイディア出し) に関するものはありますか？
@@ -19,12 +19,12 @@ Fable Team 自身の運用(委任・検証・記録)で作り上げる(ドッグ
 
 ## Definition of Done
 
-- [ ] `skills/brainstorm/SKILL.md` が存在し、規約に準拠している: frontmatter description に "Use when…" と "/fable-team:brainstorm" トリガ句 / 本文に (a) 手順(問題枠づけ→発散→収束→goal/DoD 草案化→intake ルート判定) (b) fenced の出力サマリブロック (c) 小さなレンズカタログ (d) 「対ユーザー対話はユーザー言語で」規則 / 内部は全英語(日本語文字 grep = 0)
-- [ ] `claude plugin validate .` が exit 0
-- [ ] reviewer(Opus)の逆評価で未対応指摘 0(修正サイクル最大2周)
-- [ ] ドッグフーディング: 実在のあいまいな題材で新スキルによるブレストを1回実施し、出力(goal 草案+観測可能な DoD 草案)が `/fable-team:mission` または `/fable-team:task` の intake に手戻りなく受理された証拠が journal にある。対話がユーザー言語(日本語)で行われた
-- [ ] README.md 構造ツリーに brainstorm 行が追加され、CHANGELOG.md に証拠シグナル付きエントリが存在する
-- [ ] 変更セット(SKILL.md + README 差分 + CHANGELOG)がユーザーに提示され、承認されている
+- [x] `skills/brainstorm/SKILL.md` が存在し、規約に準拠している: frontmatter description に "Use when…" と "/fable-team:brainstorm" トリガ句 / 本文に (a) 手順(問題枠づけ→発散→収束→goal/DoD 草案化→intake ルート判定) (b) fenced の出力サマリブロック (c) 小さなレンズカタログ (d) 「対ユーザー対話はユーザー言語で」規則 / 内部は全英語(日本語文字 grep = 0)
+- [x] `claude plugin validate .` が exit 0
+- [x] reviewer(Opus)の逆評価で未対応指摘 0(修正サイクル最大2周)
+- [x] ドッグフーディング: 実在のあいまいな題材で新スキルによるブレストを1回実施し、出力(goal 草案+観測可能な DoD 草案)が `/fable-team:mission` または `/fable-team:task` の intake に手戻りなく受理された証拠が journal にある。対話がユーザー言語(日本語)で行われた
+- [x] README.md 構造ツリーに brainstorm 行が追加され、CHANGELOG.md に証拠シグナル付きエントリが存在する
+- [x] 変更セット(SKILL.md + README 差分 + CHANGELOG)がユーザーに提示され、承認されている
 
 ## Verification harness (this project's feedback loop)
 

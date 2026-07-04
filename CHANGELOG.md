@@ -124,3 +124,11 @@
 - **Effectiveness measure**: the back-translation review found 14 fixes + 2 design flaws (it worked). Next
   retro: confirm the bilingual docs don't drift (English is authoritative) and that the status-token / grep-
   target fixes hold across resumes.
+
+## 2026-07-04 — Add /fable-team:brainstorm skill (brainstorm-asset mission)
+
+> 要約(gist): ミッション前のブレインストーミング支援スキル /fable-team:brainstorm を新設。ゴールがあいまいな段階で「枠づけ→発散→収束→goal/DoD 草案化」を回し、task/mission の intake に接続する。
+
+- **Change**: New `skills/brainstorm/SKILL.md` — a single-file command skill (sibling of `task`): procedure (problem framing → divergence → convergence → goal/DoD drafting → intake routing), a 6-lens starter catalog, a fenced "Brainstorm Summary" output block that feeds /fable-team:task or /fable-team:mission intake, divergence fan-out pinned to Opus-tier agents (architect) with scoring/merging kept by the Conductor (HANDOFF §5 Judge Panel reuse), and the user-language dialogue rule. README.md and README.ja.md structure trees + counting lines updated. Deliberately NOT added: a new agent, a playbook.md, templates/, state directories, rules.md changes (so no re-init propagation to consuming projects is needed).
+- **Evidence signal**: The user explicitly asked whether the Fable 5 handoff includes brainstorming (pre-project ideation) support; a repo-wide search found none (closest: the Judge Panel orchestration pattern in HANDOFF §5). Dogfooded within the same mission: a real Japanese-language brainstorm on 2 unprocessed growth-inbox signals produced a summary the verifier judged intake-fit without rework (PASS-WITH-NOTES). Adversarial review (Opus) at the Phase 1 gate: APPROVE-WITH-FIXES, all findings resolved in one cycle.
+- **Effectiveness measure**: To evaluate at future /fable-team:retro / /fable-team:grow: (1) brainstorm summaries continue to be adopted by task/mission intake without rework; (2) discoverability — the skill actually gets proposed when a fuzzy-goal request arrives (rules.md intake section was intentionally left unchanged; recurring "should have brainstormed first" moments would be the signal to revisit); (3) the single-file/no-agent scope holds (reconsider-if conditions recorded in the mission plan).
