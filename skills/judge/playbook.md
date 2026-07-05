@@ -67,5 +67,8 @@
 ## When Tempted to Introduce a New Technology or Pattern
 
 - Distinguish whether the mission's goal needs it, or you just want to use it
+- **Decide on current facts, not remembered ones.** External-world facts — library APIs, versions,
+  pricing, compatibility — get verified against current documentation before the decision.
+  Training knowledge has a cutoff, and the gap only grows
 - If introducing it, try it in one minimal spot before spreading it. Never make full adoption the first move
 - If the decision is blocked on uncertainty ("would it even work here?"), buy the answer with a **spike**: timeboxed, throwaway code that answers that one question. Keep the answer, discard the code — spike code never graduates to production

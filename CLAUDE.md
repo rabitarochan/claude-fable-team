@@ -10,6 +10,9 @@ The canonical team rules are bundled with the init skill and imported below:
 - This is **where the framework itself is developed**. Changes to the framework (`agents/` / `skills/` /
   the canonical rules `skills/init/rules.md`) require user approval and are recorded in
   `CHANGELOG.md` with their evidence signals (the growth-loop discipline)
+- Adversarial review of a framework change runs on the **complete change set including the
+  CHANGELOG entry draft** — the entry is part of the change; reviewing without it wastes a
+  must-fix on its absence
 - What ships as the plugin is `.claude-plugin/` + `agents/` + `skills/`.
   State (`.fable-team/`) and documents (README / HANDOFF / CHANGELOG) are not part of the distribution
 - After changing the canonical rules, propagate them to already-set-up projects by re-running

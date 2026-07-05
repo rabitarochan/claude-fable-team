@@ -372,3 +372,38 @@
   approved in full; the resume mirror's "a **new** destructive operation" wording narrows the
   reading, and the worst case is one extra confirmation before an irreversible act (the safe
   direction) — tighten the wording only if it produces friction signals.
+
+## 2026-07-05 — Growth cycle 1: cross-sweep recipe and knowledge-freshness rule (/fable-team:grow, run by Fable 5)
+
+> 要約(gist): 初の閾値超過(未処理 6 件)による本格 grow サイクルを Fable 5 自身が実演。
+> ①verify playbook に検証レシピ「ドキュメント・ルール類の変更」を追加(横断掃引の検出実績 2 回+
+> 標準適用 4 回 = 3 回ルール成立)。②judge playbook 新技術節に「外部世界の事実は現行ドキュメントで
+> 検証してから決定する」を追加(「古い知識起因の失敗は普通のバグに化けてシグナル化しない」という
+> 検出バイアスを Fable 5 が判定し、退避から格上げ)。HQ レビュー規約とメモリ衛生シグナルの破棄は
+> プロジェクト側 growth/changelog.md に記録。
+
+- **Change**:
+  - skills/verify/playbook.md — new recipe **"Documentation, rules, and other prose assets"** under
+    Recipes by Change Type: match the claimed change list against the target files item by item;
+    **cross-sweep the repo for the same pattern** (stale copies survive outside the change set);
+    check paired documents (translations, README pairs, enumeration points).
+  - skills/judge/playbook.md — new bullet under "When Tempted to Introduce a New Technology or
+    Pattern": **decide on current facts, not remembered ones** — external-world facts (library
+    APIs, versions, pricing, compatibility) get verified against current documentation before the
+    decision; training knowledge has a cutoff, and the gap only grows.
+- **Evidence signal**: cross-sweep recipe — the 成功 inbox signal with two real catches
+  (agents/scribe.md's impossible clock instruction on 2026-07-04; agents/debugger.md's
+  unconditional "reproduce first" + skills/verify/SKILL.md's stale routing at sweep 2), plus
+  standard application at sweeps 4 and 5 with zero misses — rule of three satisfied. Freshness
+  rule — one documented success (plugin-ization verified the plugin spec against official docs
+  before implementing, 2026-07-03) plus Fable 5's promotion judgment: the deferral condition
+  ("wait for a recurrence signal") is structurally biased against detection, because
+  stale-knowledge failures masquerade as ordinary bugs and never get attributed to freshness,
+  while the exposure (training cutoff vs. a moving world) is permanent and grows. Both approved
+  by the user at the grow approval gate (multi-select, all four items accepted).
+- **Effectiveness measure**: at upcoming retros — (1) documentation/rules change sets get verified
+  via the recipe without the Conductor hand-writing sweep instructions into each brief, and
+  leftover-instruction catches continue (or the class stops occurring); (2) decisions hinging on
+  external-world facts cite a current-doc check in their rationale, and zero 驚き signals of the
+  class "the API/version had changed since training"; (3) both changes reach consuming projects
+  without re-init (playbooks are referenced by bundled path, not embedded in CLAUDE.md).

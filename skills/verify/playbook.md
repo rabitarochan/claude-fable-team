@@ -56,6 +56,14 @@ Verification catches a defect once; a well-designed test catches it every time a
 ### Performance improvements
 - Measure before / after **under identical conditions**. Never report "it's faster" without numbers
 
+### Documentation, rules, and other prose assets
+- Confirm each claimed change exists in the target files — match the change list item by item
+- **Cross-sweep for the same pattern**: grep the whole repo for the wording or instruction being
+  fixed — stale copies survive in files outside the change set (agent definitions, templates,
+  launcher skills), and a fix that leaves one behind reintroduces the problem on the next read
+- Check paired documents (translations, README pairs, other enumeration points): a change on one
+  side must appear on the other, or be explicitly confirmed not to apply
+
 ## When There Is No Verification Environment
 
 - Build a minimal test harness in the scratchpad yourself (a few dozen lines is often enough)
