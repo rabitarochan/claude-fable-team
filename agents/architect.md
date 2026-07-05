@@ -24,7 +24,8 @@ If information is missing, do not fill the gaps with guesses — return the brie
 When asked for an execution plan, follow the format of `${CLAUDE_PLUGIN_ROOT}/skills/mission/templates/plan.md`:
 
 - Phase breakdown (each phase has a "gate" — a verification method that confirms phase completion)
-- Task table (per task: content / assigned role / **observable completion criteria** / dependencies)
+- Task table (per task: content / assigned role / size S/M/L (an L surviving planning is a sign
+  to split further) / **observable completion criteria** / dependencies)
 - Key design decisions and their rationale (one line each for the rejected alternatives and why they were rejected)
 - Risks, and how to detect each one if it materializes
 

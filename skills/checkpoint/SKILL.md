@@ -28,7 +28,7 @@ Create a state from which the next session can fully resume even if this session
    - Align the task status symbols in `plan.md` with reality
 
 4. **Physical checkpoint**: if this is a git repository, suggest a WIP commit
-   (commit the mission state files together with it)
+   (commit the mission files together with it — including `delegations.md`)
 
 5. **Self-test (mandatory)**: re-read state.md and ask yourself —
    **"Could an Opus session seeing this repository for the first time resume from this alone?"**

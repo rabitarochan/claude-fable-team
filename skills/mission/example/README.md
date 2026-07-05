@@ -12,3 +12,6 @@ In a real mission, these files are created under `.fable-team/missions/<slug>/`.
 - **journal.md 07-01 09:15** — an example where re-verifying assumptions during /fable-team:resume
   revealed a divergence from reality, and state was fixed treating reality as the truth
 - **The "Next move" in state.md** — a model of the concreteness that lets a first-time session resume from it alone
+- **delegations.md** — the process-telemetry mirror of those journal events: task 1.3 (sized S)
+  taking three attempts plus a debugger escalation, logged as metric lines with a failure dossier,
+  and the phase-1 gate recorded with findings counts

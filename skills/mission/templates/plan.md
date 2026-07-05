@@ -3,6 +3,8 @@
 > Author: architect / Approved: YYYY-MM-DD
 > Status legend: ⬜ not started / 🔄 in progress / ✅ done (verified) / ⏸️ blocked
 > ✅ only for tasks that passed verifier's behavioral verification.
+> Size legend: S = one delegation should complete it / M = a few delegations or a fix cycle
+> expected / L = should be split further (an L surviving planning is a warning sign)
 
 ## Assumptions
 
@@ -20,18 +22,18 @@
 
 **Gate**: <How this phase is verified as complete (reviewer review + what to run and observe)>
 
-| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
-|---|--------|------|----------------------|------|------|
-| 1.1 | | builder | | - | ⬜ |
-| 1.2 | | builder | | 1.1 | ⬜ |
+| # | Task | Owner | Size | Completion criteria (observable) | Depends on | Status |
+|---|--------|------|------|----------------------|------|------|
+| 1.1 | | builder | | | - | ⬜ |
+| 1.2 | | builder | | | 1.1 | ⬜ |
 
 ## Phase 2: <name>
 
 **Gate**: <verification method>
 
-| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
-|---|--------|------|----------------------|------|------|
-| 2.1 | | | | | ⬜ |
+| # | Task | Owner | Size | Completion criteria (observable) | Depends on | Status |
+|---|--------|------|------|----------------------|------|------|
+| 2.1 | | | | | | ⬜ |
 
 ## Risks
 

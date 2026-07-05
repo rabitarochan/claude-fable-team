@@ -21,7 +21,8 @@ The team gets stronger with every mission — if it keeps records.
 3. **Extract lessons** — answer these questions:
    - What was duplicated effort (rework, redoing things, wasted investigation)?
    - Which decisions were right / wrong? (Judge by the information available at decision time, not hindsight)
-   - Where did estimates diverge from reality?
+   - Where did estimates diverge from reality? (check plan.md's Size column against the
+     attempt counts in delegations.md)
    - Are there **new pitfalls to add** to the pitfall catalog in HANDOFF.md?
 
    Merge any unprocessed signals for this mission from `.fable-team/growth/inbox.md` into the lessons here.

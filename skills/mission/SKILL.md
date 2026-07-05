@@ -41,17 +41,21 @@ Have architect (Opus) produce an execution plan, given:
 
 - The goal and Definition of Done / scout findings (summarized) / constraints
 - Requirements: phase split (a gate per phase), a task table (observable completion criteria,
-  assigned role, dependencies), key design decisions with rationale, risks
+  assigned role, size estimate S/M/L, dependencies), key design decisions with rationale, risks
 
 ## Step 4: Materialize (creating the state files)
 
-Create 4 files in `.fable-team/missions/<slug>/` based on the `templates/` bundled with this skill
-(delegate to scribe, or do it yourself if small). Filled-in samples are in the bundled `example/`:
+Create the 4 state files plus the delegation log in `.fable-team/missions/<slug>/` based on the
+`templates/` bundled with this skill (delegate to scribe, or do it yourself if small).
+Filled-in samples are in the bundled `example/`:
 
-- `mission.md` — goal, Definition of Done, constraints, out of scope (keep the user's original request verbatim)
+- `mission.md` — goal, Definition of Done, constraints, out of scope (keep the user's original
+  request verbatim; record your model in the `Conductor:` line)
 - `plan.md` — architect's plan
 - `state.md` — status "in progress", next move = the first task in the plan
 - `journal.md` — opening entry (check the actual system date/time and record it)
+- `delegations.md` — empty log. Append-only process telemetry for after-the-fact QA;
+  **not needed for resume** — the 4 state files above remain the resume set
 
 ## Step 5: Approval Gate
 

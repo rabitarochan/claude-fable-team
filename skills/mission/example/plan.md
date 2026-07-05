@@ -2,6 +2,7 @@
 
 > Author: architect / Approved: 2026-06-29
 > Status legend: ⬜ not started / 🔄 in progress / ✅ done (verified) / ⏸️ blocked
+> Size legend: S = one delegation / M = a few delegations or a fix cycle / L = split further
 
 ## Assumptions
 
@@ -20,22 +21,22 @@
 **Gate**: reviewer LGTM + actually start the app and observe the happy path of every endpoint via curl
 → **passed 2026-06-30** (see journal)
 
-| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
-|---|--------|------|----------------------|------|------|
-| 1.1 | Project scaffold (TS/Express/test setup) | builder | The sample test passes with `npm test`, and the app starts with `npm start` | - | ✅ |
-| 1.2 | Implement todos CRUD | builder | POST/GET/PUT/DELETE behave per spec via curl | 1.1 | ✅ |
-| 1.3 | Test coverage (all CRUD paths + error cases) | builder | `npm test` all green; stable under parallel runs (20 consecutive green runs) | 1.2 | ✅ |
+| # | Task | Owner | Size | Completion criteria (observable) | Depends on | Status |
+|---|--------|------|------|----------------------|------|------|
+| 1.1 | Project scaffold (TS/Express/test setup) | builder | M | The sample test passes with `npm test`, and the app starts with `npm start` | - | ✅ |
+| 1.2 | Implement todos CRUD | builder | M | POST/GET/PUT/DELETE behave per spec via curl | 1.1 | ✅ |
+| 1.3 | Test coverage (all CRUD paths + error cases) | builder | S | `npm test` all green; stable under parallel runs (20 consecutive green runs) | 1.2 | ✅ |
 
 ## Phase 2: Authentication and user separation
 
 **Gate**: reviewer LGTM + observe via curl that user A's key cannot touch user B's TODOs
 
-| # | Task | Owner | Completion criteria (observable) | Depends on | Status |
-|---|--------|------|----------------------|------|------|
-| 2.1 | users table and API key issuance | builder | `POST /users` returns 201 + a key; includes the display_name column (changed 07-01, see journal) | - | ✅ |
-| 2.2 | Auth middleware | builder | `npm test -- auth` all green; 401 for missing/invalid key | 2.1 | 🔄 |
-| 2.3 | Per-user TODO separation | builder | GET on B's TODO with A's key → 404; nothing leaks into listings | 2.2 | ⬜ |
-| 2.4 | README (startup steps, API list) | builder | Following the written steps as-is starts the app and every API responds | 2.3 | ⬜ |
+| # | Task | Owner | Size | Completion criteria (observable) | Depends on | Status |
+|---|--------|------|------|----------------------|------|------|
+| 2.1 | users table and API key issuance | builder | S | `POST /users` returns 201 + a key; includes the display_name column (changed 07-01, see journal) | - | ✅ |
+| 2.2 | Auth middleware | builder | M | `npm test -- auth` all green; 401 for missing/invalid key | 2.1 | 🔄 |
+| 2.3 | Per-user TODO separation | builder | M | GET on B's TODO with A's key → 404; nothing leaks into listings | 2.2 | ⬜ |
+| 2.4 | README (startup steps, API list) | builder | S | Following the written steps as-is starts the app and every API responds | 2.3 | ⬜ |
 
 ## Risks
 

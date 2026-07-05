@@ -407,3 +407,75 @@
   external-world facts cite a current-doc check in their rationale, and zero 驚き signals of the
   class "the API/version had changed since training"; (3) both changes reach consuming projects
   without re-init (playbooks are referenced by bundled path, not embedded in CLAUDE.md).
+
+## 2026-07-05 — Process telemetry for mentor QA (delegation log, size estimates, conductor field)
+
+> 要約(gist): ミッションプロトコルは resume(前方への引き継ぎ)用に設計されており、事後 QA
+> (後方からの検査)には委譲ループの一次資料が残らない —— というメンター QA ギャップ分析
+> (発注者の質問起点)を受けて 4 点を実装。①delegations.md(追記専用テレメトリ、委譲 1 件 = 1 行、
+> 失敗時のみブリーフ/報告の原文ドシエ) ②plan.md に Size 列(S/M/L) ③mission.md に Conductor 欄
+> (指揮モデルの A/B 比較用) ④reviewer ゲート判定の構造化行。状態ファイルは 4 のまま
+> (telemetry は resume 不要と明示)、rules.md 非接触 = 再 init 伝播不要。
+
+- **Change**:
+  - NEW skills/mission/templates/delegations.md — append-only delegation log template: one line
+    per delegation (time / task / agent(model) / attempt / verdict ✅❌⤴ / note); reviewer gates
+    logged in the same format with findings counts, carrying the reviewer's own verdict vocabulary
+    (✅ LGTM / ⚠️ needs fixes / ❌ reimplement); **dossier rule** — verbatim brief + report only
+    for escalated (⤴) or non-converging delegations (a routine send-back that converges needs no
+    dossier), masked per Boundary Hygiene.
+    Fix-cycle count = highest attempt number (no separate counter for the Haiku scribe to get wrong)
+  - skills/mission/templates/mission.md — `Conductor:` line (model at mission start; a resuming
+    different model notes the change in the journal, never rewrites the line)
+  - skills/mission/templates/plan.md — task tables gain a Size column with an S/M/L legend
+    (an L surviving planning is a warning sign); actuals are derived from journal timestamps +
+    delegations.md attempts, so no actuals column (no double bookkeeping)
+  - skills/mission/SKILL.md — Step 3 requires size estimates from architect; Step 4 creates the
+    4 state files **plus** the delegation log (explicitly not part of the resume set)
+  - skills/work/SKILL.md — Step 4: scribe appends one delegation line per delegation, dossier
+    material passed verbatim on ❌/⤴/non-convergence; Step 5: phase-gate verdict + findings
+    counts logged as a delegations.md line
+  - agents/scribe.md — delegations.md added to responsibilities; append-only extended to it
+  - agents/architect.md — plan deliverable includes size S/M/L
+  - skills/resume/SKILL.md — delegations.md excluded from the minimum read, with one carve-out:
+    before re-delegating an in-flight task, check the log tail so attempt numbering continues
+    instead of restarting at 1; Conductor-model mismatch check added to assumption re-verification
+  - skills/checkpoint/SKILL.md — WIP-commit wording widened from "state files" to "mission files —
+    including delegations.md" (telemetry accrues between checkpoints; the commit is its persistence point)
+  - skills/retro/SKILL.md — the estimate-divergence question now points at plan.md Size vs.
+    delegations.md attempt counts (retro is the in-team consumer of the telemetry)
+  - skills/mission/example/ — Conductor line, Size column (task 1.3 deliberately sized S),
+    NEW example delegations.md mirroring the journal's 1.3 escalation (3 attempts + dossier)
+    and the phase-1 gate, example README highlight added
+- **Evidence signal**: the user asked whether Fable 5 could later QA/mentor the team's work from
+  .fable-team/ alone. Gap analysis found deliverable QA and growth QA already covered, but
+  process QA blocked by four structural holes: briefs/reports evaporate with the session (the
+  core loop's primary artifacts are unrecorded), rework/escalation counts are buried in journal
+  prose, plan.md has no estimates to check the 2x-blowout rule against, and the conducting model
+  is recorded nowhere (the Opus-vs-Fable conductor A/B question from the same conversation is
+  unmeasurable without it). The user approved the 4-point design (multi-select approval gate;
+  second reproduction of the device in this project). Design decisions: telemetry-not-state
+  (the "4 files" resume doctrine stays intact everywhere; rejected "5th state file" — bilingual
+  HANDOFF/rules ripple + re-init propagation + heavier resume reads); dossiers only on failure
+  (mentoring value concentrates there; full capture rejected for volume and secret surface);
+  /fable-team:task left untouched (telemetry contradicts its no-heavy-gear philosophy —
+  reconsider if mentor QA shows quality escaping via one-shot work); no token/cost column
+  (not reliably observable by hand, wouldn't change QA verdicts).
+  Adversarial review (Opus): needs-fixes, resolved in one cycle — the two independent gates were
+  complementary: the verifier cross-sweep caught the example's gate-findings count contradicting
+  the journal's "(1 finding)" and the undocumented ⚠️ verdict symbol; the reviewer caught the
+  example's 1.2 timestamp postdating the journal recap, the dossier trigger firing on every
+  routine ❌ send-back (the volume the design meant to avoid), and attempt numbering silently
+  restarting after a resume. All example timestamps now precede their journal recap entries.
+  Watch-notes (deliberately unfixed): HANDOFF §1's "four files under the mission directory"
+  phrasing is now an undercount as a directory inventory but remains true as a state claim
+  (bilingual pair, not distributed — fix only on the next HANDOFF touch); "fix-cycle = highest
+  attempt" over-counts across an escalation boundary (the full log disambiguates; tighten only
+  if mentor QA misfires on it)
+- **Effectiveness measure**: at the next real mission + retro — (1) delegations.md exists with
+  one line per delegation and dossiers only on escalations / non-convergence; (2) a mentor QA pass can answer "was
+  delegation well-executed" and "was effort proportionate" from .fable-team/ alone (the two ❌
+  rows of the gap table flip); (3) scribe stays at one call per task (recording cost did not
+  grow); (4) mission.md's Conductor field is populated, making conductor-model A/B comparison
+  possible via inbox correction/rework rates; (5) mentor-QA findings enter through the existing
+  inbox → /fable-team:grow pipeline (no new mechanism was needed — confirm none gets invented)

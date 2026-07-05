@@ -43,6 +43,11 @@ record it in the journal, then proceed.
 ## Step 4: Record (mandatory per task)
 
 Delegate to scribe to update: append to `journal.md` / the next move in `state.md` / the status symbols in `plan.md`.
+Also have scribe append one line per delegation from this cycle to `delegations.md`
+(time / task / agent(model) / attempt / verdict / note — the metrics come from your brief).
+For an escalated (⤴) or non-converging delegation, paste the brief and the returned report
+verbatim into the scribe brief so a dossier can be appended (masked per Boundary Hygiene;
+a routine send-back that converges needs no dossier).
 If this cycle produced **growth signals** (user corrections, rework, escalations, surprises, friction,
 success patterns), have scribe add one line to `.fable-team/growth/inbox.md` as well (Don't analyze — just capture.).
 If this is a git repository, suggest a commit at clean completion points.
@@ -52,6 +57,7 @@ If this is a git repository, suggest a commit at clean completion points.
 Repeat Steps 1-4 until one of the following:
 
 - **Phase boundary reached** → phase review by reviewer (Opus) → address findings →
+  log the gate verdict and findings counts (must-fix / recommended / FYI) as a `delegations.md` line →
   record the equivalent of `/fable-team:checkpoint` → interim report to the user
 - **Context is getting long** → do not push on; take a checkpoint and tell the user:
   "run /fable-team:resume in a new session"

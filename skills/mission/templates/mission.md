@@ -3,6 +3,8 @@
 - slug: `<kebab-case-slug>`
 - Start date: YYYY-MM-DD
 - Status: in progress <!-- in progress / completed / aborted (reason) -->
+- Conductor: <model at mission start, e.g. opus / fable>
+  <!-- On resume with a different model, note the change in the journal; do not rewrite this line -->
 - The user's request (verbatim):
   > <Paste the user's original request as-is. Do not summarize. It becomes the baseline for detecting interpretation drift later>
 

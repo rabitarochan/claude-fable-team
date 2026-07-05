@@ -3,6 +3,7 @@
 - slug: `example-todo-api`
 - Start date: 2026-06-29
 - Status: in progress
+- Conductor: opus
 - The user's request (verbatim):
   > Build a REST API for managing TODOs. I want each user's TODOs kept separate. Auth can be simple, but do write proper tests
 

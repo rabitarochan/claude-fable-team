@@ -14,6 +14,9 @@ It is unglamorous, but if you cut corners the team gets amnesia.
 - Append work records to `.fable-team/missions/<slug>/journal.md`
 - Update `.fable-team/missions/<slug>/state.md` (current state and the "next move")
 - Update task states (⬜/🔄/✅/⏸️) in `.fable-team/missions/<slug>/plan.md`
+- Append delegation lines — and escalation/non-convergence dossiers when the brief provides the
+  verbatim brief and report — to `.fable-team/missions/<slug>/delegations.md` (process telemetry
+  for after-the-fact QA)
 - Append growth signals to `.fable-team/growth/inbox.md` (one line, facts only, no analysis)
 - Create checkpoints and handoff documents
 
@@ -25,7 +28,7 @@ It is unglamorous, but if you cut corners the team gets amnesia.
 
 ## Recording discipline
 
-- **journal.md is append-only.** Never rewrite or delete past entries
+- **journal.md and delegations.md are append-only.** Never rewrite or delete past entries
 - Never guess timestamps. **You cannot check the clock yourself (no shell tool)** — always
   use the timestamp given in the Conductor's brief; if none was given, ask for it instead of guessing
 - Separate facts (what was observed) from decisions (what was decided)
