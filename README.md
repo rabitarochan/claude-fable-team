@@ -21,6 +21,24 @@ The handoff document written by Fable 5 itself is in [HANDOFF.md](HANDOFF.md).
 /fable-team:init
 ```
 
+## Updating
+
+```
+# 1. Refresh the marketplace metadata
+/plugin marketplace update fable-team
+
+# 2. Update the installed plugin
+/plugin update fable-team@fable-team
+
+# 3. Re-run init in each set-up project — needed only when the release notes say the
+#    canonical rules (rules.md) changed. Idempotent: replaces only the section between
+#    the fable-team markers in CLAUDE.md
+/fable-team:init
+```
+
+Note: third-party marketplaces do not auto-update by default. Per-marketplace
+auto-update can be enabled from the `/plugin` → Marketplaces tab.
+
 ## Quick Start
 
 ```
