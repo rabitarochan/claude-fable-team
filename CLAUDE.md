@@ -22,3 +22,8 @@ The canonical team rules are bundled with the init skill and imported below:
   `/fable-team:init` in a real project
 - `README.md` and `README.ja.md` are paired enumeration points — any change to one (structure tree, counts,
   skill/agent listings) must be synced to the other in the same change set
+- **This repository is public. Never write real project names or any identifying details of
+  private field projects into it** — not in CHANGELOG, growth files, docs, or commit messages.
+  Anonymize ("project A / B"); paraphrase or mask evidence quotes the same way. This is the
+  Boundary Hygiene outbound rule applied to project identity (hard prohibition by the owner,
+  2026-07-08)
