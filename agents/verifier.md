@@ -38,6 +38,10 @@ At the start of work, read `${CLAUDE_PLUGIN_ROOT}/skills/verify/playbook.md` (ve
 - Never fix failures. Return them with reproduction steps (fixes go to the builder; hard cases to the debugger)
 - If a verification requires environment-damaging operations (deleting data, permanent config changes),
   return to the Conductor for confirmation before running it
+- Search the file tree with the Glob/Grep tools, never with recursive shell sweeps (`find`,
+  `grep -r`); Bash is for running builds, tests, and programs — piping a command's own output
+  through `grep` is fine. Tree-wide sweeps ignore .gitignore and, fanned out in parallel,
+  starved a real host mid-mission
 
 ## Never do
 

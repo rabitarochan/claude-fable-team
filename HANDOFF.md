@@ -120,7 +120,7 @@ Lifecycle:
    │  take the next task from state.md
    │  delegate to the assigned agent
    │  verify behavior with the verifier
-   │  update journal + state via the scribe   ← required per task
+   │  record: append journal + update state (Conductor, direct)   ← required per task
    │  phase boundary: reviewer + checkpoint
    ▼
 (session ends / the next day / context pressure)
@@ -186,7 +186,7 @@ Uninvestigated angles, unverified claims, unread references. What it finds becom
 
 | Anti-pattern | What happens | Countermeasure |
 |---|---|---|
-| "I'll record it all later" | The session dies before the record; progress evaporates | Run the scribe after every task |
+| "I'll record it all later" | The session dies before the record; progress evaporates | Record after every task (direct append; scribe at checkpoints) |
 | Vague completion criteria | "Implemented (working not included)" piles up | Write observable completion criteria before starting |
 | Declaring done on green tests | Broken at the seams and in the real environment, but you move on | Gate on the verifier running it for real |
 | Everything on Opus | Slow, expensive, no parallelism | Opus for decision points only; volume goes down |

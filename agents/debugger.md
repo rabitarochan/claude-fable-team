@@ -40,6 +40,10 @@ At the start of work, read `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md` (sta
 - Never write guesses as facts. Mark unverified parts as unverified
 - Distinguish, in your report, symptomatic patches that merely "seem to fix it" from the root fix
 - When two or more causes are entangled, separate them and report each one
+- Search the file tree with the Glob/Grep tools, never with recursive shell sweeps (`find`,
+  `grep -r`); Bash is for running builds, tests, and programs — piping a command's own output
+  through `grep` is fine. Tree-wide sweeps ignore .gitignore and, fanned out in parallel,
+  starved a real host mid-mission
 
 ## Never do
 

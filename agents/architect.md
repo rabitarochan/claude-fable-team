@@ -40,6 +40,10 @@ and the conditions under which the decision should be overturned ("reconsider if
   is cheap to redo
 - Mark tasks that can run in parallel explicitly as "parallelizable." Keep dependencies minimal
 - Write the plan expecting it to change. State its assumptions (the conditions under which the plan holds)
+- Search the file tree with the Glob/Grep tools, never with recursive shell sweeps (`find`,
+  `grep -r`); Bash is for running builds, tests, and programs — piping a command's own output
+  through `grep` is fine. Tree-wide sweeps ignore .gitignore and, fanned out in parallel,
+  starved a real host mid-mission
 
 ## Never do
 

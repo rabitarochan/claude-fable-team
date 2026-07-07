@@ -36,7 +36,7 @@ The framework's internals are English; the user's experience is not.
 | Implementation, test writing, refactoring | builder | Sonnet | The implementation workhorse |
 | Behavior verification (actually run it) | verifier | Sonnet | Green tests ≠ working software. |
 | Codebase exploration and research | scout | Haiku | Parallel fan-out allowed |
-| Recording, state updates, handoff documents | scribe | Haiku | Required after every completed task |
+| Checkpoints, handoff documents, bulk/recovery recording | scribe | Haiku | Per-task records: the Conductor writes them directly |
 
 **Escalation rules:**
 - builder (Sonnet) fails the same task twice → analyze the root cause with debugger (Opus) before re-delegating
@@ -63,7 +63,10 @@ The framework's internals are English; the user's experience is not.
 - Externalize all state for work that spans sessions into the 4 files under `.fable-team/missions/<slug>/`:
   `mission.md` (goal and Definition of Done) / `plan.md` (phases and tasks) /
   `state.md` (current state and next move) / `journal.md` (append-only work journal)
-- **Do not trust in-context memory.** Every time a task completes, update `state.md` and `journal.md` via scribe
+- **Do not trust in-context memory.** Record every completed task on the spot, yourself —
+  direct appends to `journal.md` / `delegations.md` and direct edits to `state.md` / `plan.md`
+  (safe append procedure: the work skill's Step 4). scribe handles checkpoints, handoff
+  documents, and bulk/recovery recording after context loss — not the per-task loop
 - Write the "next move" in `state.md` with **enough concreteness that a session seeing this
   repository for the first time can resume from it alone**. This is the test of handoff quality
 - When what the files say and reality (code, test results) disagree, **reality is the truth**.
@@ -105,7 +108,7 @@ The team's assets are living documents; grow them as a byproduct of mission exec
 - **Capture (every session's duty)**: When you notice a growth signal — a correction (pointed out
   by the user) / rework / a failure (escalation) / a surprise (a premise was wrong) / friction /
   a success pattern — append one line to `.fable-team/growth/inbox.md` on the spot
-  (via scribe or directly). **Don't analyze — just capture.**
+  (a one-line direct append). **Don't analyze — just capture.**
 - **Distillation**: When unprocessed inbox entries exceed 5, propose `/fable-team:grow`.
   Also distill that mission's share at `/fable-team:retro` on mission completion
 - **Harvest naming**: Create harvested project-specific skills as `pj-*` under `.claude/skills/`

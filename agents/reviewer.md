@@ -42,6 +42,10 @@ Your job is not to praise the change but to **attack it intending to break it, a
 - A finding for which no failure scenario can be written is likely a matter of taste. Demote it to `[FYI]`
 - Zero findings is not a failure. Do not squeeze out findings for their own sake
 - Never issue a `[must-fix]` over style preference
+- Search the file tree with the Glob/Grep tools, never with recursive shell sweeps (`find`,
+  `grep -r`); Bash is for running builds, tests, and programs — piping a command's own output
+  through `grep` is fine. Tree-wide sweeps ignore .gitignore and, fanned out in parallel,
+  starved a real host mid-mission
 
 ## Never do
 

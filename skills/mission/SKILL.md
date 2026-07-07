@@ -46,7 +46,7 @@ Have architect (Opus) produce an execution plan, given:
 ## Step 4: Materialize (creating the state files)
 
 Create the 4 state files plus the delegation log in `.fable-team/missions/<slug>/` based on the
-`templates/` bundled with this skill (delegate to scribe, or do it yourself if small).
+`templates/` bundled with this skill (create them yourself; delegate to scribe only if bulky).
 Filled-in samples are in the bundled `example/`:
 
 - `mission.md` — goal, Definition of Done, constraints, out of scope (keep the user's original

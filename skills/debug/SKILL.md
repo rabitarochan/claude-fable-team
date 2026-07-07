@@ -26,4 +26,4 @@ The substance lives in the bundled `playbook.md` (single source of truth; never 
 - Don't call a restated symptom a diagnosis. Only what **explains the mechanism and is consistent
   with the observations** counts as a diagnosis
 - Even if a symptomatic fix makes the symptom disappear, report it as "unresolved" unless the mechanism is explained
-- During mission work, record confirmed diagnoses and decisions in journal.md (via scribe)
+- During mission work, record confirmed diagnoses and decisions in journal.md (the Conductor appends directly)

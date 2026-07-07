@@ -17,7 +17,7 @@ does not catch the DB-lookup exception and passes it to next(err) (unconfirmed; 
 
 Steps: (1) fix the above → (2) confirm `npm test -- auth` is all green → (3) wire the
 middleware into `src/app.ts` (all routes except /users) → (4) observe via verifier with curl
-(no key 401 / invalid key 401 / valid key 200) → (5) record via scribe and move to 2.3.
+(no key 401 / invalid key 401 / valid key 200) → (5) record (direct journal append + state update) and move to 2.3.
 An example brief for builder is in the journal's 07-02 entry.
 
 ## In progress / stopping point

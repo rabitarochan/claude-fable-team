@@ -40,16 +40,28 @@ record it in the journal, then proceed.
   (do not take builder's "done" at face value)
 - On verification failure, send it back to builder (max 2 fix cycles; if it does not converge, go to the user)
 
-## Step 4: Record (mandatory per task)
+## Step 4: Record (mandatory per task — the Conductor writes, no scribe spawn)
 
-Delegate to scribe to update: append to `journal.md` / the next move in `state.md` / the status symbols in `plan.md`.
-Also have scribe append one line per delegation from this cycle to `delegations.md`
-(time / task / agent(model) / attempt / verdict / note — the metrics come from your brief).
-For an escalated (⤴) or non-converging delegation, paste the brief and the returned report
-verbatim into the scribe brief so a dossier can be appended (masked per Boundary Hygiene;
-a routine send-back that converges needs no dossier).
-If this cycle produced **growth signals** (user corrections, rework, escalations, surprises, friction,
-success patterns), have scribe add one line to `.fable-team/growth/inbox.md` as well (Don't analyze — just capture.).
+Record directly: you already composed everything a record needs when you wrote the brief and
+read the report. Spawning scribe for routine per-task records adds a spawn per task and a
+re-read of the growing journal per append, for zero added information.
+
+- Append the work record to `journal.md` and one line per delegation from this cycle to
+  `delegations.md` (time / task / agent(model) / attempt / verdict / note). Safe append: run
+  `date '+%Y-%m-%d %H:%M'` first, then append the body with a **quoted heredoc**
+  (`cat >> journal.md <<'EOF' ... EOF`) — record text is full of backticks and `$`, and an
+  unquoted append lets the shell execute them and silently corrupt an append-only file.
+  Follow the templates' formats; both files are append-only
+- Update the next move in `state.md` and the status symbols in `plan.md` with direct edits
+- For an escalated (⤴) or non-converging delegation, append the brief and the returned report
+  verbatim as a dossier below the log line (masked per Boundary Hygiene;
+  a routine send-back that converges needs no dossier)
+- If this cycle produced **growth signals** (user corrections, rework, escalations, surprises,
+  friction, success patterns), append one line to `.fable-team/growth/inbox.md` as well
+  (Don't analyze — just capture.)
+- Delegate recording to scribe only when your own context is degraded (e.g., right after
+  compaction) — scribe rebuilds the picture from the files on disk instead of your compressed memory
+
 If this is a git repository, suggest a commit at clean completion points.
 
 ## Step 5: Decide Whether to Continue

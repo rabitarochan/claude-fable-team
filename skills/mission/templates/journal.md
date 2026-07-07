@@ -1,7 +1,9 @@
 # Work journal: <mission name>
 
 > **Append-only.** Never rewrite or delete past entries. Add new entries at the end.
-> Timestamps come from the Conductor's brief (the Conductor checks the clock; scribe cannot). Never guess a time.
+> Timestamps come from the Conductor — run `date` first, then append the entry with a quoted heredoc
+> (`<<'EOF'`) so the shell never interprets body text; when recording is delegated to scribe
+> (checkpoints), the brief passes the timestamp (scribe cannot check the clock). Never guess a time.
 > Distinguish facts (what was observed) from judgments (what was decided). Leave failures as they happened — do not embellish them.
 
 ---

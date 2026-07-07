@@ -32,4 +32,4 @@ Watchword: **Green tests ≠ working software.** Only what has been observed cou
 - Write the expected results **before executing**. Never look at the output first and then declare it "correct"
 - Never accept — or give — an "I checked it" without evidence (the command + its actual output)
 - Never blur "unverified" and "verified OK". Mark anything you could not observe as unverified, with the reason
-- During mission work, reflect verification results in the "verification status" section of state.md (via scribe)
+- During mission work, reflect verification results in the "verification status" section of state.md (the Conductor edits directly)

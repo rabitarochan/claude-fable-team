@@ -479,3 +479,146 @@
   grow); (4) mission.md's Conductor field is populated, making conductor-model A/B comparison
   possible via inbox correction/rework rates; (5) mentor-QA findings enter through the existing
   inbox → /fable-team:grow pipeline (no new mechanism was needed — confirm none gets invented)
+
+## 2026-07-07 — Search discipline for Bash-holding agents (field incident: host starvation)
+
+> 要約(gist): 実プロジェクト A(現地ミッション)で、サブエージェントの Bash 広域探索
+> (find/head パイプラインの並列 fan-out、各 10 プロセス)が Windows ホストを資源逼迫させ、
+> ユーザーが手動でプロセスを終了。同ミッションの逼迫時間帯に、進行中の委任 2 件(builder 1.5 /
+> verifier 1.6)が相次いでホストプロセス終了で消失した(fan-out が主因と特定されたのは
+> verifier 1.6)。現地では再委任 brief に「具体パス指定・広域再帰検索禁止」を入れて再発なしを
+> 実証済み。これをフレームワークへ昇格 —— Bash 保有 5 エージェント(builder / verifier /
+> debugger / architect / reviewer)の Principles に「ツリー検索は Glob/Grep ツール、再帰 shell
+> 掃引は禁止(自コマンド出力のパイプ filter は可)」を同一文言で 1 行追加、brief playbook に
+> 「探索を伴う brief は対象ディレクトリを指定して束縛する」の標準注記を追加。
+> rules.md は非接触(再 init 伝播不要)。
+
+- **Change**:
+  - agents/builder.md / verifier.md / debugger.md / architect.md / reviewer.md — one identical
+    Principles line each: search the file tree with the Glob/Grep tools, never with recursive
+    shell sweeps (`find`, `grep -r`); Bash is for running builds, tests, and programs, and piping
+    a command's own output through `grep` stays allowed (identical wording across the five, so a
+    cross-sweep can verify coverage with a single pattern)
+  - skills/brief/playbook.md — standard note after the per-agent notes: a brief that legitimately
+    requires searching must name the directories to sweep and require the Glob/Grep tools over
+    recursive shell sweeps
+- **Evidence signal**: 2026-07-07 failure signal (HQ inbox; same incident captured independently
+  in the field project's own inbox as Friction): during verifier task 1.6, wide shell
+  fan-out (≈10× find.exe + 10× head.exe at 3–5% CPU each, per the user's firsthand report) made
+  the Windows host unresponsive and the user killed the processes manually. In the same mission's
+  resource-pressure window, two delegations were lost to host-process terminations in sequence —
+  builder 1.5 first, then (after 1.5's re-delegation had completed) verifier 1.6, where the
+  fan-out was identified as the main cause. The decisive property of the Glob/Grep tools is that
+  they are single in-process calls — no process fan-out. Grep additionally respects .gitignore in
+  its default mode (not when a `glob` filter is passed; Glob does not filter ignored files at
+  all), whereas shell `find` never does (the sweep was traversing `.vs/`, `packages/`,
+  `TestResults/`). The constraint wording was field-tested: the tight-scope re-delegation of
+  task 1.6 (attempt 2) completed without recurrence. Scope decisions: all five Bash-holding
+  agents, not only the implicated verifier — the failure mode is a property of Bash +
+  exploration, not of a role, and partial coverage leaves the identical hazard open (scout/scribe
+  excluded: no Bash). rules.md line for the Conductor rejected: the incident was subagent
+  fan-out, Conductor sweeps are singular, and a rules.md touch forces re-init propagation to
+  every project — add only if a Conductor-caused starvation signal ever appears. One-in-one-out:
+  swept the five agent defs and the brief playbook for an obsolete rule to remove; none found
+  (add-only, following the bloat-check precedent from a field project's retro).
+  Adversarial review (Opus): needs-fixes, resolved in one cycle — the reviewer caught the change
+  set violating its own coverage argument (reviewer.md holds Bash and was omitted from the
+  original four), a falsifiable .gitignore claim (Glob returns ignored files — verified against
+  this repo's ignored files), an over-broad "never shell `find`/`grep` pipelines" wording that
+  would ban legitimate output filtering (build-log grep, single-file grep), and an incident
+  timeline compressed into one event against delegations.md's record.
+  Watch-note (deliberately unfixed): skills/verify/playbook.md and skills/judge/playbook.md use
+  "grep" as a verb for repo-wide sweeps; idiomatic English, but if an agent ever cites them to
+  justify a shell sweep, align them to "the Grep tool" via /fable-team:grow.
+- **Effectiveness measure**: next mission on a large repo — (1) no host-starvation / process-kill
+  signal in any project inbox; (2) subagent reports show Glob/Grep usage for sweeps;
+  (3) delegation briefs with a search component name their directories (visible in dossiers /
+  journal). If a shell sweep recurs despite the rule, escalate via /fable-team:grow to a harder
+  mechanism (e.g., permission deny patterns for `find`/`grep` in Bash).
+
+## 2026-07-07 — Per-task recording moves to the Conductor (scribe narrowed to checkpoints)
+
+> 要約(gist): ユーザー所感「Opus 単独運用より遅い(シンプルな処理でも)。5 ファイル管理の
+> MCP 化を検討すべきでは」を受けた分析で、ルーチン記録の scribe スポーンが特定された —
+> スポーン 1 回 30〜90 秒(推定・未計測。計測は効果測定 (1) で行う)× ミッションあたり
+> 20〜30 記録 ≈ 15〜45 分、Edit の前提 Read で肥大する journal(step2 で 62KB・実測)を
+> 毎回読み直し、529 過負荷の故障面(実測)、時計が読めず brief で時刻を渡す歪み。Conductor は scribe への brief 時点で記録内容の全文を既に作文しており、スポーンが足す
+> のはファイル I/O と書式だけ。よってタスクごとの記録を Conductor 自身の直接操作に変更
+> (追記専用ファイルは timestamp 込みの単一 shell append、state/plan は直接 Edit)。scribe は
+> チェックポイント・handoff 文書・コンテキスト劣化時の復旧記録に特化(廃止はしない)。
+> MCP アクセサ化は現時点で却下 — 純 Markdown プラグインにランタイムと .mcp.json を足す配布
+> 重量に対し、直接操作で同便益(現場実績ではサブエージェントに MCP ツールは届いておらず、
+> どのみち Conductor 専用になる)。書式ドリフトが retro で観測されたら同梱スクリプト、
+> さらに証拠が出たら MCP という段階戦略を記録。**rules.md に触れるため既存プロジェクトへは
+> 再 init で伝播が必要。**
+
+- **Change**:
+  - skills/init/rules.md — Mission Protocol: per-task recording is the Conductor's own direct
+    work (direct appends to journal.md / delegations.md, direct edits to state.md / plan.md;
+    the mechanics live in the work skill, rules stay principle-level); routing-table scribe row
+    narrowed to checkpoints / handoff documents / bulk・recovery recording; growth-signal
+    capture simplified to a one-line direct append
+  - skills/work/SKILL.md — Step 4 rewritten as the direct-recording procedure: run `date`
+    first, append the body with a quoted heredoc (`<<'EOF'`) so the shell never executes
+    backticks/`$` inside record text (adversarial-review catch — an unquoted append would
+    silently corrupt append-only files); dossier rule unchanged; scribe reserved for when the
+    Conductor's own context is degraded
+  - agents/scribe.md — description + intro narrowed to the new scope; recording discipline and
+    the state.md quality bar unchanged
+  - skills/debug/SKILL.md, skills/judge/SKILL.md, skills/verify/SKILL.md — "(via scribe)"
+    replaced with direct append/edit by the Conductor
+  - skills/brief/playbook.md — scribe-timestamp note scoped to the briefs scribe still gets
+    (checkpoints, handoff documents, recovery recording)
+  - skills/mission/SKILL.md — state-file creation default flipped to "create them yourself;
+    delegate to scribe only if bulky"
+  - skills/mission/templates/journal.md + delegations.md — timestamp note updated (run `date`
+    first, append via quoted heredoc; a timestamp is passed in the brief only when recording
+    is delegated to scribe)
+  - skills/mission/example/state.md — next-move step "record via scribe" → direct record.
+    The example's checkpoint journal entry and its "Updated by: scribe" stay — checkpoints are
+    the designed scribe use
+  - HANDOFF.md / HANDOFF.ja.md (bilingual pair, synced) — work-loop diagram line and the
+    pitfall-catalog countermeasure updated to direct recording
+  - README.md / README.ja.md — the scribe one-liner in the structure tree updated to
+    "Checkpoints and recovery recording" / 「チェックポイント・復旧記録」 (pair synced in the
+    same change set); agent count and all other enumerations unchanged
+- **Evidence signal**: 2026-07-07 user correction (HQ inbox), backed by field telemetry from
+  two projects / 4 missions: project A's heaviest mission logged 38 delegation-log lines
+  (35 agent delegations, 3 user decision points) while its journal grew to 62KB (measured) —
+  every scribe append pays a Read of the whole file before Edit; scribe spawn latency estimated
+  at 30–90 s (a Conductor estimate, not measured — the inbox signal itself flags it 要計測;
+  effectiveness measure (1) below is that measurement) × 20–30 records per mission ≈ 15–45 min;
+  project B's retro lost 2 scouts to 529 overload (every spawn is a failure surface);
+  the delegations.md template header itself documents the clock workaround ("scribe cannot
+  check the clock"). The Conductor composes the full record content in every scribe brief
+  already, so direct writes add ~zero marginal context cost and delete the spawn entirely.
+  project B's session-death lesson ("run scribe before the next delegation or progress
+  evaporates") becomes cheaper to honor: the record is now an in-line append with no latency
+  to tempt skipping. Design decisions: MCP accessor rejected for now (the user's own weight
+  concern was the trigger: a runtime + .mcp.json on a pure-markdown plugin buys nothing direct
+  ops don't already deliver, and field evidence from project B — its builder had no access to a
+  project-local MCP tool — shows subagents don't receive MCP tools anyway); a bundled append script deferred until a
+  retro actually observes format drift; scribe kept, not deleted (fresh file reads beat a
+  degraded context at checkpoints/recovery; the "tomorrow's stranger" quality bar for state.md
+  lives on in its definition). One-in-one-out: the per-task scribe-brief choreography
+  (metrics-in-brief, dossier-material-in-brief plumbing) is removed outright; stated honestly,
+  what drops is runtime weight (one spawn per task) while prose grows slightly (the safe-append
+  procedure in work Step 4) — rules.md itself stays principle-level.
+  Adversarial review (Opus): needs-fixes (must-fix 0 / recommended 3), resolved in one cycle —
+  the reviewer caught the unquoted shell append: record text is full of backticks/`$`, and an
+  `echo "...$(date)..." >>` style append would execute embedded commands and silently corrupt
+  append-only files (quoted-heredoc procedure now mandated in work Step 4, rules.md, and both
+  templates); the 30–90 s spawn figure presented as measured while the inbox signal itself says
+  unmeasured (now marked as an estimate); and a delegation count (~24) contradicting step2's
+  actual log of 38 lines (corrected). FYI dispositions: scribe scope widened to "bulk or
+  recovery" so grow's changelog recording stays in-scope; README pair one-liner updated in the
+  same set; post-compaction rationale reworded; this one-in-one-out claim made honest.
+- **Effectiveness measure**: next real mission + retro — (1) per-task cycle time drops
+  (measure: delegations.md timestamp gap between a task's acceptance and the next delegation);
+  (2) journal/delegations entries stay template-conformant without scribe (retro checks;
+  drift → promote the bundled-script step); (3) no unrecorded-progress incident recurs
+  (the session-death class — records must not get skipped now that they are cheaper);
+  (4) scribe invocations per mission ≈ number of checkpoints + handoffs;
+  (5) the user's "slower than Opus-solo even for simple work" signal does not recur with this
+  as the cause — the remaining floor (delegation cold-starts, review gates) is tracked as its
+  own question (builder-continuation experiment noted in the HQ inbox).

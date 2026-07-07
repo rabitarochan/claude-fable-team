@@ -22,7 +22,7 @@ Premise: **heuristics are not rules.** In situations that call for deviating, yo
    - If reversible, try it small. If irreversible, ask the user (with options + a recommendation)
    - If you lack the information needed to decide, it is an investigation problem, not a judgment
      problem (route to scout)
-4. **Record the decision**: during mission work, leave "decision and reasoning" in journal.md (via scribe).
+4. **Record the decision**: during mission work, leave "decision and reasoning" in journal.md (the Conductor appends directly).
    Write the rationale so a successor won't relitigate it. If you deviated from a heuristic, record why
 
 ## Rules

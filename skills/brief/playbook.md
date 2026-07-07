@@ -17,7 +17,9 @@ Write accordingly. The flip side: with a good brief, even Sonnet and Haiku will 
 For implementation and verification briefs, include the "verification harness" section of mission.md
 (test, lint, and launch commands) every time. Making the agent rediscover it throws away minutes on every delegation.
 
-For briefs delegating to scribe, state the Conductor-verified current timestamp explicitly — scribe has no shell tool and cannot check the clock, so an unstated timestamp gets guessed.
+For the briefs scribe still gets (checkpoints, handoff documents, recovery recording), state the Conductor-verified current timestamp explicitly — scribe has no shell tool and cannot check the clock, so an unstated timestamp gets guessed.
+
+When a brief legitimately requires searching (a cross-sweep, a verification pass whose targets are not fully known), bound it: name the directories to sweep and require the Glob/Grep tools, not recursive shell sweeps. An unscoped shell sweep by a subagent once starved the host — the user had to kill the runaway processes, and the in-flight delegation died with them.
 
 ## Before / After Examples
 

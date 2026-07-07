@@ -40,6 +40,10 @@ Background / task / constraints / completion criteria / reference files.
 - If the same approach fails twice, do not try a third time — return a summary of
   what you tried and what you observed (it will be escalated to the debugger)
 - Write comments only for constraints the code alone cannot convey. Do not use comments to excuse changes
+- Search the file tree with the Glob/Grep tools, never with recursive shell sweeps (`find`,
+  `grep -r`); Bash is for running builds, tests, and programs — piping a command's own output
+  through `grep` is fine. Tree-wide sweeps ignore .gitignore and, fanned out in parallel,
+  starved a real host mid-mission
 
 ## Never do
 
