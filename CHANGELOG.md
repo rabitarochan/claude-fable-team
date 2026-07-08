@@ -622,3 +622,54 @@
   (5) the user's "slower than Opus-solo even for simple work" signal does not recur with this
   as the cause — the remaining floor (delegation cold-starts, review gates) is tracked as its
   own question (builder-continuation experiment noted in the HQ inbox).
+
+## 2026-07-08 — Growth cycle 2: fan-out calibration, scheduled runs, token observability (/fable-team:grow, run by Fable 5)
+
+> 要約(gist): 未処理シグナル 5 件を蒸留(候補ベースの内訳で適用 3・破棄 3・保留 1 —
+> 複数候補を含むシグナルは分割して数えた。別枠で効果検証記録 1)。①brief playbook に
+> 「fan-out は依頼の強度に校正し、広域展開(5 体以上 or 未検証 brief)の前に代表 1 スライスで
+> 試走」を追加 — 独立 2 源(第 3 回引き継ぎ再点検の見送り候補 + 外部記事 Getting started
+> with loops)、傍証は現場の scout 529 過負荷と資源逼迫インシデント ②work スキル無人ループ節に
+> 「スケジュール機構(/schedule・cron)との合成で定時実行、停止条件・ゲート規律は不変」を
+> 追加 ③retro Step 3 に「/usage があればトークン内訳を記録」を追加 — 2026-07-05 の
+> トークン列却下の前提の一方(「手で観測不能」)が /usage の登場で変化したため、
+> 列は追加せず retro 時の観測経路のみ追加。
+> 破棄 3 件はいずれも再起票条件つき(/goal 停止ゲート = 無人走行で早すぎる完了が出たら /
+> 見送り 4 分野 = 実ミッションから該当シグナルが出たら / 多視点検証 = 同一反証者の冗長性が
+> 失敗したら)。保留 1 件(builder 継続実験)は次ミッションの計測待ち。Rule diet: 形骸化
+> ルールなし・追加のみ約 5 行(正直に記録)。
+
+- **Change**:
+  - skills/brief/playbook.md — fan-out calibration: size the fan-out to the strength of the
+    ask; pilot one representative slice before any wide fan-out (5+ agents, or an unproven
+    brief)
+  - skills/work/SKILL.md — Unattended Loop Mode gains a "Scheduled runs" line: compose the
+    harness's scheduling primitive (/schedule, cron, etc.) with /loop /fable-team:work; the
+    stop conditions and gate discipline apply unchanged
+  - skills/retro/SKILL.md — Step 3 gains a token question: when the harness provides /usage,
+    snapshot the per-skill/per-subagent breakdown into the retro notes (delegations.md
+    deliberately carries no token column — this is the designated place to look)
+- **Evidence signal**: five unprocessed HQ-inbox signals, processed with item-by-item user
+  approval. Applied items: fan-out calibration had two independent sources (the third
+  handoff-review's deferred candidate, 2026-07-05, and the external article "Getting started
+  with loops" — published on ClaudeDevs, the official Claude Developers X account, authored by
+  @delba_oliveira) plus field corroboration (a retro lost 2 scouts to 529 overload; the
+  host-starvation incident began as an unscoped wide sweep); scheduled runs came from the same
+  article's proactive-loops section (the framework had no documented intake for recurring
+  routines); the /usage line adds an observation path that the 2026-07-05 token-column
+  rejection's first premise ("not reliably observable by hand") no longer forecloses — the
+  rejection itself stands (delegations.md still carries no token column); updating course when
+  a premise dies is what the growth loop is for.
+  Discards (all with re-open conditions recorded in the inbox): /goal stop-gating (no
+  premature-completion signal observed in any unattended run; the verifier gate covers the
+  role), the four deferred handoff-review domains (two field projects and four missions
+  produced zero related signals), and multi-lens verification (no observed failure of
+  same-lens redundancy). Held: the builder-continuation experiment awaits its next-mission
+  measurement per its own signal. Rule diet: no dead-letter rules found this cycle; net
+  addition ~5 lines across three files, stated honestly.
+- **Effectiveness measure**: (1) next mission — fan-out sizes match the strength of the ask
+  and no overload-class signal (529 / host starvation) reappears in any inbox; (2) the next
+  request for a scheduled routine is answered from the work skill's line instead of
+  improvised; (3) the next retro contains a /usage snapshot or an explicit "not available in
+  this harness" note; (4) none of the three discards' re-open conditions fire silently — if
+  one fires, it arrives as a new inbox signal.

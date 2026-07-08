@@ -21,6 +21,8 @@ For the briefs scribe still gets (checkpoints, handoff documents, recovery recor
 
 When a brief legitimately requires searching (a cross-sweep, a verification pass whose targets are not fully known), bound it: name the directories to sweep and require the Glob/Grep tools, not recursive shell sweeps. An unscoped shell sweep by a subagent once starved the host — the user had to kill the runaway processes, and the in-flight delegation died with them.
 
+Calibrate fan-out to the strength of the ask: "any bugs?" warrants a couple of scouts, "audit this thoroughly" justifies a wide pass. Before any wide fan-out (5+ agents, or an unproven brief), pilot one representative slice first — a bad brief multiplied is expensive.
+
 ## Before / After Examples
 
 ### Delegating to a scout

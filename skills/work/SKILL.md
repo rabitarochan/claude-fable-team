@@ -92,6 +92,9 @@ Impose extra discipline on a loop no human is watching.
 - **Pair every checkpoint with a git commit** (especially unattended — nobody remembers lost progress)
 - **Parting notes** — leave 3 lines in the journal and the report: what stopped the loop / progress /
   how to resume. Use notification means (PushNotification etc.) if available
+- **Scheduled runs** — to make this loop schedule-driven, compose the harness's scheduling
+  primitive (`/schedule`, cron, etc.) with `/loop /fable-team:work`. The stop conditions and
+  gate discipline above apply unchanged
 
 ## Report Format
 

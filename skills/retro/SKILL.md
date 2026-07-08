@@ -23,6 +23,9 @@ The team gets stronger with every mission — if it keeps records.
    - Which decisions were right / wrong? (Judge by the information available at decision time, not hindsight)
    - Where did estimates diverge from reality? (check plan.md's Size column against the
      attempt counts in delegations.md)
+   - Where did the tokens go? (if the harness provides `/usage`, snapshot the breakdown by
+     skill/subagent into the retro notes — delegations.md deliberately has no token column,
+     so this is the one place to look)
    - Are there **new pitfalls to add** to the pitfall catalog in HANDOFF.md?
 
    Merge any unprocessed signals for this mission from `.fable-team/growth/inbox.md` into the lessons here.
