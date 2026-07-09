@@ -55,6 +55,17 @@ auto-update can be enabled from the `/plugin` → Marketplaces tab.
 One-shot tasks go to `task`; anything that spans sessions goes to `mission`.
 When in doubt, ask "Will you continue this tomorrow?" **You can always promote; you can never demote.**
 
+### Which permission mode to start in
+
+Start in **normal mode** — Plan Mode is not needed as the session entry point.
+The intake (`task` / `mission`) already carries its own "recon → plan → approval" gate
+and persists the plan to `plan.md`, so stacking Plan Mode on top approves the same plan
+twice; worse, Plan Mode blocks writing the `.fable-team/` state files that intake creates.
+Once the plan is approved and the delegation loop is running, raising to auto-accept
+edits fits well (it is close to a prerequisite for `/loop /fable-team:work`).
+Plan Mode still earns its keep in two places: a major change of direction mid-mission,
+and raw edits outside the framework where you want a hard no-edit guarantee.
+
 ## Structure
 
 ```
