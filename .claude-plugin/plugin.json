@@ -1,7 +1,7 @@
 {
   "name": "fable-team",
   "description": "An AI agent team that ships everything from one-shot tasks to long-running missions by dividing work across Opus, Sonnet, and Haiku — the Fable 5 handoff framework.",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "author": {
     "name": "rabitarochan",
     "email": "rabitarochan@gmail.com"
