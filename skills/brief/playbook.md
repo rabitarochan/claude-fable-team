@@ -23,6 +23,25 @@ When a brief legitimately requires searching (a cross-sweep, a verification pass
 
 Calibrate fan-out to the strength of the ask: "any bugs?" warrants a couple of scouts, "audit this thoroughly" justifies a wide pass. Before any wide fan-out (5+ agents, or an unproven brief), pilot one representative slice first — a bad brief multiplied is expensive.
 
+## Cold Starts: Fresh Spawn or Continue
+
+Every fresh subagent pays a cold start: it reads the rules, your references, and the target
+files before producing anything (measured on a large codebase: 6–10 minutes and 0.3–0.8M
+freshly ingested (cache-creation) tokens per fresh builder; a continued agent starts
+producing immediately).
+
+- **Continue via SendMessage** for follow-up tasks on the same artifacts. The continuation
+  brief shrinks to task + completion criteria + what changed since — background and
+  references are already in the agent's context
+- **Spawn fresh** when the value is fresh eyes — new design, production-critical changes,
+  adversarial review — or when the agent's context has grown long enough to degrade
+- **For large files (~1,000+ lines), name the line ranges that matter**, not just the path
+  ("`orders.ts` L120–180: the retry loop the fix targets") — a path alone makes a fresh
+  agent read the whole file in chunks before starting
+- **After an API drop kills a delegation mid-task**, resume the same agent via SendMessage
+  and have it first verify its own partial diff before continuing (its context survives;
+  its in-flight report does not)
+
 ## Before / After Examples
 
 ### Delegating to a scout

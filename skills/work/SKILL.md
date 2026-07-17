@@ -33,6 +33,10 @@ record it in the journal, then proceed.
    Use isolation: worktree only when multiple agents modify files at the same time
 4. If builder fails the same task twice, do not throw a third attempt — have debugger (Opus)
    pin down the cause, then re-delegate
+5. For a follow-up task on the same artifacts, **continue the same agent via SendMessage**
+   instead of spawning fresh (cold-start rule in rules.md Delegation Rules). If a background
+   delegation dies mid-task (API drop), resume the same agent and have it **verify its own
+   partial diff first** — its context survives; its in-flight report does not
 
 ## Step 3: Verification Gate
 
@@ -47,12 +51,33 @@ read the report. Spawning scribe for routine per-task records adds a spawn per t
 re-read of the growing journal per append, for zero added information.
 
 - Append the work record to `journal.md` and one line per delegation from this cycle to
-  `delegations.md` (time / task / agent(model) / attempt / verdict / note). Safe append: run
-  `date '+%Y-%m-%d %H:%M'` first, then append the body with a **quoted heredoc**
-  (`cat >> journal.md <<'EOF' ... EOF`) — record text is full of backticks and `$`, and an
-  unquoted append lets the shell execute them and silently corrupt an append-only file.
-  Follow the templates' formats; both files are append-only
-- Update the next move in `state.md` and the status symbols in `plan.md` with direct edits
+  `delegations.md` (time / task / agent(model) / attempt / verdict / note) in **one shell
+  call per cycle** — not one call per file, and never a separate call just for `date`
+  (every extra call costs a full Conductor turn over its large context). Capture the
+  timestamp into a variable, print each header from it, and append each body with a
+  **quoted heredoc** (`<<'EOF'`, terminator at column 0) — record text is full of backticks
+  and `$`, and an unquoted append lets the shell execute them and silently corrupt an
+  append-only file:
+
+  ```sh
+  ts=$(date '+%Y-%m-%d %H:%M')
+  printf '\n## %s — Conductor\n\n' "$ts" >> journal.md
+  cat >> journal.md <<'EOF'
+  ...entry body (Did / Learned / Decisions / Next)...
+  EOF
+  printf -- '- %s | ' "$ts" >> delegations.md
+  cat >> delegations.md <<'EOF'
+  task <#> | <agent>(<model>) | attempt <n> | ✅ accepted | <note>
+  EOF
+  ```
+
+  On Windows, run this in the POSIX shell (Bash tool), not PowerShell — in the same field
+  logs, `Get-Date` via PowerShell measured 9–138 s per call (avg 27 s) while `date` via Bash
+  measured 0.7–6 s. With several delegations in one cycle, repeat the printf + heredoc pair
+  once per delegations.md line. Follow the templates' formats; both files are append-only
+- Update the next move in `state.md` and the status symbols in `plan.md` with direct edits,
+  issued **in the same message as the append call** (independent tool calls run in parallel;
+  every extra turn pays a full round-trip over the Conductor's large context)
 - For an escalated (⤴) or non-converging delegation, append the brief and the returned report
   verbatim as a dossier below the log line (masked per Boundary Hygiene;
   a routine send-back that converges needs no dossier)

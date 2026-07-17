@@ -673,3 +673,79 @@
   improvised; (3) the next retro contains a /usage snapshot or an explicit "not available in
   this harness" note; (4) none of the three discards' re-open conditions fire silently — if
   one fires, it arrives as a new inbox signal.
+
+## 2026-07-16 — Delegation cold starts and recording turn count cut (transcript telemetry from a heavyweight project A mission)
+
+> 要約(gist): ユーザー所感「Skills/Agents に分散すると処理時間が大幅にかかる」を、実プロジェクト A の
+> 直近の重量級ミッション(委任 17+ゲート 2、2 セッション各約 6 時間、2026-07-15)のセッショントランスクリプトで
+> 実測分解した。(1) **新規スポーンのコールドスタートが最大の可変費** — 新規 builder は最初の編集・コマンド
+> まで 6:18〜10:32 を読み込みに費やし(同一の数千行ファイルを 6〜8 分割で再読)、エージェント側の
+> cache_creation はミッション合計 4.29M トークン。同ミッションで 5 回実証された SendMessage 継続は
+> このランプを消した(growth cycle 2 で保留だった「builder 継続実験」を本計測で完了し、ルール化)。
+> (2) **記録ループの固定費** — Windows ホストで PowerShell `Get-Date` が 1 回平均 27 秒(9〜138 秒)
+> × 20 回 ≈ 9 分/セッション、mission-state への Edit が平均約 12 秒 × 75 回 ≈ 15 分、記録がタスクあたり
+> 4〜5 ツールコール=Conductor の追加ターン(計 248 ターン、1 ターンあたり約 23〜25 万トークンの
+> キャッシュ済みコンテキストを再往復)。記録を 1 シェルコール+同一メッセージ内の並列 Edit に統合。
+> (3) **非要因の確定** — バックグラウンドエージェント完了→拾い上げの遅延は中央値 1 分未満・最悪 2:25
+> (/loop ハーネスは健全)、レビューゲートは 2 回で計約 22 分(主要コストではない)、journal の記述量は
+> Conductor 出力 396k トークン中の一部にすぎず、かつセッション断からの復旧と retro で 2 度 load-bearing
+> だった。ゲートと journal の様式は変更しない。**rules.md に触れるため既存プロジェクトへは再 init で
+> 伝播が必要。**
+
+- **Change**:
+  - skills/init/rules.md — Delegation Rules: new "Fresh spawn or continue" paragraph — continue
+    the same agent via SendMessage for follow-up tasks on the same artifacts; spawn fresh when the
+    value is fresh eyes (new design, production-critical changes, review) or the agent's context
+    has degraded — with the field measurements inline
+  - skills/work/SKILL.md — Step 2 gains the continuation rule and the API-drop resume procedure
+    (resume the same agent; have it verify its own partial diff first — its context survives, its
+    in-flight report does not); Step 4 recording collapsed to **one shell call per cycle**
+    (timestamp captured once into a variable, printf headers, quoted-heredoc bodies for journal.md
+    and delegations.md together) with state.md / plan.md edits issued in the same message as
+    parallel tool calls; Windows note: use the POSIX shell for recording, not PowerShell
+  - skills/brief/playbook.md — new "Cold Starts: Fresh Spawn or Continue" section (continuation
+    brief shape, fresh-eyes criteria, line-range references for 1,000+-line files, API-drop resume)
+  - skills/mission/templates/journal.md + delegations.md — timestamp note synced to the
+    one-call procedure (pointer to work Step 4)
+- **Evidence signal**: HQ inbox 2026-07-07 friction signal ("per-delegation cold start is the
+  largest remaining execution-time factor; continue the same builder via SendMessage — measure one
+  mission, then decide") — the measurement now exists. Transcript analysis of project A's latest
+  heavyweight mission (17 delegations + 2 gates): fresh builders' ramp to first edit/command 6:18 / 7:29 /
+  10:32, each re-reading the same several-thousand-line file in 6–8 chunked Reads; per-engagement
+  cache_creation 0.27–0.83M tokens (4.29M mission total). The mission's five SendMessage
+  continuations (follow-up task, post-escalation fix, measurement arms, API-drop resume) started
+  producing immediately — follow-up engagements ran 5–12 min wall against 17–40 min for fresh
+  spawns (tasks differ in size, so directional; the ramp itself is measured directly). The two
+  deliberate fresh spawns (production-code change, new-class design) worked as intended and become
+  the fresh-eyes criteria. Recording overhead from the same transcripts: PowerShell `Get-Date`
+  averaged 27 s per call (9–138 s; 20 calls ≈ 9 min in one session), mission-state Edits ~12 s
+  each on that host (75 calls ≈ 15 min), 4–5 recording tool calls per task each costing a
+  Conductor turn (248 turns total at ~230–250k cached input tokens per turn). Non-causes pinned
+  with the same data: pickup latency after background-agent completion (median <1 min, worst
+  2:25), reviewer gates (2 gates ≈ 22 min, both LGTM), journal verbosity (small share of the
+  Conductor's 396k output tokens; twice load-bearing — session-drop recovery and retro). Growth
+  cycle 2's held item ("builder-continuation experiment awaits its next-mission measurement")
+  closes with this entry. Rule diet: no dead rule found to remove; the Step 4 procedure is a
+  replacement, net addition ≈ 50 lines across six files, stated honestly.
+  Adversarial review (Opus): needs fixes (must-fix 1 / recommended 1 / FYI 4), resolved in one
+  cycle — the reviewer caught a project-identifier leak (an insufficiently masked code example
+  in the distributed brief playbook, plus a solver-technology fragment of the mission slug in
+  this entry's draft; both anonymized — the 2026-07-08 hard prohibition was violated in draft
+  and held at the review gate, which is that entry's effectiveness measure firing as designed)
+  and a measurement misattribution (the 9–138 s figure belongs to the PowerShell timestamp
+  call, not to call consolidation as such; reworded — consolidation is justified by the
+  turn cost, the shell switch by the timing data). FYI dispositions: the cold-start token
+  metric renamed to cache-creation; the Bash `date` figure re-verified against the transcripts
+  as measured (0.7–6 s over 12 calls) rather than left as an estimate; a repeat-per-delegation
+  note and a heredoc column-0 note added to the Step 4 example. A self-caught inconsistency
+  fixed in the same cycle: this mission is not project A's "heaviest" (the 2026-07-07 entry's
+  38-delegation-line mission is larger) — retitled "heavyweight".
+- **Effectiveness measure**: next real mission + retro — (1) per-task cycle time (delegations.md
+  gap from a task's acceptance to the next delegation) drops against project A's baseline
+  (~11–17 min per S task); (2) follow-up tasks on the same artifacts show SendMessage
+  continuations in the transcript, with no fresh-eyes regression (production changes still get
+  fresh builders); (3) recording is ≤2 Conductor turns per cycle (one shell call + parallel
+  edits) and no `Get-Date` appears in recording paths on Windows hosts; (4) the user's
+  "slower than Opus-solo" signal does not recur with cold starts or recording as the cause —
+  if it recurs, the next-largest measured lever (agent-side chunked re-reads of large files)
+  gets its own signal.

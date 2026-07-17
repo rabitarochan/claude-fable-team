@@ -3,8 +3,9 @@
 > **Append-only process telemetry for after-the-fact QA and mentoring — not needed for resume.**
 > (state.md remains the single source of truth for recovery; never read this file to resume.)
 > One line per delegation, appended at the end in chronological order.
-> Timestamps come from the Conductor — run `date` first, then append the entry with a quoted heredoc
-> (`<<'EOF'`) so the shell never interprets body text; when recording is delegated to scribe
+> Timestamps come from the Conductor — one shell call: capture `ts=$(date '+%Y-%m-%d %H:%M')`,
+> print the header from it, append the body with a quoted heredoc (`<<'EOF'`) so the shell never
+> interprets body text (procedure: work skill Step 4); when recording is delegated to scribe
 > (checkpoints), the brief passes the timestamp (scribe cannot check the clock). Never guess a time.
 > **Dossier rule**: only when a delegation escalates (⤴) or a fix cycle does not converge,
 > append the brief and the returned report verbatim right below the log line — masked per
