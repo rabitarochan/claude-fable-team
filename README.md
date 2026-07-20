@@ -18,7 +18,7 @@ The handoff document written by Fable 5 itself is in [HANDOFF.md](HANDOFF.md).
 /plugin install fable-team@fable-team
 
 # 3. Set up in the target project (creates the state directory + embeds the rules into CLAUDE.md)
-/fable-team:init
+/fable-team:setup
 ```
 
 ## Updating
@@ -30,10 +30,10 @@ The handoff document written by Fable 5 itself is in [HANDOFF.md](HANDOFF.md).
 # 2. Update the installed plugin
 /plugin update fable-team@fable-team
 
-# 3. Re-run init in each set-up project — needed only when the release notes say the
+# 3. Re-run setup in each set-up project — needed only when the release notes say the
 #    canonical rules (rules.md) changed. Idempotent: replaces only the section between
 #    the fable-team markers in CLAUDE.md
-/fable-team:init
+/fable-team:setup
 ```
 
 Note: third-party marketplaces do not auto-update by default. Per-marketplace
@@ -47,7 +47,7 @@ auto-update can be enabled from the `/plugin` → Marketplaces tab.
 3. Start a long-running mission            /fable-team:mission implement <something>
 4. Run the execution loop                  /fable-team:work
    (to keep it running automatically)      /loop /fable-team:work
-5. Session died, or it's the next day      /fable-team:resume in a new session
+5. Session died, or it's the next day      /fable-team:resume-mission in a new session
 6. After the mission completes             /fable-team:retro to harvest insights
 7. When signals have accumulated           /fable-team:grow to improve the team itself
 ```
@@ -82,16 +82,16 @@ claude-fable-team/       ← The Claude Plugin itself (this repository)
 │   ├── scout.md           (Haiku)  Exploration and research (parallel fan-out)
 │   └── scribe.md          (Haiku)  Checkpoints and recovery recording
 ├── skills/              ← 1 setup + 1 brainstorm + 1 one-shot + 5 mission + 4 playbook + 1 growth
-│   ├── init/              Project setup (bundles rules.md, the canonical rules)
+│   ├── setup/             Project setup (bundles rules.md, the canonical rules)
 │   ├── brainstorm/        Pre-mission brainstorming: diverge, converge, draft goal/DoD for task/mission intake
 │   ├── task/              One-shot task execution (single-session, with a promotion path)
 │   ├── mission/           Mission kickoff (bundles templates/ and a filled-in example/)
 │   ├── work/              Execution loop (delegate → verify → record, with unattended loop mode)
 │   ├── checkpoint/        Freezing state
-│   ├── resume/            Full recovery in a new session
+│   ├── resume-mission/    Full recovery in a new session
 │   ├── retro/             Harvesting insights after completion
 │   ├── grow/              Growing the team itself (signal distillation → asset updates)
-│   └── debug/ verify/ brief/ judge/   Playbook skills (each bundles a playbook.md)
+│   └── debug-mission/ verify/ brief/ judge/   Playbook skills (each bundles a playbook.md)
 ├── README.md / HANDOFF.md / CHANGELOG.md / CLAUDE.md (for HQ)
 └── .fable-team/         ← State of this HQ repository itself (not part of the distribution)
 ```
@@ -112,5 +112,5 @@ and every deliverable counts as done only after passing "observable completion c
 
 - Changes to the framework require approval and are recorded in `CHANGELOG.md` with their evidence signals
 - Verification procedure: `claude plugin validate .` → install locally →
-  run through the full flow starting from `/fable-team:init` in a real project
+  run through the full flow starting from `/fable-team:setup` in a real project
 - Commit at every checkpoint (the change history itself becomes the team's growth history)

@@ -1,12 +1,12 @@
 ---
-name: resume
+name: resume-mission
 description: >
-  Fully recover an interrupted mission in a new session. Use for "/fable-team:resume",
+  Fully recover an interrupted mission in a new session. Use for "/fable-team:resume-mission",
   "pick up where we left off yesterday", "resume the mission", or when the user approves
   resuming an in-progress mission at session start.
 ---
 
-# /fable-team:resume — Full Recovery
+# /fable-team:resume-mission — Full Recovery
 
 You have no memory of the previous session. That is normal.
 **The files are the truth; trust only the files to recover.** But cross-check against reality at the end.

@@ -749,3 +749,39 @@
   "slower than Opus-solo" signal does not recur with cold starts or recording as the cause —
   if it recurs, the next-largest measured lever (agent-side chunked re-reads of large files)
   gets its own signal.
+
+## 2026-07-20 — Rename three skills that collide with Claude Code built-in commands (v0.5.0)
+
+> 要約(gist): init / resume / debug は Claude Code 組み込みコマンドと同名のため、`fable-team:` 接頭辞付きでも
+> 呼び出せなかった。setup / resume-mission / debug-mission に改名(破壊的変更)。導入済みプロジェクトは
+> プラグイン更新後に /fable-team:setup を再実行して埋め込みルールを最新化する。
+
+- **Change**: `skills/init` → `skills/setup` (rules.md and templates/ move with it; the HQ
+  CLAUDE.md import becomes `@skills/setup/rules.md`), `skills/resume` → `skills/resume-mission`,
+  `skills/debug` → `skills/debug-mission`. All living references updated: README pair, HANDOFF
+  pair, root CLAUDE.md, canonical rules (session-start `resume-mission`, playbook table
+  `debug-mission`), `agents/debugger.md` playbook path, sibling skills (work / checkpoint),
+  mission example docs, blog draft v2. Embedded rules markers
+  (`<!-- fable-team:rules:start/end -->`) intentionally unchanged so field-project idempotent
+  replacement keeps working. Plugin version 0.4.0 → 0.5.0 (public command names are a breaking
+  change). New HQ rule: check new skill names against the built-in command list before naming.
+  Rule diet: no dead rule found to remove; net addition is one bullet, stated honestly.
+- **Evidence signal**: user report (2026-07-20): `/fable-team:init` and `/fable-team:resume`
+  could not be invoked. Cause: Claude Code resolves the base name against built-in commands
+  before the plugin namespace, so a colliding name is unreachable even fully qualified. The
+  official command list (code.claude.com/docs/en/commands.md) confirmed a third exact collision:
+  `/debug` (debug logging). Near-misses `task` (built-in is the plural `/tasks`) and `checkpoint`
+  (no name collision) kept unchanged by owner decision; new names setup / resume-mission /
+  debug-mission chosen by the owner. Historical records (mission archives, growth files, past
+  CHANGELOG entries) keep the old names — history is not rewritten.
+  Adversarial review (Opus): LGTM (must-fix 0 / recommended 1 / FYI 2), resolved in one cycle.
+  The recommended item stands as the open completion gate: `claude plugin validate` does not
+  exercise command resolution, so the effectiveness measure below is a criterion, not an
+  observation, until the post-reinstall invocation check runs in a real session. FYI items:
+  the gist marker aligned to the file's `要約(gist):` format; the growth-inbox capture was
+  deferred by the Conductor until after the review gate (to keep the reviewed diff clean) and
+  appended in the same cycle.
+- **Effectiveness measure**: after plugin reinstall, `/fable-team:setup`, `/fable-team:resume-mission`
+  and `/fable-team:debug-mission` invoke successfully in a real session (the original failure mode
+  is gone), and the next newly named skill is checked against the built-in list (the new HQ rule
+  fires at naming time).

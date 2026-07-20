@@ -41,5 +41,5 @@ Create a state from which the next session can fully resume even if this session
 
 - Progress: Phase N — X of Y tasks done
 - Frozen state: <1-2 sentences>
-- How to resume: run /fable-team:resume <slug> in a new session
+- How to resume: run /fable-team:resume-mission <slug> in a new session
 ```

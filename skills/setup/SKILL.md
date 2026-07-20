@@ -1,23 +1,23 @@
 ---
-name: init
+name: setup
 description: >
   Set up Fable Team in a project. Use after installing the plugin, when the user says
-  "/fable-team:init", "set up Fable Team", or "install Fable Team in this project".
+  "/fable-team:setup", "set up Fable Team", or "install Fable Team in this project".
   Creates .fable-team/ (the state directory) and embeds the team rules into the project's
   CLAUDE.md. Re-running updates only the rules section to the latest version (idempotent).
 ---
 
-# /fable-team:init — Project Setup
+# /fable-team:setup — Project Setup
 
 The plugin brings Fable Team's brains (agents and skills).
 This skill sets up the remaining two pieces in the target project — **a place for state** and **always-loaded rules**.
 
 ## Steps
 
-1. **Read the canonical rules**: `${CLAUDE_PLUGIN_ROOT}/skills/init/rules.md`
+1. **Read the canonical rules**: `${CLAUDE_PLUGIN_ROOT}/skills/setup/rules.md`
 
 2. **Create the state directory** (do not touch anything that already exists):
-   - `.fable-team/growth/inbox.md` ← copy from `${CLAUDE_PLUGIN_ROOT}/skills/init/templates/inbox.md`
+   - `.fable-team/growth/inbox.md` ← copy from `${CLAUDE_PLUGIN_ROOT}/skills/setup/templates/inbox.md`
    - `.fable-team/growth/changelog.md` ← copy from the same `templates/changelog.md`
    - Do not create `.fable-team/missions/` now — the first mission creates it
 
@@ -35,6 +35,6 @@ This skill sets up the remaining two pieces in the target project — **a place 
 
 ## Notes
 
-- The area between the markers is managed by init. Project-specific rules (including rules
+- The area between the markers is managed by setup. Project-specific rules (including rules
   harvested by the growth loop) go **outside the markers**
 - If this is a git repository, suggest committing the setup

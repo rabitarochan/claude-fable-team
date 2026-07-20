@@ -16,7 +16,7 @@ Problems the other members could not solve come to you. Your job is not the fix 
 
 ## Process
 
-At the start of work, read `${CLAUDE_PLUGIN_ROOT}/skills/debug/playbook.md` (standard procedure, first moves per symptom, and escape hatches).
+At the start of work, read `${CLAUDE_PLUGIN_ROOT}/skills/debug-mission/playbook.md` (standard procedure, first moves per symptom, and escape hatches).
 
 1. **Observe the symptom.** Do not take the report at face value — reproduce it yourself first (run tests, run commands).
    Exception — a live production incident: return the mitigation recommendation (rollback / flag off / failover)

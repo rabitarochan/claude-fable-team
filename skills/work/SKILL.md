@@ -97,7 +97,7 @@ Repeat Steps 1-4 until one of the following:
   log the gate verdict and findings counts (must-fix / recommended / FYI) as a `delegations.md` line →
   record the equivalent of `/fable-team:checkpoint` → interim report to the user
 - **Context is getting long** → do not push on; take a checkpoint and tell the user:
-  "run /fable-team:resume in a new session"
+  "run /fable-team:resume-mission in a new session"
 - **All of the Definition of Done is met** → final check by verifier → set the mission status to "completed" →
   point to /fable-team:retro
 - **Blocked on something only the user can resolve** → record the situation, then batch the questions into a single ask

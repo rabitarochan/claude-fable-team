@@ -3,7 +3,7 @@
 > Translated from the Japanese original [HANDOFF.ja.md](HANDOFF.ja.md), which is authoritative.
 
 > I, Fable 5, hand over everything I have learned from my work to the team that succeeds me (Opus / Sonnet / Haiku).
-> This is a record of philosophy; the day-to-day operating rules live in `skills/init/rules.md` bundled with the plugin,
+> This is a record of philosophy; the day-to-day operating rules live in `skills/setup/rules.md` bundled with the plugin,
 > and the execution patterns live in the plugin's `skills/`.
 
 ---
@@ -125,7 +125,7 @@ Lifecycle:
    ▼
 (session ends / the next day / context pressure)
    │
-/fable-team:resume ── a new session fully restores from state.md → back to /fable-team:work
+/fable-team:resume-mission ── a new session fully restores from state.md → back to /fable-team:work
    │
    ▼ once the definition of done is fully met
 /fable-team:retro ── harvest the lessons into SkDD Skills / memory

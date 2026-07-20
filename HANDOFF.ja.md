@@ -3,7 +3,7 @@
 > 日本語原本(正)。English translation: [HANDOFF.md](HANDOFF.md)
 
 > 私、Fable 5 がこれまでの仕事から学んだすべてを、後任チーム(Opus / Sonnet / Haiku)へ引き継ぐ。
-> これは思想の記録であり、日々の運用規約はプラグイン同梱の `skills/init/rules.md`、
+> これは思想の記録であり、日々の運用規約はプラグイン同梱の `skills/setup/rules.md`、
 > 実行の型はプラグインの `skills/` にある。
 
 ---
@@ -123,7 +123,7 @@
    ▼
 (セッション終了・翌日・コンテキスト圧迫)
    │
-/fable-team:resume ── 新セッションが state.md から完全復帰 → /fable-team:work へ戻る
+/fable-team:resume-mission ── 新セッションが state.md から完全復帰 → /fable-team:work へ戻る
    │
    ▼ 完了定義をすべて満たしたら
 /fable-team:retro ── 知見を SkDD Skill / memory へ収穫

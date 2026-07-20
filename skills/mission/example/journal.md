@@ -43,7 +43,7 @@
 - **Decisions and rationale**: —
 - **Next**: Phase 2 (2.1 users table)
 
-## 2026-07-01 09:15 — Conductor (session #3, /fable-team:resume)
+## 2026-07-01 09:15 — Conductor (session #3, /fable-team:resume-mission)
 
 - **Did**: Re-verifying assumptions on resume **found a divergence**: state said "schema.ts matches
   the plan", but the user had hand-added a display_name column to the users table on the evening of 06-30
@@ -61,4 +61,4 @@
 - **Learned**: Suspected cause of the 500 is the exception handling at auth.ts:18 (**unconfirmed**)
 - **Decisions and rationale**: Did not grind toward a confirmed diagnosis; wrote the hypothesis into state
   and handed it to the next session (write checkpoints while the next move is still clear)
-- **Next**: In a new session, /fable-team:resume → start from step (1) in state.md
+- **Next**: In a new session, /fable-team:resume-mission → start from step (1) in state.md
